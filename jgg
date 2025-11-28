@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas de Laboratórios - EM JGG</title>
+    <!-- Carrega o Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define a fonte Inter como padrão */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fafc; /* light gray background */
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#4f46e5', // Indigo 600
+                        'secondary': '#10b981', // Emerald 500
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased">
+
+    <div class="min-h-screen flex flex-col items-center p-4 sm:p-8">
+
+        <!-- Header -->
+        <header class="w-full max-w-4xl mb-6">
+            <!-- Banner Image -->
+            <img src="https://placehold.co/1200x250/4f46e5/ffffff?text=ESCOLA+MUNICIPAL+JOSÉ+GERALDO+GUIMARÃES" alt="Banner da Escola Municipal José Geraldo Guimarães" class="w-full h-auto rounded-xl shadow-lg object-cover">
+        </header>
+
+        <!-- Laboratórios Grid -->
+        <main class="w-full max-w-4xl grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+
+            <!-- Card: Laboratório 01 - Informática -->
+            <div class="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 border-t-4 border-primary flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-3">💻</span>
+                        <h2 class="text-2xl font-bold text-gray-800">Laboratório 01</h2>
+                    </div>
+                    <p class="text-sm font-semibold text-primary uppercase mb-2">Reserva Laboratório 01 - Informática</p>
+                    
+                    <div class="p-3 bg-indigo-50 rounded-lg mt-4">
+                        <p class="font-semibold text-gray-800 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Horários fixos (Profª Ângela):
+                        </p>
+                        <p class="text-gray-600 ml-7">Segunda a Sexta-feira: <span class="font-mono text-lg text-primary">07:00 às 10:35</span></p>
+                    </div>
+                </div>
+
+                <!-- Botão Link Lab 01 -->
+                <a href="https://www.professoraangela.com.br/agendamento/" target="_blank"
+                   class="mt-6 w-full bg-primary hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-lg uppercase text-sm tracking-wider text-center block">
+                    RESERVAR HORARIO LABORATÓRIO 01 - INFORMÁTICA
+                </a>
+            </div>
+
+            <!-- Card: Laboratório 02 - Informática (Atualizado) -->
+            <div class="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 border-t-4 border-secondary flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-3">🖥️</span>
+                        <h2 class="text-2xl font-bold text-gray-800">Laboratório 02</h2>
+                    </div>
+                    <p class="text-sm font-semibold text-secondary uppercase mb-2">Reserva Laboratório 02 - Informática</p>
+                    
+                    <p class="mb-4 text-gray-600 text-sm italic border-l-4 border-secondary pl-2">
+                        Pode ser agendado em <span class="font-bold">qualquer dia e horário letivo</span>, mediante disponibilidade.
+                    </p>
+
+                    <div class="p-3 bg-emerald-50 rounded-lg mb-4">
+                        <p class="font-semibold text-gray-800 flex items-center mb-1">
+                            <svg class="w-5 h-5 mr-2 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Horários fixos (Prof. Lian):
+                        </p>
+                        <ul class="ml-7 text-gray-600">
+                            <li>Quinta-feira: <span class="font-mono text-lg text-secondary">08:40 às 11:25</span></li>
+                            <li>Sexta-feira: <span class="font-mono text-lg text-secondary">07:00 às 11:25</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Aviso Importante -->
+                    <div class="bg-red-50 p-3 rounded-lg border border-red-200">
+                        <p class="font-bold text-red-700 text-sm flex items-center mb-1">
+                            ⚠️ Atenção:
+                        </p>
+                        <p class="text-xs text-red-700 leading-relaxed">
+                            Caso agende fora dos horários de suporte acima, o <span class="font-bold underline">professor regente da turma</span> ficará responsável por operar os equipamentos.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Botão Link Lab 02 -->
+                <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ09FY27JuAUHZbi-iltMflsqU-h24ZWGSfIM_syx6BGZ9MBtj6ZgtYSDdwtbWx2sE5E-CEILXQW" target="_blank"
+                   class="mt-6 w-full bg-secondary hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-lg uppercase text-sm tracking-wider text-center block">
+                    RESERVAR HORARIO LABORATÓRIO 02 - INFORMÁTICA
+                </a>
+            </div>
+
+            <!-- Card: Laboratório 03 - Ciências -->
+            <div class="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 border-t-4 border-blue-600 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-3">🔬</span>
+                        <h2 class="text-2xl font-bold text-gray-800">Laboratório 03</h2>
+                    </div>
+                    <p class="text-sm font-semibold text-blue-600 uppercase mb-2">Reserva Laboratório 03 - Ciências</p>
+                    
+                    <p class="mb-3 text-lg text-gray-700">
+                        <span class="font-bold">Uso Exclusivo:</span> Professores da disciplina de Ciências
+                    </p>
+                    <div class="p-3 bg-blue-50 rounded-lg">
+                        <p class="font-semibold text-gray-800 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Horários Fixos:
+                        </p>
+                        <p class="text-gray-600 ml-7">Segunda a Sexta-feira: <span class="font-mono text-lg text-blue-600">07:00 às 11:25</span></p>
+                    </div>
+                </div>
+
+                <!-- Botão Link Lab 03 -->
+                <a href="https://professoraangela.com.br/ciencias/" target="_blank"
+                   class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-lg uppercase text-sm tracking-wider text-center block">
+                    RESERVAR HORARIO LABORATÓRIO 03 - CIÊNCIAS
+                </a>
+            </div>
+        </main>
+
+        <!-- Lembrete: Cuidados e Organização Section -->
+        <section class="w-full max-w-4xl p-6 bg-yellow-50 rounded-xl shadow-xl border-t-4 border-yellow-500">
+            <div class="flex items-center mb-4 border-b pb-3 border-yellow-200">
+                <span class="text-3xl mr-3">📢</span>
+                <h2 class="text-2xl font-extrabold text-yellow-800">Lembrete: Cuidados e Organização</h2>
+            </div>
+            
+            <p class="text-lg text-gray-700 mb-4">
+                Para garantir a vida útil dos equipamentos, pedimos a colaboração com os seguintes pontos:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Ponto 1: Cabos -->
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-indigo-400">
+                    <h3 class="font-bold text-lg text-indigo-700 mb-2">1. Cuidado com os Cabos</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">
+                        <li>Utilizar somente o computador da escola.</li>
+                        <li>Evite desconectar cabos HDMI ou de Áudio.</li>
+                    </ul>
+                </div>
+
+                <!-- Ponto 2: Sair da Sala -->
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-indigo-400">
+                    <h3 class="font-bold text-lg text-indigo-700 mb-2">2. Ao Sair da Sala</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">
+                        <li><span class="font-bold">Desligue o projetor</span> e caixas de som.</li>
+                        <li>Deixe a sala organizada, lixo recolhido e quadro apagado.</li>
+                    </ul>
+                </div>
+
+                <!-- Ponto 3: Reporte Problemas -->
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-indigo-400">
+                    <h3 class="font-bold text-lg text-indigo-700 mb-2">3. Reporte Problemas</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">
+                        <li>Notou defeitos? Avise imediatamente o <span class="font-bold">Giberto ou Professor Lian</span>.</li>
+                        <li><span class="font-bold text-red-500">Não tente consertar por conta própria.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="mt-6 text-center text-lg font-bold text-yellow-800">
+                O bom uso deste espaço depende da colaboração de todos!
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="w-full max-w-4xl mt-10 p-4 text-center text-sm text-gray-500 border-t border-gray-200">
+            &copy; 2025 Escola Municipal José Geraldo Guimarães. Todos os direitos reservados.
+        </footer>
+
+    </div>
+
+</body>
+</html>

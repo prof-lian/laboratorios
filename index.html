@@ -10,7 +10,6 @@
         .container { flex: 1; max-width: 1000px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; }
         
         /* ================= CABEÇALHO E LOGO ================= */
-        /* Cabeçalho mais compacto */
         .header { border-bottom: 2px solid #004080; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; position: relative; }
         .header-esq { display: flex; align-items: center; gap: 10px; width: 100%; }
         .logo-escola { width: 60px; height: auto; cursor: pointer; transition: transform 0.2s; }
@@ -134,7 +133,7 @@
             body { padding: 0; }
             .container { padding: 10px; border-radius: 0; }
             
-            /* Cabeçalho mobile ainda mais compacto */
+            /* Cabeçalho mobile mais compacto */
             .header { padding-top: 25px; padding-bottom: 8px; margin-bottom: 12px; flex-direction: column; align-items: flex-start; }
             .btn-login-admin { position: absolute; top: 5px; right: 5px; padding: 4px 8px; font-size: 10px; }
             .header-esq { flex-direction: row; align-items: center; margin-bottom: 0; width: 100%; gap: 6px; }
@@ -442,26 +441,6 @@
         return arrayHorarios.sort((a, b) => ordemHorarios.indexOf(a) - ordemHorarios.indexOf(b));
     }
 
-    async function buscarAgendamentos() {
-        try {
-            const snapshot = await db.collection("agendamentos").get();
-            todosAgendamentosCache = []; 
-            snapshot.forEach(doc => {
-                let ag = doc.data();
-                ag.id = doc.id;
-                let partes = ag.data.split('/');
-                if(partes.length === 3) {
-                    ag.diaNum = parseInt(partes[0]);
-                    ag.mesNum = parseInt(partes[1]) - 1; 
-                    ag.anoNum = parseInt(partes[2]);
-                    ag.dataParaOrdenacao = new Date(ag.anoNum, ag.mesNum, ag.diaNum);
-                }
-                todosAgendamentosCache.push(ag);
-            });
-            todosAgendamentosCache.sort((a, b) => a.dataParaOrdenacao - b.dataParaOrdenacao);
-        } catch(e) { console.error("Erro ao buscar dados:", e); }
-    }
-
     function mudarTela(idTela) {
         document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
         document.getElementById(idTela).classList.add('ativa');
@@ -469,7 +448,13 @@
 
     function fecharFormulario() {
         idAgendamentoEdicao = null;
-        document.getElementById("btn-salvar").innerHTML = "📅 AGENDAR AULA";
+        
+        // CORREÇÃO DO BUG DO BOTÃO "TRAVANDO": 
+        // Reativar o botão sempre que fechar o formulário
+        const btn = document.getElementById("btn-salvar");
+        btn.innerHTML = "📅 AGENDAR AULA";
+        btn.disabled = false;
+        
         document.getElementById("nome").value = ""; document.getElementById("telefone").value = "";
         document.getElementById("disciplina").value = ""; document.getElementById("descricao").value = "";
         mudarTela('tela-calendario');
@@ -514,7 +499,7 @@
             document.getElementById("admin-responsavel").value = "";
             checkboxes.forEach(cb => cb.checked = false);
             document.getElementById('chk-marcar-todos').checked = false; 
-            await buscarAgendamentos(); gerarCalendario(); renderizarTabelasMensais(); 
+            // A interface será atualizada automaticamente pelo onSnapshot
         } catch (erro) { alert("❌ Erro ao bloquear."); }
     }
 
@@ -620,6 +605,7 @@
                 divDia.style.backgroundColor = "#ffebee"; 
             } 
             else if (qtdMatutino >= 5 || qtdVespertino >= 5 || qtdTotal >= 5) { 
+                // Palavra alterada para Lotado
                 divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado</div>`; 
             } 
 
@@ -630,6 +616,8 @@
 
     async function abrirFormulario(dataStr) {
         idAgendamentoEdicao = null; document.getElementById("btn-salvar").innerHTML = "📅 AGENDAR AULA";
+        document.getElementById("btn-salvar").disabled = false; // Garante que o botão tá livre
+        
         document.getElementById("nome").value = ""; document.getElementById("telefone").value = "";
         document.getElementById("disciplina").value = ""; document.getElementById("descricao").value = "";
 
@@ -658,7 +646,7 @@
 
         if(nome.trim() === "" || horariosSelecionados.length === 0) return alert("⚠️ Preencha seu nome e selecione um horário.");
 
-        const btn = document.getElementById("btn-salvar"); const textoOriginal = btn.innerHTML;
+        const btn = document.getElementById("btn-salvar");
         btn.innerHTML = "⏳ Salvando..."; btn.disabled = true;
 
         try {
@@ -675,8 +663,14 @@
                 });
                 alert("✅ Agendamento salvo!");
             }
-            await buscarAgendamentos(); gerarCalendario(); fecharFormulario(); 
-        } catch (erro) { alert("❌ Erro ao salvar."); btn.innerHTML = textoOriginal; btn.disabled = false; } 
+            // A tela vai atualizar via onSnapshot e o fecharFormulario() resolve os botões!
+            fecharFormulario(); 
+        } catch (erro) { 
+            console.error(erro);
+            alert("❌ Erro ao salvar."); 
+            btn.innerHTML = "📅 AGENDAR AULA"; 
+            btn.disabled = false; 
+        } 
     }
 
     // ================= LISTAGENS (SEMANA E MÊS) =================
@@ -851,12 +845,48 @@
 
     async function excluirReserva(idRegistro) {
         if(confirm("⚠️ Deseja cancelar esta reserva/bloqueio?")) {
-            try { await db.collection("agendamentos").doc(idRegistro).delete(); await buscarAgendamentos(); gerarCalendario(); renderizarTabelasMensais(); } 
+            try { 
+                await db.collection("agendamentos").doc(idRegistro).delete(); 
+                // A interface será atualizada pelo onSnapshot 
+            } 
             catch(e) { alert("❌ Erro ao remover."); }
         }
     }
 
-    window.onload = async () => { gerarCalendario(); await buscarAgendamentos(); gerarCalendario(); };
+    // ================= FUNÇÃO DE CARREGAMENTO COM ONSNAPSHOT (TEMPO REAL) =================
+    window.onload = () => { 
+        gerarCalendario(); 
+        
+        // Substitui a busca única por um Listener contínuo do Firebase
+        db.collection("agendamentos").onSnapshot((snapshot) => {
+            todosAgendamentosCache = [];
+            snapshot.forEach(doc => {
+                let ag = doc.data();
+                ag.id = doc.id;
+                let partes = ag.data.split('/');
+                if(partes.length === 3) {
+                    ag.diaNum = parseInt(partes[0]);
+                    ag.mesNum = parseInt(partes[1]) - 1;
+                    ag.anoNum = parseInt(partes[2]);
+                    ag.dataParaOrdenacao = new Date(ag.anoNum, ag.mesNum, ag.diaNum);
+                }
+                todosAgendamentosCache.push(ag);
+            });
+            todosAgendamentosCache.sort((a, b) => a.dataParaOrdenacao - b.dataParaOrdenacao);
+
+            // Sempre que o banco mudar, atualiza a tela em que o usuário está no momento
+            if (document.getElementById('tela-calendario').classList.contains('ativa')) {
+                gerarCalendario();
+            } else if (document.getElementById('tela-lista-publica').classList.contains('ativa')) {
+                renderizarGradeSemanal();
+                renderizarTabelasMensais();
+            } else if (document.getElementById('tela-admin').classList.contains('ativa')) {
+                renderizarTabelasMensais();
+            }
+        }, (error) => {
+            console.error("Erro na sincronização em tempo real: ", error);
+        });
+    };
 </script>
 
 </body>

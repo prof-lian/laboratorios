@@ -6,12 +6,12 @@
     <title>Reserva Laboratório de Informática 02</title>
     <style>
         /* ================= ESTILOS GLOBAIS ================= */
-        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 10px; }
-        .container { max-width: 1000px; margin: 0 auto; background-color: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 10px; display: flex; flex-direction: column; min-height: 100vh; }
+        .container { flex: 1; max-width: 1000px; margin: 0 auto; background-color: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; }
         
         /* ================= CABEÇALHO E LOGO ================= */
-        .header { border-bottom: 2px solid #005f6b; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
-        .header-esq { display: flex; align-items: center; gap: 15px; }
+        .header { border-bottom: 2px solid #005f6b; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .header-esq { display: flex; align-items: center; gap: 15px; width: 100%; }
         .logo-escola { width: 70px; height: auto; cursor: pointer; transition: transform 0.2s; }
         .logo-escola:hover { transform: scale(1.05); }
         .header-textos { text-align: left; }
@@ -27,26 +27,24 @@
         .btn-voltar-simples { color: #005f6b; border: none; background: none; font-size: 13px; font-weight: normal; cursor: pointer; padding: 10px; display: block; width: 100%; text-align: center; margin-top: 10px; transition: 0.2s; }
         .btn-voltar-simples:hover { text-decoration: underline; color: #004080; }
 
-        /* ================= CALENDÁRIO INICIAL (AGORA APENAS SEG A SEX) ================= */
+        /* ================= NAVEGAÇÃO DE MESES ================= */
+        .nav-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background-color: #f0f4f8; padding: 10px; border-radius: 5px; gap: 10px; }
+        .nav-mes button { padding: 10px 15px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: #005f6b; color: white; border: none; border-radius: 4px; transition: 0.2s; min-height: 44px; text-transform: uppercase; }
+        .nav-mes button:hover { background-color: #004080; }
+        .nav-mes h3 { color: #005f6b; font-size: 17px; margin: 0; text-transform: uppercase; font-weight: bold; text-align: center; }
+
+        /* ================= CALENDÁRIO INICIAL ================= */
         .instrucoes { font-size: 14px; margin-bottom: 20px; text-align: left; line-height: 1.5; }
         .aviso { background-color: #f9f9f9; padding: 12px; border-radius: 4px; border: 1px solid #eee; border-left: 5px solid #d32f2f; margin-top: 15px; font-size: 14px; text-align: justify; width: 100%; box-sizing: border-box; }
         
-        .nav-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background-color: #f0f4f8; padding: 10px; border-radius: 5px; gap: 10px; }
-        .nav-mes button { padding: 10px 15px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: #005f6b; color: white; border: none; border-radius: 4px; transition: 0.2s; min-height: 44px; }
-        .nav-mes button:hover { background-color: #004080; }
-        .nav-mes h3 { color: #005f6b; font-size: 17px; margin: 0; text-transform: uppercase; font-weight: bold; text-align: center; }
-        
-        /* Modificado para 5 colunas */
         .calendario-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; text-align: left; margin-bottom: 20px; }
-        
-        /* Visual novo para os dias da semana */
         .dia-semana { background-color: #005f6b; color: white; padding: 10px 0; text-align: center; font-size: 14px; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
         
         .dia { background-color: #e9e9e9; min-height: 90px; display: flex; flex-direction: column; padding: 6px; cursor: pointer; border: 1px solid #ddd; transition: 0.2s; border-radius: 4px; }
         .dia:hover { background-color: #d4d4d4; }
         .dia.vazio { background-color: transparent; border: none; cursor: default; }
         .dia-numero { font-size: 16px; font-weight: bold; width: 100%; text-align: left; margin-bottom: 2px; color: #005f6b; }
-        .reserve-agora { font-size: 11px; margin-top: auto; font-weight: bold; padding-top: 5px; }
+        .reserve-agora { font-size: 11px; margin-top: auto; font-weight: bold; padding-top: 5px; text-align: center; }
         .prof-fixo { font-size: 10px; color: #004080; font-weight: bold; margin-top: 2px; text-align: left; line-height: 1.2; }
         .texto-proerd { font-size: 10px; color: #d32f2f; font-weight: bold; margin-top: 2px; text-align: left; line-height: 1.2; }
 
@@ -54,18 +52,16 @@
         .btn-ver-horarios { background-color: #17a2b8; color: white; border: none; padding: 18px 25px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.2s; width: 100%; max-width: 400px; }
         .btn-ver-horarios:hover { background-color: #138496; }
 
-        /* Botões de Outros Agendamentos */
         .secao-outros-agendamentos { margin-top: 30px; border-top: 2px dashed #ccc; padding-top: 20px; text-align: center; }
         .secao-outros-agendamentos h3 { color: #005f6b; font-size: 18px; margin-bottom: 15px; }
         .container-btn-outros { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         .btn-outros { background-color: #17a2b8; color: white; padding: 12px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; transition: 0.2s; font-size: 14px; flex: 1; min-width: 200px; text-align: center; }
-        .btn-outros:hover { background-color: #138496; }
 
         /* ================= CALENDÁRIO VISUAL (SEMANAL) ================= */
-        .calendario-semana-wrapper { width: 100%; overflow-x: auto; padding-bottom: 10px; margin-bottom: 20px; }
-        .calendario-semana { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; min-width: 750px; }
+        .calendario-semana-wrapper { width: 100%; padding-bottom: 10px; margin-bottom: 20px; }
+        .calendario-semana { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; }
         .dia-semana-header { background-color: #005f6b; color: white; padding: 10px 0; text-align: center; font-size: 14px; font-weight: bold; border-radius: 4px 4px 0 0; text-transform: uppercase; }
-        .dia-visual { background-color: #fff; border: 1px solid #ccc; border-radius: 0 0 4px 4px; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .dia-visual { background-color: #fff; border: 1px solid #ccc; border-radius: 0 0 4px 4px; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; }
         .dia-numero-visual { background-color: #f0f4f8; font-size: 16px; font-weight: bold; text-align: center; padding: 8px; border-bottom: 2px solid #005f6b; color: #005f6b; }
         .turno-titulo { font-size: 11px; font-weight: bold; text-align: center; background-color: #e9ecef; color: #495057; letter-spacing: 1px; padding: 4px 0; }
         
@@ -105,7 +101,6 @@
         
         .rodape-form { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 25px; }
         .btn-agendar { background-color: #004080; color: white; border: none; padding: 18px 40px; font-size: 20px; font-weight: bold; cursor: pointer; border-radius: 5px; width: 100%; max-width: 400px; }
-        .btn-agendar:hover { background-color: #002b5e; }
 
         /* ================= TABELAS ================= */
         .tabela-wrapper { width: 100%; overflow-x: auto; }
@@ -115,27 +110,51 @@
         .tabela-agendamentos tr:nth-child(even) { background-color: #f9f9f9; }
 
         /* ================= PAINEL ADMIN ================= */
-        .badge-admin-aviso { background-color: #d32f2f; color: white; padding: 8px 15px; border-radius: 4px; font-size: 15px; font-weight: bold; display: inline-block; margin-bottom: 20px; text-align: center; }
+        .badge-admin-aviso { background-color: #d32f2f; color: white; padding: 8px 15px; border-radius: 4px; font-size: 15px; font-weight: bold; display: inline-block; margin-bottom: 20px; }
         .btn-excluir, .btn-editar { color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; min-height: 40px; }
         .btn-excluir { background-color: #d32f2f; }
-        .btn-excluir:hover { background-color: #b71c1c; }
         .btn-editar { background-color: #f0ad4e; color: #fff; margin-right: 5px; margin-bottom: 5px; }
-        .btn-editar:hover { background-color: #ec971f; }
 
+        /* ================= RODAPÉ GLOBAL ================= */
+        .rodape-global { text-align: center; font-size: 12px; color: #777; padding: 20px 10px; margin-top: auto; border-top: 1px solid #ddd; }
+
+        /* ================= CELULAR (MOBILE) ================= */
         @media (max-width: 768px) {
-            body { padding: 5px; }
-            .container { padding: 15px; border-radius: 0; }
-            .header { flex-direction: column; text-align: center; gap: 15px; }
-            .header-esq { flex-direction: column; }
-            .header-textos h1 { font-size: 20px; }
-            .nav-mes { flex-direction: column; }
-            .nav-mes button { width: 100%; }
-            .calendario-grid { gap: 4px; }
-            .dia { min-height: 85px; padding: 5px; }
-            .dia-numero { font-size: 15px; }
-            .texto-proerd, .prof-fixo, .reserve-agora { font-size: 10px; }
+            body { padding: 0; }
+            .container { padding: 10px; border-radius: 0; }
+            
+            /* Ajustes no Header Mobile */
+            .header { padding-top: 30px; display: flex; flex-direction: row; flex-wrap: nowrap; border-bottom: 1px solid #005f6b; }
+            .btn-login-admin { position: absolute; top: 0px; right: 0px; padding: 5px 10px; font-size: 11px; }
+            .header-esq { justify-content: space-between; gap: 5px; }
+            .header-textos { width: 75%; }
+            .header-textos h1 { font-size: 15px; }
+            .header-textos h2 { font-size: 9px; }
+            .logo-escola { width: 45px; margin-left: auto; }
+
+            /* Ajustes nos Botões de Mês (Lado a Lado) */
+            .nav-mes { flex-direction: row; padding: 8px; }
+            .nav-mes button { padding: 8px 10px; font-size: 12px; min-height: 35px; flex: 1; }
+            .nav-mes h3 { font-size: 13px; flex: 1; text-align: center; margin: 0 5px; }
+
+            .calendario-grid { gap: 3px; }
+            .dia { min-height: 75px; padding: 4px; }
+            .dia-numero { font-size: 14px; }
+            .texto-proerd, .prof-fixo, .reserve-agora { font-size: 9px; }
+            .dia-semana { font-size: 11px; padding: 6px 0; }
+            
             .form-layout { flex-direction: column; }
             .grid-horarios { grid-template-columns: 1fr; }
+
+            /* Ajuste da Grade Semanal - Espremer para caber sem rolar */
+            .calendario-semana { gap: 2px; }
+            .dia-semana-header { font-size: 9px; padding: 5px 0; }
+            .dia-numero-visual { font-size: 10px; padding: 5px 2px; }
+            .turno-titulo { font-size: 7px; padding: 2px 0; }
+            .slot { font-size: 8px; padding: 3px; height: 50px; }
+            .slot b { font-size: 7px; padding: 1px 2px; margin-bottom: 1px; }
+            .slot-disciplina { font-size: 7px; margin-top: 2px; padding-top: 2px; }
+            .btn-ver-horarios { font-size: 14px; padding: 12px 15px; }
         }
     </style>
 </head>
@@ -143,14 +162,14 @@
 
 <div class="container">
     <div class="header">
+        <button class="btn-login-admin" onclick="solicitarSenhaAdmin()">⚙️ Admin</button>
         <div class="header-esq">
-            <img src="https://iili.io/q4Q2Puj.png" alt="Logo Escola JGG" class="logo-escola" onclick="fecharFormulario()">
             <div class="header-textos">
                 <h2>Escola Municipal Cívico-Militar Prof. José Geraldo Guimarães</h2>
                 <h1>Reserva Laboratório de Informática 02</h1>
             </div>
+            <img src="https://iili.io/q4Q2Puj.png" alt="Logo Escola JGG" class="logo-escola" onclick="fecharFormulario()">
         </div>
-        <button class="btn-login-admin" onclick="solicitarSenhaAdmin()">⚙️ Admin</button>
     </div>
 
     <div id="tela-calendario" class="tela ativa">
@@ -162,9 +181,9 @@
         </div>
         
         <div class="nav-mes">
-            <button onclick="mudarMes(-1)">&lt; Mês Anterior</button>
-            <h3 id="mes-ano-texto">MARÇO 2026</h3>
-            <button onclick="mudarMes(1)">Próximo Mês &gt;</button>
+            <button id="btn-mes-ant" onclick="mudarMes(-1)">&lt; ANT</button>
+            <h3 id="mes-ano-texto">MAR 2026</h3>
+            <button id="btn-mes-prox" onclick="mudarMes(1)">PRÓX &gt;</button>
         </div>
         
         <div class="calendario-grid" id="grade-dias"></div>
@@ -249,23 +268,23 @@
         <h3>📅 Grade de Agendamentos da Semana</h3>
         
         <div class="nav-mes">
-            <button onclick="mudarSemana(-1)">&lt; Semana Anterior</button>
-            <h3 id="semana-texto-publica">02/03 a 06/03 de 2026</h3>
-            <button onclick="mudarSemana(1)">Próxima Semana &gt;</button>
+            <button onclick="mudarSemana(-1)">&lt; ANT</button>
+            <h3 id="semana-texto-publica" style="font-size: 12px; margin: 0 5px;">02/03 a 06/03</h3>
+            <button onclick="mudarSemana(1)">PRÓX &gt;</button>
         </div>
 
         <div class="calendario-semana-wrapper">
             <div class="calendario-semana" id="grade-dias-lista"></div>
         </div>
 
-        <div style="margin-top: 40px; margin-bottom: 20px;">
+        <div style="margin-top: 20px; margin-bottom: 20px;">
             <button class="btn-voltar-simples" onclick="fecharFormulario()">⬅️ Clique aqui para voltar ao calendário inicial</button>
         </div>
 
         <div class="nav-mes" style="border-top: 2px dashed #ccc; padding-top: 20px; background-color: transparent;">
-            <button onclick="mudarMesTabela(-1)">&lt; Mês Anterior</button>
-            <h3 id="titulo-tabela-publica" style="color: #005f6b;">📋 Todos os Agendamentos do Mês</h3>
-            <button onclick="mudarMesTabela(1)">Próximo Mês &gt;</button>
+            <button id="btn-mes-tabela-ant" onclick="mudarMesTabela(-1)">&lt; ANT</button>
+            <h3 id="titulo-tabela-publica" style="color: #005f6b; font-size: 14px;">📋 Agendamentos</h3>
+            <button id="btn-mes-tabela-prox" onclick="mudarMesTabela(1)">PRÓX &gt;</button>
         </div>
         
         <div class="tabela-wrapper">
@@ -316,9 +335,9 @@
             <h3 style="margin-top:0; color:#004080; text-align: center;">Gerenciar Agendamentos</h3>
             
             <div class="nav-mes" style="margin-bottom: 15px; background-color: #f0f4f8;">
-                <button onclick="mudarMesTabela(-1)">&lt; Mês Anterior</button>
-                <h3 id="titulo-tabela-admin" style="color: #004080;">MARÇO 2026</h3>
-                <button onclick="mudarMesTabela(1)">Próximo Mês &gt;</button>
+                <button id="btn-mes-admin-ant" onclick="mudarMesTabela(-1)">&lt; ANT</button>
+                <h3 id="titulo-tabela-admin" style="color: #004080; font-size: 14px;">MARÇO 2026</h3>
+                <button id="btn-mes-admin-prox" onclick="mudarMesTabela(1)">PRÓX &gt;</button>
             </div>
 
             <div class="tabela-wrapper">
@@ -331,7 +350,11 @@
             </div>
         </div>
     </div>
+</div>
 
+<div class="rodape-global">
+    © 2026 Escola Municipal Cívico-Militar Prof. José Geraldo Guimarães.<br>
+    Sistema de Agendamento - Desenvolvido por: seuemail@gmail.com
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -481,8 +504,15 @@
         document.getElementById("btn-salvar").innerHTML = "💾 SALVAR ALTERAÇÕES";
     }
 
-    // ================= CALENDÁRIO INICIAL (SÓ DIAS ÚTEIS E COM EMOJIS) =================
+    // ================= CALENDÁRIO INICIAL =================
     let dataAtual = new Date(); let mesAtual = dataAtual.getMonth(); let anoAtual = dataAtual.getFullYear(); let dataAtualSelecionada = "";
+
+    function atualizarBotoesMes() {
+        let mesAnt = mesAtual - 1 < 0 ? 11 : mesAtual - 1;
+        let mesProx = mesAtual + 1 > 11 ? 0 : mesAtual + 1;
+        document.getElementById("btn-mes-ant").innerText = "< " + mesesNomes[mesAnt].substring(0,3);
+        document.getElementById("btn-mes-prox").innerText = mesesNomes[mesProx].substring(0,3) + " >";
+    }
 
     function mudarMes(delta) {
         mesAtual += delta;
@@ -493,19 +523,18 @@
 
     function gerarCalendario() {
         document.getElementById("mes-ano-texto").innerText = `${mesesNomes[mesAtual]} ${anoAtual}`;
-        const grid = document.getElementById("grade-dias");
+        atualizarBotoesMes();
         
-        // Cabeçalho da grade agora tem apenas Segunda a Sexta
+        const grid = document.getElementById("grade-dias");
         grid.innerHTML = `<div class="dia-semana">Seg</div><div class="dia-semana">Ter</div><div class="dia-semana">Qua</div><div class="dia-semana">Qui</div><div class="dia-semana">Sex</div>`;
 
         let primeiroDia = new Date(anoAtual, mesAtual, 1).getDay();
         let espacosVazios = 0;
         
-        // Calcula espaços vazios apenas para Dias Úteis (1=Seg até 5=Sex)
         if (primeiroDia >= 1 && primeiroDia <= 5) {
             espacosVazios = primeiroDia - 1;
         } else if (primeiroDia === 0 || primeiroDia === 6) {
-            espacosVazios = 0; // Se o mês começa no FDS, a primeira linha preenchida será a segunda-feira direta
+            espacosVazios = 0; 
         }
 
         for (let i = 0; i < espacosVazios; i++) grid.innerHTML += `<div class="dia vazio"></div>`;
@@ -515,7 +544,6 @@
             let dataReal = new Date(anoAtual, mesAtual, dia); 
             let diaSemana = dataReal.getDay(); 
             
-            // PULA SÁBADO (6) E DOMINGO (0)
             if (diaSemana === 0 || diaSemana === 6) continue;
 
             let divDia = document.createElement("div"); divDia.className = "dia";
@@ -527,8 +555,7 @@
             else if (diaSemana === 3) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>07:00 às 11:25</div>`;
             else if (diaSemana === 4) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>08:40 às 11:25</div>`;
 
-            let qtdMatutino = 0;
-            let qtdVespertino = 0;
+            let qtdMatutino = 0; let qtdVespertino = 0;
             let agDoDia = todosAgendamentosCache.filter(ag => ag.diaNum === dia && ag.mesNum === mesAtual && ag.anoNum === anoAtual);
             
             agDoDia.forEach(ag => { 
@@ -540,7 +567,6 @@
 
             let qtdTotal = qtdMatutino + qtdVespertino;
 
-            // Lógica de Ocupação e Emojis
             if (qtdTotal >= 10) { 
                 divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado</div>`; 
                 divDia.style.backgroundColor = "#ffebee"; 
@@ -549,7 +575,7 @@
                 divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Reservado</div>`; 
             } 
             else { 
-                divDia.innerHTML += `<div class="reserve-agora" style="color:#28a745;">🟢 Disponível</div>`; 
+                divDia.innerHTML += `<div class="reserve-agora" style="font-size: 14px;">🟢</div>`; 
             }
 
             divDia.onclick = () => { abrirFormulario(dataFormatadaStr); };
@@ -631,6 +657,19 @@
         renderizarGradeSemanal(); 
     }
 
+    function atualizarBotoesMesTabela() {
+        let mesAnt = mesTabelaGlobal - 1 < 0 ? 11 : mesTabelaGlobal - 1;
+        let mesProx = mesTabelaGlobal + 1 > 11 ? 0 : mesTabelaGlobal + 1;
+        
+        let txAnt = "< " + mesesNomes[mesAnt].substring(0,3);
+        let txProx = mesesNomes[mesProx].substring(0,3) + " >";
+
+        document.getElementById("btn-mes-tabela-ant").innerText = txAnt;
+        document.getElementById("btn-mes-tabela-prox").innerText = txProx;
+        document.getElementById("btn-mes-admin-ant").innerText = txAnt;
+        document.getElementById("btn-mes-admin-prox").innerText = txProx;
+    }
+
     function mudarMesTabela(delta) {
         mesTabelaGlobal += delta;
         if(mesTabelaGlobal > 11) { mesTabelaGlobal = 0; anoTabelaGlobal++; }
@@ -665,7 +704,7 @@
 
     function renderizarGradeSemanal() {
         let sexta = new Date(dataSemanaVisao); sexta.setDate(sexta.getDate() + 4);
-        let strSemana = `${String(dataSemanaVisao.getDate()).padStart(2,'0')}/${String(dataSemanaVisao.getMonth()+1).padStart(2,'0')} a ${String(sexta.getDate()).padStart(2,'0')}/${String(sexta.getMonth()+1).padStart(2,'0')} de ${sexta.getFullYear()}`;
+        let strSemana = `${String(dataSemanaVisao.getDate()).padStart(2,'0')}/${String(dataSemanaVisao.getMonth()+1).padStart(2,'0')} a ${String(sexta.getDate()).padStart(2,'0')}/${String(sexta.getMonth()+1).padStart(2,'0')}`;
         document.getElementById("semana-texto-publica").innerText = strSemana;
         
         let agsSemana = todosAgendamentosCache.filter(ag => ag.dataParaOrdenacao >= dataSemanaVisao && ag.dataParaOrdenacao <= sexta);
@@ -689,6 +728,7 @@
         const textoMesAno = `${mesesNomes[mesTabelaGlobal]} ${anoTabelaGlobal}`;
         document.getElementById("titulo-tabela-publica").innerText = `📋 Agendamentos (${textoMesAno})`;
         document.getElementById("titulo-tabela-admin").innerText = textoMesAno;
+        atualizarBotoesMesTabela();
 
         let agsMes = todosAgendamentosCache.filter(ag => ag.mesNum === mesTabelaGlobal && ag.anoNum === anoTabelaGlobal);
 

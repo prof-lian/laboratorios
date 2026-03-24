@@ -58,14 +58,14 @@
         .btn-outros { background-color: #17a2b8; color: white; padding: 12px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; transition: 0.2s; font-size: 14px; flex: 1; min-width: 200px; text-align: center; }
 
         /* ================= CALENDÁRIO VISUAL (SEMANAL) ================= */
-        .calendario-semana-wrapper { width: 100%; padding-bottom: 10px; margin-bottom: 20px; }
-        .calendario-semana { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; }
+        .calendario-semana-wrapper { width: 100%; padding-bottom: 10px; margin-bottom: 20px; overflow-x: auto; }
+        .calendario-semana { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; min-width: 600px; }
         .dia-semana-header { background-color: #005f6b; color: white; padding: 10px 0; text-align: center; font-size: 14px; font-weight: bold; border-radius: 4px 4px 0 0; text-transform: uppercase; }
         .dia-visual { background-color: #fff; border: 1px solid #ccc; border-radius: 0 0 4px 4px; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; }
         .dia-numero-visual { background-color: #f0f4f8; font-size: 16px; font-weight: bold; text-align: center; padding: 8px; border-bottom: 2px solid #005f6b; color: #005f6b; }
         .turno-titulo { font-size: 11px; font-weight: bold; text-align: center; background-color: #e9ecef; color: #495057; letter-spacing: 1px; padding: 4px 0; }
         
-        .slot { font-size: 12px; padding: 6px; border-bottom: 1px solid #eee; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; height: 85px; box-sizing: border-box; line-height: 1.2; width: 100%; overflow: hidden; }
+        .slot { font-size: 12px; padding: 6px; border-bottom: 1px solid #eee; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; min-height: 85px; box-sizing: border-box; line-height: 1.2; width: 100%; overflow: hidden; }
         .slot-conteudo { display: flex; flex-direction: column; align-items: flex-start; text-align: left; width: 100%; }
         .slot b { font-size: 11px; background: rgba(0,0,0,0.1); padding: 2px 4px; border-radius: 3px; display: inline-block; margin-right: 4px; margin-bottom: 2px; }
         .slot-disciplina { font-size: 11px; color: #333; font-weight: 600; margin-top: 4px; border-top: 1px dashed rgba(0,0,0,0.15); padding-top: 4px; text-align: left; width: 100%; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -103,8 +103,8 @@
         .btn-agendar { background-color: #004080; color: white; border: none; padding: 18px 40px; font-size: 20px; font-weight: bold; cursor: pointer; border-radius: 5px; width: 100%; max-width: 400px; }
 
         /* ================= TABELAS ================= */
-        .tabela-wrapper { width: 100%; overflow-x: auto; }
-        .tabela-agendamentos { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; margin-top: 5px; min-width: 600px; }
+        .tabela-wrapper { width: 100%; overflow-x: auto; margin-top: 5px; }
+        .tabela-agendamentos { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; min-width: 600px; }
         .tabela-agendamentos th { background-color: #17a2b8; color: white; padding: 12px; border: 1px solid #138496; }
         .tabela-agendamentos td { border: 1px solid #ddd; padding: 12px; vertical-align: middle; }
         .tabela-agendamentos tr:nth-child(even) { background-color: #f9f9f9; }
@@ -116,23 +116,21 @@
         .btn-editar { background-color: #f0ad4e; color: #fff; margin-right: 5px; margin-bottom: 5px; }
 
         /* ================= RODAPÉ GLOBAL ================= */
-        .rodape-global { text-align: center; font-size: 12px; color: #777; padding: 20px 10px; margin-top: auto; border-top: 1px solid #ddd; }
+        .rodape-global { text-align: center; font-size: 13px; color: #555; padding: 25px 10px; margin-top: auto; border-top: 1px solid #ddd; line-height: 1.6; }
 
         /* ================= CELULAR (MOBILE) ================= */
         @media (max-width: 768px) {
             body { padding: 0; }
             .container { padding: 10px; border-radius: 0; }
             
-            /* Ajustes no Header Mobile */
-            .header { padding-top: 30px; display: flex; flex-direction: row; flex-wrap: nowrap; border-bottom: 1px solid #005f6b; }
-            .btn-login-admin { position: absolute; top: 0px; right: 0px; padding: 5px 10px; font-size: 11px; }
-            .header-esq { justify-content: space-between; gap: 5px; }
-            .header-textos { width: 75%; }
+            /* Header Mobile - Imagem na Esquerda */
+            .header { padding-top: 15px; align-items: flex-start; flex-direction: column; border-bottom: 1px solid #005f6b; }
+            .btn-login-admin { position: absolute; top: 10px; right: 10px; padding: 5px 10px; font-size: 11px; }
+            .header-esq { flex-direction: row; align-items: center; margin-top: 15px; margin-bottom: 10px; }
             .header-textos h1 { font-size: 15px; }
             .header-textos h2 { font-size: 9px; }
-            .logo-escola { width: 45px; margin-left: auto; }
+            .logo-escola { width: 50px; margin-left: 0; margin-right: 12px; }
 
-            /* Ajustes nos Botões de Mês (Lado a Lado) */
             .nav-mes { flex-direction: row; padding: 8px; }
             .nav-mes button { padding: 8px 10px; font-size: 12px; min-height: 35px; flex: 1; }
             .nav-mes h3 { font-size: 13px; flex: 1; text-align: center; margin: 0 5px; }
@@ -145,16 +143,14 @@
             
             .form-layout { flex-direction: column; }
             .grid-horarios { grid-template-columns: 1fr; }
-
-            /* Ajuste da Grade Semanal - Espremer para caber sem rolar */
-            .calendario-semana { gap: 2px; }
-            .dia-semana-header { font-size: 9px; padding: 5px 0; }
-            .dia-numero-visual { font-size: 10px; padding: 5px 2px; }
-            .turno-titulo { font-size: 7px; padding: 2px 0; }
-            .slot { font-size: 8px; padding: 3px; height: 50px; }
-            .slot b { font-size: 7px; padding: 1px 2px; margin-bottom: 1px; }
-            .slot-disciplina { font-size: 7px; margin-top: 2px; padding-top: 2px; }
             .btn-ver-horarios { font-size: 14px; padding: 12px 15px; }
+            
+            /* Ajustes visuais para a tabela e grade no mobile (Permite rolagem horizontal) */
+            .slot { font-size: 11px; padding: 4px; }
+            .slot-disciplina { font-size: 10px; }
+            .dia-numero-visual { font-size: 12px; }
+            .dia-semana-header { font-size: 12px; }
+            .tabela-agendamentos { font-size: 12px; }
         }
     </style>
 </head>
@@ -164,11 +160,11 @@
     <div class="header">
         <button class="btn-login-admin" onclick="solicitarSenhaAdmin()">⚙️ Admin</button>
         <div class="header-esq">
+            <img src="https://iili.io/q4Q2Puj.png" alt="Logo Escola JGG" class="logo-escola" onclick="fecharFormulario()">
             <div class="header-textos">
                 <h2>Escola Municipal Cívico-Militar Prof. José Geraldo Guimarães</h2>
                 <h1>Reserva Laboratório de Informática 02</h1>
             </div>
-            <img src="https://iili.io/q4Q2Puj.png" alt="Logo Escola JGG" class="logo-escola" onclick="fecharFormulario()">
         </div>
     </div>
 
@@ -212,21 +208,21 @@
         <div class="caixa-branca">
             <h4 class="titulo-periodo" style="margin-top:0;">☀️ Período Matutino</h4>
             <div class="grid-horarios">
-                <label class="horario-item"><input type="checkbox" name="horario" value="1º Horário (07:00 - 07:50)"> 1º Horário (07:00 - 07:50)</label>
-                <label class="horario-item"><input type="checkbox" name="horario" value="4º Horário (09:45 - 10:35)"> 4º Horário (09:45 - 10:35)</label>
-                <label class="horario-item"><input type="checkbox" name="horario" value="2º Horário (07:50 - 08:40)"> 2º Horário (07:50 - 08:40)</label>
-                <label class="horario-item"><input type="checkbox" name="horario" value="5º Horário (10:35 - 11:25)"> 5º Horário (10:35 - 11:25)</label>
-                <label class="horario-item"><input type="checkbox" name="horario" value="3º Horário (08:40 - 09:30)"> 3º Horário (08:40 - 09:30)</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="1º Horário (07:00 - 07:50)"> 1º Horário</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="4º Horário (09:45 - 10:35)"> 4º Horário</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="2º Horário (07:50 - 08:40)"> 2º Horário</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="5º Horário (10:35 - 11:25)"> 5º Horário</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="3º Horário (08:40 - 09:30)"> 3º Horário</label>
             </div>
 
             <details id="acordeon-vespertino" class="dropdown-vespertino">
                 <summary>🌤️ Período Vespertino <span style="font-size: 13px; font-weight: normal; color: #666;">(Clique para expandir)</span> ▼</summary>
                 <div class="grid-horarios" style="margin-bottom: 0;">
-                    <label class="horario-item"><input type="checkbox" name="horario" value="1º Hor. Vesp (13:00 - 13:50)"> 1º Horário (13:00 - 13:50)</label>
-                    <label class="horario-item"><input type="checkbox" name="horario" value="4º Hor. Vesp (15:45 - 16:35)"> 4º Horário (15:45 - 16:35)</label>
-                    <label class="horario-item"><input type="checkbox" name="horario" value="2º Hor. Vesp (13:50 - 14:40)"> 2º Horário (13:50 - 14:40)</label>
-                    <label class="horario-item"><input type="checkbox" name="horario" value="5º Hor. Vesp (16:35 - 17:25)"> 5º Horário (16:35 - 17:25)</label>
-                    <label class="horario-item"><input type="checkbox" name="horario" value="3º Hor. Vesp (14:40 - 15:30)"> 3º Horário (14:40 - 15:30)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="1º Hor. Vesp (13:00 - 13:50)"> 1º Horário (Vesp)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="4º Hor. Vesp (15:45 - 16:35)"> 4º Horário (Vesp)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="2º Hor. Vesp (13:50 - 14:40)"> 2º Horário (Vesp)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="5º Hor. Vesp (16:35 - 17:25)"> 5º Horário (Vesp)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="3º Hor. Vesp (14:40 - 15:30)"> 3º Horário (Vesp)</label>
                 </div>
             </details>
         </div>
@@ -290,7 +286,7 @@
         <div class="tabela-wrapper">
             <table class="tabela-agendamentos">
                 <thead>
-                    <tr><th>Data</th><th>Horários Reservados</th><th>Professor / Disciplina</th></tr>
+                    <tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th></tr>
                 </thead>
                 <tbody id="corpo-tabela-publica"></tbody>
             </table>
@@ -307,27 +303,34 @@
             <div class="form-layout">
                 <div class="coluna-esq">
                     <div class="form-group"><label>Selecione a Data:</label><input type="date" id="admin-data-bloqueio"></div>
-                    <div class="form-group"><label>Motivo:</label><input type="text" id="admin-motivo-bloqueio" placeholder="Ex: Manutenção, Feriado..."></div>
-                    <button class="btn-login-admin" style="margin-top:5px; text-align:center; width: 100%;" onclick="selecionarTodosAdmin()">☑️ Marcar Todos os Horários</button>
+                    <div class="form-group"><label>Motivo do Fechamento:</label><input type="text" id="admin-motivo-bloqueio" placeholder="Ex: Manutenção, Feriado..."></div>
+                    <div class="form-group"><label>Responsável:</label><input type="text" id="admin-responsavel" placeholder="Quem autorizou o bloqueio?"></div>
                 </div>
                 <div class="coluna-dir">
-                    <label style="font-size: 14px; font-weight: bold; color: #555; margin-bottom: 10px; display: block;">Quais horários deseja bloquear?</label>
-                    <div class="grid-horarios" style="gap: 8px;">
+                    <label style="font-size: 14px; font-weight: bold; color: #555; margin-bottom: 5px; display: block;">Quais horários deseja bloquear?</label>
+                    <button class="btn-login-admin" style="margin-bottom:15px; width: 100%; background-color:#e0f7fa;" onclick="selecionarTodosAdmin()">☑️ Marcar Todos os Horários</button>
+                    
+                    <h4 style="margin:0 0 5px 0; color:#005f6b; font-size:14px;">☀️ Matutino</h4>
+                    <div class="grid-horarios" style="gap: 5px; margin-bottom:15px;">
                         <label class="horario-item"><input type="checkbox" name="admin-horario" value="1º Horário (07:00 - 07:50)"> 1º Horário</label>
-                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="1º Hor. Vesp (13:00 - 13:50)"> 1º Hor (Vesp)</label>
                         <label class="horario-item"><input type="checkbox" name="admin-horario" value="2º Horário (07:50 - 08:40)"> 2º Horário</label>
-                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="2º Hor. Vesp (13:50 - 14:40)"> 2º Hor (Vesp)</label>
                         <label class="horario-item"><input type="checkbox" name="admin-horario" value="3º Horário (08:40 - 09:30)"> 3º Horário</label>
-                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="3º Hor. Vesp (14:40 - 15:30)"> 3º Hor (Vesp)</label>
                         <label class="horario-item"><input type="checkbox" name="admin-horario" value="4º Horário (09:45 - 10:35)"> 4º Horário</label>
-                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="4º Hor. Vesp (15:45 - 16:35)"> 4º Hor (Vesp)</label>
                         <label class="horario-item"><input type="checkbox" name="admin-horario" value="5º Horário (10:35 - 11:25)"> 5º Horário</label>
+                    </div>
+
+                    <h4 style="margin:0 0 5px 0; color:#005f6b; font-size:14px;">🌤️ Vespertino</h4>
+                    <div class="grid-horarios" style="gap: 5px;">
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="1º Hor. Vesp (13:00 - 13:50)"> 1º Hor (Vesp)</label>
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="2º Hor. Vesp (13:50 - 14:40)"> 2º Hor (Vesp)</label>
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="3º Hor. Vesp (14:40 - 15:30)"> 3º Hor (Vesp)</label>
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="4º Hor. Vesp (15:45 - 16:35)"> 4º Hor (Vesp)</label>
                         <label class="horario-item"><input type="checkbox" name="admin-horario" value="5º Hor. Vesp (16:35 - 17:25)"> 5º Hor (Vesp)</label>
                     </div>
                 </div>
             </div>
-            <div style="text-align: right; margin-top: 20px;">
-                <button class="btn-excluir" style="padding: 12px 25px; font-size: 15px;" onclick="salvarBloqueioAdmin()">🔒 Confirmar Bloqueio</button>
+            <div style="text-align: right; margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 20px;">
+                <button class="btn-excluir" style="padding: 15px 30px; font-size: 16px; width: 100%; max-width: 300px;" onclick="salvarBloqueioAdmin()">🔒 Confirmar Bloqueio</button>
             </div>
         </div>
         
@@ -353,8 +356,8 @@
 </div>
 
 <div class="rodape-global">
-    © 2026 Escola Municipal Cívico-Militar Prof. José Geraldo Guimarães.<br>
-    Sistema de Agendamento - Desenvolvido por: seuemail@gmail.com
+    <strong>Dúvidas e informações:</strong> Lian.ribeiro@edu.uberabadigital.br<br>
+    © 2026 Professor Lian - Escola Municipal José Geraldo Guimarães.
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -384,16 +387,16 @@
     ];
 
     function formatarHorario(h) {
-        if (h.startsWith("1º Horário (07")) return "1º Horário";
-        if (h.startsWith("2º Horário")) return "2º Horário";
-        if (h.startsWith("3º Horário")) return "3º Horário";
-        if (h.startsWith("4º Horário")) return "4º Horário";
-        if (h.startsWith("5º Horário")) return "5º Horário";
-        if (h.startsWith("1º Hor. Vesp")) return "1º Horário (Vesp)";
-        if (h.startsWith("2º Hor. Vesp")) return "2º Horário (Vesp)";
-        if (h.startsWith("3º Hor. Vesp")) return "3º Horário (Vesp)";
-        if (h.startsWith("4º Hor. Vesp")) return "4º Horário (Vesp)";
-        if (h.startsWith("5º Hor. Vesp")) return "5º Horário (Vesp)";
+        if (h.includes("1º Horário (07")) return "1º";
+        if (h.includes("2º Horário (07")) return "2º";
+        if (h.includes("3º Horário (08")) return "3º";
+        if (h.includes("4º Horário (09")) return "4º";
+        if (h.includes("5º Horário (10")) return "5º";
+        if (h.includes("1º Hor. Vesp")) return "1º (Vesp)";
+        if (h.includes("2º Hor. Vesp")) return "2º (Vesp)";
+        if (h.includes("3º Hor. Vesp")) return "3º (Vesp)";
+        if (h.includes("4º Hor. Vesp")) return "4º (Vesp)";
+        if (h.includes("5º Hor. Vesp")) return "5º (Vesp)";
         return h;
     }
 
@@ -449,6 +452,7 @@
     async function salvarBloqueioAdmin() {
         const dataRaw = document.getElementById("admin-data-bloqueio").value; 
         const motivo = document.getElementById("admin-motivo-bloqueio").value.trim() || "Fechado pelo Administrador";
+        const responsavel = document.getElementById("admin-responsavel").value.trim();
         const checkboxes = document.querySelectorAll('input[name="admin-horario"]:checked');
         let horariosSelecionados = Array.from(checkboxes).map(cb => cb.value);
 
@@ -457,14 +461,17 @@
 
         let partes = dataRaw.split('-');
         let dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
+        let descricaoFinal = responsavel ? `${motivo} (Resp: ${responsavel})` : motivo;
 
         try {
             await db.collection("agendamentos").add({
                 data: dataFormatada, nomeProfessor: "🔒 BLOQUEADO", telefone: "-", disciplina: "Fechado", 
-                descricaoAula: motivo, horarios: horariosSelecionados, dataRegistro: firebase.firestore.FieldValue.serverTimestamp()
+                descricaoAula: descricaoFinal, horarios: horariosSelecionados, dataRegistro: firebase.firestore.FieldValue.serverTimestamp()
             });
             alert(`✅ Bloqueio salvo!`);
-            document.getElementById("admin-data-bloqueio").value = ""; document.getElementById("admin-motivo-bloqueio").value = "";
+            document.getElementById("admin-data-bloqueio").value = ""; 
+            document.getElementById("admin-motivo-bloqueio").value = "";
+            document.getElementById("admin-responsavel").value = "";
             checkboxes.forEach(cb => cb.checked = false);
             await buscarAgendamentos(); gerarCalendario(); renderizarTabelasMensais(); 
         } catch (erro) { alert("❌ Erro ao bloquear."); }
@@ -574,9 +581,6 @@
             else if (qtdMatutino >= 5 || qtdVespertino >= 5 || qtdTotal >= 5) { 
                 divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Reservado</div>`; 
             } 
-            else { 
-                divDia.innerHTML += `<div class="reserve-agora" style="font-size: 14px;">🟢</div>`; 
-            }
 
             divDia.onclick = () => { abrirFormulario(dataFormatadaStr); };
             grid.appendChild(divDia);
@@ -720,7 +724,10 @@
             let htmlMat = ""; for(let j=0; j<5; j++) htmlMat += gerarHtmlSlot(diaSemana, 'M', j, agDoDia);
             let htmlVesp = ""; for(let j=0; j<5; j++) htmlVesp += gerarHtmlSlot(diaSemana, 'V', j, agDoDia);
 
-            gridLista.innerHTML += `<div class="dia-visual"><div class="dia-numero-visual">${diaNum < 10 ? "0"+diaNum : diaNum}/${mesNum + 1 < 10 ? "0"+(mesNum+1) : (mesNum+1)}</div><div class="turno-titulo">MATUTINO</div>${htmlMat}<div class="turno-titulo" style="border-top: 1px solid #ccc;">VESPERTINO</div>${htmlVesp}</div>`;
+            let nomeDiaSemana = diasSemanaNomes[diaSemana];
+            let dataStrExibicao = `${diaNum < 10 ? "0"+diaNum : diaNum}/${mesNum + 1 < 10 ? "0"+(mesNum+1) : (mesNum+1)}`;
+
+            gridLista.innerHTML += `<div class="dia-visual"><div class="dia-numero-visual">${dataStrExibicao}</div><div class="turno-titulo">MATUTINO</div>${htmlMat}<div class="turno-titulo" style="border-top: 1px solid #ccc;">VESPERTINO</div>${htmlVesp}</div>`;
         }
     }
 
@@ -739,7 +746,7 @@
         } else {
             agsMes.forEach(ag => {
                 let horOrd = ordenarHorarios(ag.horarios);
-                let horStr = horOrd.map(h => formatarHorario(h)).join("<br>");
+                let horStr = horOrd.map(h => formatarHorario(h)).join(", ");
                 let corNome = ag.nomeProfessor.includes("BLOQUEADO") ? "color: #d32f2f;" : "color: #333;";
                 let dis = ag.disciplina || "Sem disciplina";
 
@@ -747,16 +754,16 @@
 
                 htmlPublico += `<tr>
                     <td><strong>${ag.data}</strong><br><small style="color:#666;">${diaDaSemanaTexto}</small></td>
-                    <td>${horStr}</td>
-                    <td><strong style="${corNome}">${ag.nomeProfessor}</strong><br><span style="color:#005f6b; font-size:12px; font-weight:bold;">📚 ${dis}</span><br><span style="color: #666; font-size: 12px;">${ag.descricaoAula}</span></td>
+                    <td><strong>${horStr}</strong></td>
+                    <td><strong style="${corNome}">${ag.nomeProfessor}</strong><br><span style="color:#005f6b; font-size:12px; font-weight:bold;">📚 ${dis}</span><br><span style="color: #666; font-size: 13px; display:block; margin-top:5px;">${ag.descricaoAula}</span></td>
                 </tr>`;
                 
                 htmlAdmin += `<tr>
                     <td><strong>${ag.data}</strong><br><small style="color:#666;">${diaDaSemanaTexto}</small></td>
-                    <td>${horStr}</td>
+                    <td><strong>${horStr}</strong></td>
                     <td><strong style="${corNome}">${ag.nomeProfessor}</strong><br><small>${ag.telefone || ''} | ${dis}</small></td>
                     <td>${ag.descricaoAula}</td>
-                    <td style="text-align: center; min-width: 160px;">
+                    <td style="text-align: left; min-width: 150px;">
                         <button class="btn-editar" onclick="editarReserva('${ag.id}')">✏️ Editar</button>
                         <button class="btn-excluir" onclick="excluirReserva('${ag.id}')">🗑️ Excluir</button>
                     </td>

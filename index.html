@@ -10,11 +10,11 @@
         .container { flex: 1; max-width: 1000px; margin: 0 auto; background-color: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; }
         
         /* ================= CABEÇALHO E LOGO ================= */
-        .header { border-bottom: 2px solid #005f6b; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .header { border-bottom: 2px solid #004080; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; position: relative; }
         .header-esq { display: flex; align-items: center; gap: 15px; width: 100%; }
         .logo-escola { width: 70px; height: auto; cursor: pointer; transition: transform 0.2s; }
         .logo-escola:hover { transform: scale(1.05); }
-        .header-textos { text-align: left; }
+        .header-textos { text-align: left; max-width: 80%; }
         .header-textos h2 { color: #555; font-size: 13px; margin: 0 0 5px 0; text-transform: uppercase; font-weight: bold; }
         .header-textos h1 { color: #004080; font-size: 24px; margin: 0; }
         .btn-login-admin { background-color: #eee; color: #555; border: 1px solid #ccc; padding: 10px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s; white-space: nowrap; }
@@ -23,65 +23,66 @@
         /* ================= TELAS E NAVEGAÇÃO ================= */
         .tela { display: none; }
         .tela.ativa { display: block; }
-        .btn-voltar { color: #005f6b; text-decoration: underline; cursor: pointer; border: none; background: none; font-size: 16px; padding: 10px 0; margin-bottom: 10px; text-align: left; display: block; font-weight: bold; }
-        .btn-voltar-simples { color: #005f6b; border: none; background: none; font-size: 13px; font-weight: normal; cursor: pointer; padding: 10px; display: block; width: 100%; text-align: center; margin-top: 10px; transition: 0.2s; }
-        .btn-voltar-simples:hover { text-decoration: underline; color: #004080; }
+        .btn-voltar { color: #004080; text-decoration: underline; cursor: pointer; border: none; background: none; font-size: 16px; padding: 10px 0; margin-bottom: 10px; text-align: left; display: block; font-weight: bold; }
+        .btn-voltar-simples { color: #004080; border: none; background: none; font-size: 13px; font-weight: normal; cursor: pointer; padding: 10px; display: block; width: 100%; text-align: center; margin-top: 10px; transition: 0.2s; }
+        .btn-voltar-simples:hover { text-decoration: underline; color: #002244; }
 
         /* ================= NAVEGAÇÃO DE MESES ================= */
         .nav-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background-color: #f0f4f8; padding: 10px; border-radius: 5px; gap: 10px; }
-        .nav-mes button { padding: 10px 15px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: #005f6b; color: white; border: none; border-radius: 4px; transition: 0.2s; min-height: 44px; text-transform: uppercase; }
-        .nav-mes button:hover { background-color: #004080; }
-        .nav-mes h3 { color: #005f6b; font-size: 17px; margin: 0; text-transform: uppercase; font-weight: bold; text-align: center; }
+        .nav-mes button { padding: 10px 15px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: #004080; color: white; border: none; border-radius: 4px; transition: 0.2s; min-height: 44px; text-transform: uppercase; }
+        .nav-mes button:hover { background-color: #002244; }
+        .nav-mes h3 { color: #004080; font-size: 17px; margin: 0; text-transform: uppercase; font-weight: bold; text-align: center; }
 
         /* ================= CALENDÁRIO INICIAL ================= */
         .instrucoes { font-size: 14px; margin-bottom: 20px; text-align: left; line-height: 1.5; }
         .aviso { background-color: #f9f9f9; padding: 12px; border-radius: 4px; border: 1px solid #eee; border-left: 5px solid #d32f2f; margin-top: 15px; font-size: 14px; text-align: justify; width: 100%; box-sizing: border-box; }
         
         .calendario-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; text-align: left; margin-bottom: 20px; }
-        .dia-semana { background-color: #005f6b; color: white; padding: 10px 0; text-align: center; font-size: 14px; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
+        .dia-semana { background-color: #004080; color: white; padding: 10px 0; text-align: center; font-size: 14px; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
         
         .dia { background-color: #e9e9e9; min-height: 90px; display: flex; flex-direction: column; padding: 6px; cursor: pointer; border: 1px solid #ddd; transition: 0.2s; border-radius: 4px; }
         .dia:hover { background-color: #d4d4d4; }
         .dia.vazio { background-color: transparent; border: none; cursor: default; }
-        .dia-numero { font-size: 16px; font-weight: bold; width: 100%; text-align: left; margin-bottom: 2px; color: #005f6b; }
+        .dia-numero { font-size: 16px; font-weight: bold; width: 100%; text-align: left; margin-bottom: 2px; color: #004080; }
         .reserve-agora { font-size: 11px; margin-top: auto; font-weight: bold; padding-top: 5px; text-align: center; }
         .prof-fixo { font-size: 10px; color: #004080; font-weight: bold; margin-top: 2px; text-align: left; line-height: 1.2; }
         .texto-proerd { font-size: 10px; color: #d32f2f; font-weight: bold; margin-top: 2px; text-align: left; line-height: 1.2; }
 
         .container-btn-horarios { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 25px; border-top: 1px dotted #ccc; padding-top: 25px; }
-        .btn-ver-horarios { background-color: #17a2b8; color: white; border: none; padding: 18px 25px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.2s; width: 100%; max-width: 400px; }
-        .btn-ver-horarios:hover { background-color: #138496; }
+        .btn-ver-horarios { background-color: #004080; color: white; border: none; padding: 18px 25px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.2s; width: 100%; max-width: 400px; }
+        .btn-ver-horarios:hover { background-color: #002244; }
 
         .secao-outros-agendamentos { margin-top: 30px; border-top: 2px dashed #ccc; padding-top: 20px; text-align: center; }
-        .secao-outros-agendamentos h3 { color: #005f6b; font-size: 18px; margin-bottom: 15px; }
+        .secao-outros-agendamentos h3 { color: #004080; font-size: 18px; margin-bottom: 15px; }
         .container-btn-outros { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .btn-outros { background-color: #17a2b8; color: white; padding: 12px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; transition: 0.2s; font-size: 14px; flex: 1; min-width: 200px; text-align: center; }
+        .btn-outros { background-color: #004080; color: white; padding: 12px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; transition: 0.2s; font-size: 14px; flex: 1; min-width: 200px; text-align: center; }
+        .btn-outros:hover { background-color: #002244; }
 
-        /* ================= CALENDÁRIO VISUAL (SEMANAL) ================= */
-        .calendario-semana-wrapper { width: 100%; padding-bottom: 10px; margin-bottom: 20px; overflow-x: auto; }
-        .calendario-semana { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; min-width: 600px; }
-        .dia-semana-header { background-color: #005f6b; color: white; padding: 10px 0; text-align: center; font-size: 14px; font-weight: bold; border-radius: 4px 4px 0 0; text-transform: uppercase; }
-        .dia-visual { background-color: #fff; border: 1px solid #ccc; border-radius: 0 0 4px 4px; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; }
-        .dia-numero-visual { background-color: #f0f4f8; font-size: 16px; font-weight: bold; text-align: center; padding: 8px; border-bottom: 2px solid #005f6b; color: #005f6b; }
-        .turno-titulo { font-size: 11px; font-weight: bold; text-align: center; background-color: #e9ecef; color: #495057; letter-spacing: 1px; padding: 4px 0; }
+        /* ================= CALENDÁRIO VISUAL (SEMANAL - ESTILO IMAGEM) ================= */
+        .calendario-semana-wrapper { width: 100%; padding-bottom: 10px; margin-bottom: 20px; }
+        .calendario-semana { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; }
         
-        .slot { font-size: 12px; padding: 6px; border-bottom: 1px solid #eee; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; min-height: 85px; box-sizing: border-box; line-height: 1.2; width: 100%; overflow: hidden; }
-        .slot-conteudo { display: flex; flex-direction: column; align-items: flex-start; text-align: left; width: 100%; }
-        .slot b { font-size: 11px; background: rgba(0,0,0,0.1); padding: 2px 4px; border-radius: 3px; display: inline-block; margin-right: 4px; margin-bottom: 2px; }
-        .slot-disciplina { font-size: 11px; color: #333; font-weight: 600; margin-top: 4px; border-top: 1px dashed rgba(0,0,0,0.15); padding-top: 4px; text-align: left; width: 100%; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .dia-semana-header { background-color: #005f6b; color: white; padding: 10px 0; text-align: center; font-size: 14px; font-weight: bold; border-radius: 4px 4px 0 0; text-transform: uppercase; border-bottom: 2px solid #004080; }
+        .dia-visual { background-color: #fff; border: 1px solid #ccc; border-radius: 0 0 4px 4px; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; }
+        .dia-numero-visual { background-color: #fff; font-size: 16px; font-weight: bold; text-align: center; padding: 10px; border-bottom: 1px solid #005f6b; color: #005f6b; }
+        .turno-titulo { font-size: 11px; font-weight: bold; text-align: center; background-color: #f4f4f4; color: #666; letter-spacing: 1px; padding: 6px 0; border-bottom: 1px solid #ddd; }
+        
+        .slot { font-size: 12px; padding: 8px; border-bottom: 1px solid #eee; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; min-height: 85px; box-sizing: border-box; line-height: 1.3; width: 100%; overflow: hidden; }
+        .slot b { font-size: 11px; background: rgba(0,0,0,0.08); padding: 3px 6px; border-radius: 3px; display: inline-block; margin-bottom: 4px; color: #555; }
+        .slot-disciplina { font-size: 11px; color: #333; margin-top: 4px; border-top: 1px dashed rgba(0,0,0,0.15); padding-top: 4px; text-align: left; width: 100%; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         
         .slot-livre { color: #888; background-color: #fff; }
-        .slot-ocupado { background-color: #d1ecf1; color: #0c5460; font-weight: bold; }
-        .slot-bloqueado { background-color: #f8d7da; color: #721c24; font-weight: bold; text-decoration: line-through; }
-        .slot-proerd { background-color: #fff3cd; color: #856404; font-weight: bold; }
+        .slot-ocupado { background-color: #e0f7fa; color: #004080; } /* Azul esverdeado claro para ocupado */
+        .slot-bloqueado { background-color: #f8d7da; color: #721c24; }
+        .slot-proerd { background-color: #fff9c4; color: #b78103; } /* Amarelo claro igual a imagem */
 
         /* ================= FORMULÁRIO ================= */
-        .destaque-data { background-color: #e0f7fa; color: #005f6b; padding: 15px; border-radius: 5px; font-size: 18px; text-align: center; border: 2px dashed #005f6b; margin-bottom: 20px; font-weight: bold; }
-        .secao-titulo { background-color: #005f6b; color: white; padding: 10px 20px; border-radius: 5px 5px 0 0; width: fit-content; font-weight: bold; margin-top: 20px; }
+        .destaque-data { background-color: #e0f7fa; color: #004080; padding: 15px; border-radius: 5px; font-size: 18px; text-align: center; border: 2px dashed #004080; margin-bottom: 20px; font-weight: bold; }
+        .secao-titulo { background-color: #004080; color: white; padding: 10px 20px; border-radius: 5px 5px 0 0; width: fit-content; font-weight: bold; margin-top: 20px; }
         .caixa-branca { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; border-radius: 0 5px 5px 5px; background-color: #fafafa; }
-        .titulo-periodo { color: #005f6b; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 15px; margin-bottom: 15px; }
+        .titulo-periodo { color: #004080; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 15px; margin-bottom: 15px; }
         .dropdown-vespertino { border-top: 1px dashed #ccc; padding-top: 15px; margin-top: 15px; }
-        .dropdown-vespertino summary { color: #005f6b; font-size: 16px; font-weight: bold; cursor: pointer; padding: 10px 0; outline: none; list-style: none; }
+        .dropdown-vespertino summary { color: #004080; font-size: 16px; font-weight: bold; cursor: pointer; padding: 10px 0; outline: none; list-style: none; }
         
         .grid-horarios { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .horario-item { display: flex; align-items: center; font-size: 14px; color: #333; padding: 8px; background: #fff; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; }
@@ -100,14 +101,17 @@
         .texto-vermelho { color: #d32f2f; font-weight: bold; font-size: 14px; }
         
         .rodape-form { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 25px; }
-        .btn-agendar { background-color: #004080; color: white; border: none; padding: 18px 40px; font-size: 20px; font-weight: bold; cursor: pointer; border-radius: 5px; width: 100%; max-width: 400px; }
+        .btn-agendar { background-color: #004080; color: white; border: none; padding: 18px 40px; font-size: 20px; font-weight: bold; cursor: pointer; border-radius: 5px; width: 100%; max-width: 400px; transition: 0.2s;}
+        .btn-agendar:hover { background-color: #002244; }
 
-        /* ================= TABELAS ================= */
-        .tabela-wrapper { width: 100%; overflow-x: auto; margin-top: 5px; }
-        .tabela-agendamentos { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; min-width: 600px; }
-        .tabela-agendamentos th { background-color: #17a2b8; color: white; padding: 12px; border: 1px solid #138496; }
+        /* ================= TABELAS (DESKTOP) ================= */
+        .tabela-wrapper { width: 100%; margin-top: 5px; }
+        .tabela-agendamentos { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
+        .tabela-agendamentos th { background-color: #004080; color: white; padding: 12px; border: 1px solid #002244; }
         .tabela-agendamentos td { border: 1px solid #ddd; padding: 12px; vertical-align: middle; }
         .tabela-agendamentos tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        .lbl-mobile { display: none; } /* Oculto no Desktop */
 
         /* ================= PAINEL ADMIN ================= */
         .badge-admin-aviso { background-color: #d32f2f; color: white; padding: 8px 15px; border-radius: 4px; font-size: 15px; font-weight: bold; display: inline-block; margin-bottom: 20px; }
@@ -123,13 +127,14 @@
             body { padding: 0; }
             .container { padding: 10px; border-radius: 0; }
             
-            /* Header Mobile */
-            .header { padding-top: 15px; align-items: flex-start; flex-direction: column; border-bottom: 1px solid #005f6b; }
-            .btn-login-admin { position: absolute; top: 10px; right: 10px; padding: 5px 10px; font-size: 11px; }
-            .header-esq { flex-direction: row; align-items: center; margin-top: 15px; margin-bottom: 10px; }
+            /* Ajuste Fino do Cabeçalho e Botão Admin */
+            .header { padding-top: 40px; flex-direction: column; align-items: flex-start; }
+            .btn-login-admin { position: absolute; top: 10px; right: 10px; padding: 6px 12px; font-size: 11px; }
+            .header-esq { flex-direction: row; align-items: center; margin-bottom: 10px; width: 100%; }
+            .logo-escola { width: 45px; margin-right: 10px; }
+            /* Texto fixo em uma linha com reticências para não sobrepor */
+            .header-textos h2 { font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100vw - 80px); }
             .header-textos h1 { font-size: 15px; }
-            .header-textos h2 { font-size: 9px; }
-            .logo-escola { width: 50px; margin-left: 0; margin-right: 12px; }
 
             .nav-mes { flex-direction: row; padding: 8px; }
             .nav-mes button { padding: 8px 10px; font-size: 12px; min-height: 35px; flex: 1; }
@@ -145,51 +150,46 @@
             .grid-horarios { grid-template-columns: 1fr; }
             .btn-ver-horarios { font-size: 14px; padding: 12px 15px; }
             
-            /* ================= AJUSTES DA GRADE SEMANAL PARA CABER NA TELA ================= */
-            .calendario-semana { 
-                grid-template-columns: 1fr; /* Empilha os dias da semana um embaixo do outro */
-                min-width: 100%; /* Remove a rolagem horizontal */
-                gap: 15px;
-            }
-            .dia-semana-header { 
-                display: none; /* Oculta os cabeçalhos lado a lado */
-            }
-            .dia-visual {
-                border-radius: 6px;
-                border: 2px solid #005f6b; /* Dá um destaque para cada dia */
-            }
-            .dia-numero-visual {
-                background-color: #005f6b;
-                color: white;
-                border-radius: 4px 4px 0 0;
-            }
+            /* AJUSTE PARA CABER AS 5 COLUNAS NA TELA DO CELULAR */
+            .calendario-semana { gap: 2px; }
+            .dia-semana-header { font-size: 10px; padding: 6px 0; }
+            .dia-numero-visual { font-size: 11px; padding: 5px; }
+            .turno-titulo { font-size: 8px; padding: 3px 0; border-top: 1px solid #ccc; }
+            .slot { font-size: 9px; padding: 4px; min-height: 55px; line-height: 1.1; }
+            .slot b { font-size: 8px; padding: 1px 3px; margin-bottom: 2px; }
+            .slot-disciplina { font-size: 8px; margin-top: 2px; padding-top: 2px; }
 
-            /* ================= AJUSTES DA TABELA PARA FORMATO DE CARTÕES ================= */
-            .tabela-wrapper { overflow-x: hidden; }
-            .tabela-agendamentos { min-width: 100%; }
-            .tabela-agendamentos thead { display: none; /* Esconde os títulos das colunas */ }
-            
+            /* FORMATO DE CARDS PARA TABELAS NO MOBILE */
+            .tabela-agendamentos thead { display: none; } /* Esconde o cabeçalho padrão */
             .tabela-agendamentos tbody tr {
                 display: flex;
                 flex-direction: column;
                 margin-bottom: 15px;
-                border: 1px solid #005f6b;
+                border: 1px solid #004080;
                 border-radius: 6px;
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             .tabela-agendamentos tbody td {
-                display: block;
-                width: 100%;
-                box-sizing: border-box;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start; /* Alinha os textos no topo */
                 border: none;
                 border-bottom: 1px solid #eee;
                 padding: 10px;
-                text-align: left !important;
+                width: 100%;
+                box-sizing: border-box;
+                text-align: right;
             }
             .tabela-agendamentos tbody td:last-child {
                 border-bottom: none;
-                background-color: #f0f4f8; /* Destaca a última linha (ações ou descrição) */
+                background-color: #f0f4f8; /* Destaque leve na última linha do card */
             }
+            
+            .lbl-mobile { display: inline-block; font-weight: bold; color: #004080; font-size: 13px; text-align: left; }
+            .val-mobile { text-align: right; max-width: 65%; font-size: 13px; }
+            
+            /* Ajuste específico para os botões de ação do admin no mobile */
+            .td-acoes { justify-content: flex-end !important; gap: 8px; }
         }
     </style>
 </head>
@@ -197,7 +197,6 @@
 
 <div class="container">
     <div class="header">
-        <button class="btn-login-admin" onclick="solicitarSenhaAdmin()">⚙️ Admin</button>
         <div class="header-esq">
             <img src="https://iili.io/q4Q2Puj.png" alt="Logo Escola JGG" class="logo-escola" onclick="fecharFormulario()">
             <div class="header-textos">
@@ -205,6 +204,7 @@
                 <h1>Reserva Laboratório de Informática 02</h1>
             </div>
         </div>
+        <button class="btn-login-admin" onclick="solicitarSenhaAdmin()">⚙️ Admin</button>
     </div>
 
     <div id="tela-calendario" class="tela ativa">
@@ -300,7 +300,7 @@
     <div id="tela-lista-publica" class="tela">
         <button class="btn-voltar" onclick="fecharFormulario()">&lt;&lt; Voltar para o calendário principal</button>
         
-        <h3>📅 Grade de Agendamentos da Semana</h3>
+        <h3 style="color:#004080;">📅 Grade Semanal de Reservas</h3>
         
         <div class="nav-mes">
             <button onclick="mudarSemana(-1)">&lt; ANT</button>
@@ -318,7 +318,7 @@
 
         <div class="nav-mes" style="border-top: 2px dashed #ccc; padding-top: 20px; background-color: transparent;">
             <button id="btn-mes-tabela-ant" onclick="mudarMesTabela(-1)">&lt; ANT</button>
-            <h3 id="titulo-tabela-publica" style="color: #005f6b; font-size: 14px;">📋 Agendamentos</h3>
+            <h3 id="titulo-tabela-publica" style="color: #004080; font-size: 14px;">📋 Agendamentos</h3>
             <button id="btn-mes-tabela-prox" onclick="mudarMesTabela(1)">PRÓX &gt;</button>
         </div>
         
@@ -349,7 +349,7 @@
                     <label style="font-size: 14px; font-weight: bold; color: #555; margin-bottom: 5px; display: block;">Quais horários deseja bloquear?</label>
                     <button class="btn-login-admin" style="margin-bottom:15px; width: 100%; background-color:#e0f7fa;" onclick="selecionarTodosAdmin()">☑️ Marcar Todos os Horários</button>
                     
-                    <h4 style="margin:0 0 5px 0; color:#005f6b; font-size:14px;">☀️ Matutino</h4>
+                    <h4 style="margin:0 0 5px 0; color:#004080; font-size:14px;">☀️ Matutino</h4>
                     <div class="grid-horarios" style="gap: 5px; margin-bottom:15px;">
                         <label class="horario-item"><input type="checkbox" name="admin-horario" value="1º Horário (07:00 - 07:50)"> 1º Horário</label>
                         <label class="horario-item"><input type="checkbox" name="admin-horario" value="2º Horário (07:50 - 08:40)"> 2º Horário</label>
@@ -358,7 +358,7 @@
                         <label class="horario-item"><input type="checkbox" name="admin-horario" value="5º Horário (10:35 - 11:25)"> 5º Horário</label>
                     </div>
 
-                    <h4 style="margin:0 0 5px 0; color:#005f6b; font-size:14px;">🌤️ Vespertino</h4>
+                    <h4 style="margin:0 0 5px 0; color:#004080; font-size:14px;">🌤️ Vespertino</h4>
                     <div class="grid-horarios" style="gap: 5px;">
                         <label class="horario-item"><input type="checkbox" name="admin-horario" value="1º Hor. Vesp (13:00 - 13:50)"> 1º Hor (Vesp)</label>
                         <label class="horario-item"><input type="checkbox" name="admin-horario" value="2º Hor. Vesp (13:50 - 14:40)"> 2º Hor (Vesp)</label>
@@ -384,7 +384,7 @@
 
             <div class="tabela-wrapper">
                 <table class="tabela-agendamentos">
-                    <thead style="background-color: #004080; color: white;">
+                    <thead>
                         <tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th><th>Descrição</th><th style="text-align: center;">Ações</th></tr>
                     </thead>
                     <tbody id="corpo-tabela-admin"></tbody>
@@ -597,7 +597,7 @@
             
             let dataFormatadaStr = `${dia < 10 ? '0'+dia : dia}/${mesAtual < 9 ? '0'+(mesAtual+1) : (mesAtual+1)}/${anoAtual}`;
             
-            if (diaSemana === 1) divDia.innerHTML += `<div class="texto-proerd">PROERD<br>07:00/09:30<br>13:00/15:30</div>`;
+            if (diaSemana === 1) divDia.innerHTML += `<div class="texto-proerd">PROERD</div>`; /* Retirados os horários do PROERD */
             else if (diaSemana === 3) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>07:00 às 11:25</div>`;
             else if (diaSemana === 4) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>08:40 às 11:25</div>`;
 
@@ -737,12 +737,12 @@
         }
 
         if(nomeProf) {
-            if(bloqueado) return `<div class="slot slot-bloqueado"><div class="slot-conteudo"><b>${info.lbl}</b> Fechado</div></div>`;
+            if(bloqueado) return `<div class="slot slot-bloqueado"><b>${info.lbl}</b><span style="font-weight: bold; display: block; margin-top: 2px;">Fechado</span></div>`;
             let divDisc = disciplina ? `<div class="slot-disciplina">${disciplina}</div>` : '';
-            return `<div class="slot slot-ocupado"><div class="slot-conteudo"><b>${info.lbl}</b> ${nomeProf}</div>${divDisc}</div>`;
+            return `<div class="slot slot-ocupado"><b>${info.lbl}</b><span style="font-weight: bold; display: block; margin-top: 2px;">${nomeProf}</span>${divDisc}</div>`;
         }
-        if (diaSemana === 1 && index <= 2) return `<div class="slot slot-proerd"><div class="slot-conteudo"><b>${info.lbl}</b> PROERD</div></div>`;
-        return `<div class="slot slot-livre"><div class="slot-conteudo"><b>${info.lbl}</b> Livre</div></div>`;
+        if (diaSemana === 1 && index <= 2) return `<div class="slot slot-proerd"><b>${info.lbl}</b><span style="font-weight: bold; display: block; margin-top: 2px;">PROERD</span></div>`;
+        return `<div class="slot slot-livre"><b>${info.lbl}</b><span style="display: block; margin-top: 2px;">Livre</span></div>`;
     }
 
     function renderizarGradeSemanal() {
@@ -753,7 +753,15 @@
         let agsSemana = todosAgendamentosCache.filter(ag => ag.dataParaOrdenacao >= dataSemanaVisao && ag.dataParaOrdenacao <= sexta);
 
         const gridLista = document.getElementById("grade-dias-lista");
-        gridLista.innerHTML = `<div class="dia-semana-header">Seg</div><div class="dia-semana-header">Ter</div><div class="dia-semana-header">Qua</div><div class="dia-semana-header">Qui</div><div class="dia-semana-header">Sex</div>`;
+        
+        // Estrutura atualizada para ser fiel à imagem enviada
+        gridLista.innerHTML = `
+            <div class="dia-visual" style="border:none; box-shadow:none;"><div class="dia-semana-header">SEG</div></div>
+            <div class="dia-visual" style="border:none; box-shadow:none;"><div class="dia-semana-header">TER</div></div>
+            <div class="dia-visual" style="border:none; box-shadow:none;"><div class="dia-semana-header">QUA</div></div>
+            <div class="dia-visual" style="border:none; box-shadow:none;"><div class="dia-semana-header">QUI</div></div>
+            <div class="dia-visual" style="border:none; box-shadow:none;"><div class="dia-semana-header">SEX</div></div>
+        `;
 
         for (let i = 0; i < 5; i++) {
             let dataDia = new Date(dataSemanaVisao); dataDia.setDate(dataDia.getDate() + i);
@@ -763,11 +771,15 @@
             let htmlMat = ""; for(let j=0; j<5; j++) htmlMat += gerarHtmlSlot(diaSemana, 'M', j, agDoDia);
             let htmlVesp = ""; for(let j=0; j<5; j++) htmlVesp += gerarHtmlSlot(diaSemana, 'V', j, agDoDia);
 
-            // Código modificado aqui para colocar o dia da semana na barrinha azul do celular
-            let nomeDiaSemana = diasSemanaNomes[diaSemana].split('-')[0];
             let dataStrExibicao = `${diaNum < 10 ? "0"+diaNum : diaNum}/${mesNum + 1 < 10 ? "0"+(mesNum+1) : (mesNum+1)}`;
 
-            gridLista.innerHTML += `<div class="dia-visual"><div class="dia-numero-visual">${nomeDiaSemana} - ${dataStrExibicao}</div><div class="turno-titulo">MATUTINO</div>${htmlMat}<div class="turno-titulo" style="border-top: 1px solid #ccc;">VESPERTINO</div>${htmlVesp}</div>`;
+            gridLista.children[i].innerHTML += `
+                <div class="dia-numero-visual">${dataStrExibicao}</div>
+                <div class="turno-titulo">MATUTINO</div>
+                ${htmlMat}
+                <div class="turno-titulo">VESPERTINO</div>
+                ${htmlVesp}
+            `;
         }
     }
 
@@ -792,18 +804,28 @@
 
                 let diaDaSemanaTexto = diasSemanaNomes[ag.dataParaOrdenacao.getDay()];
 
+                // Geração do HTML em formato de Card para Mobile e Tabela no Desktop
                 htmlPublico += `<tr>
-                    <td><strong>${ag.data}</strong><br><small style="color:#666;">${diaDaSemanaTexto}</small></td>
-                    <td><strong>${horStr}</strong></td>
-                    <td><strong style="${corNome}">${ag.nomeProfessor}</strong><br><span style="color:#005f6b; font-size:12px; font-weight:bold;">📚 ${dis}</span><br><span style="color: #666; font-size: 13px; display:block; margin-top:5px;">${ag.descricaoAula}</span></td>
+                    <td><span class="lbl-mobile">Data:</span> <span class="val-mobile"><strong>${ag.data}</strong> <small style="color:#666;">(${diaDaSemanaTexto})</small></span></td>
+                    <td><span class="lbl-mobile">Horários:</span> <span class="val-mobile"><strong>${horStr}</strong></span></td>
+                    <td style="flex-direction: column; align-items: stretch;">
+                        <div style="display:flex; justify-content:space-between; width:100%;">
+                            <span class="lbl-mobile">Professor:</span>
+                            <span class="val-mobile"><strong style="${corNome}">${ag.nomeProfessor}</strong></span>
+                        </div>
+                        <div style="margin-top: 5px; text-align: left; width: 100%;">
+                            <span style="color:#005f6b; font-size:12px; font-weight:bold;">📚 ${dis}</span><br>
+                            <span style="color: #666; font-size: 13px; display:block; margin-top:5px;">${ag.descricaoAula}</span>
+                        </div>
+                    </td>
                 </tr>`;
                 
                 htmlAdmin += `<tr>
-                    <td><strong>${ag.data}</strong><br><small style="color:#666;">${diaDaSemanaTexto}</small></td>
-                    <td><strong>${horStr}</strong></td>
-                    <td><strong style="${corNome}">${ag.nomeProfessor}</strong><br><small>${ag.telefone || ''} | ${dis}</small></td>
-                    <td>${ag.descricaoAula}</td>
-                    <td style="text-align: left; min-width: 150px;">
+                    <td><span class="lbl-mobile">Data:</span> <span class="val-mobile"><strong>${ag.data}</strong> <small style="color:#666;">(${diaDaSemanaTexto})</small></span></td>
+                    <td><span class="lbl-mobile">Horários:</span> <span class="val-mobile"><strong>${horStr}</strong></span></td>
+                    <td><span class="lbl-mobile">Professor:</span> <span class="val-mobile"><strong style="${corNome}">${ag.nomeProfessor}</strong><br><small>${ag.telefone || ''} | ${dis}</small></span></td>
+                    <td><span class="lbl-mobile">Descrição:</span> <span class="val-mobile" style="text-align:left;">${ag.descricaoAula}</span></td>
+                    <td class="td-acoes">
                         <button class="btn-editar" onclick="editarReserva('${ag.id}')">✏️ Editar</button>
                         <button class="btn-excluir" onclick="excluirReserva('${ag.id}')">🗑️ Excluir</button>
                     </td>

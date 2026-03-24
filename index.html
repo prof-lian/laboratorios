@@ -7,17 +7,18 @@
     <style>
         /* ================= ESTILOS GLOBAIS ================= */
         body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 10px; display: flex; flex-direction: column; min-height: 100vh; }
-        .container { flex: 1; max-width: 1000px; margin: 0 auto; background-color: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; }
+        .container { flex: 1; max-width: 1000px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; }
         
         /* ================= CABEÇALHO E LOGO ================= */
-        .header { border-bottom: 2px solid #004080; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; position: relative; }
-        .header-esq { display: flex; align-items: center; gap: 8px; width: 100%; }
-        .logo-escola { width: 70px; height: auto; cursor: pointer; transition: transform 0.2s; }
+        /* Cabeçalho mais compacto */
+        .header { border-bottom: 2px solid #004080; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .header-esq { display: flex; align-items: center; gap: 10px; width: 100%; }
+        .logo-escola { width: 60px; height: auto; cursor: pointer; transition: transform 0.2s; }
         .logo-escola:hover { transform: scale(1.05); }
         .header-textos { text-align: left; }
-        .header-textos h2 { color: #555; font-size: 13px; margin: 0 0 5px 0; text-transform: uppercase; font-weight: bold; }
-        .header-textos h1 { color: #004080; font-size: 24px; margin: 0; }
-        .btn-login-admin { background-color: #eee; color: #555; border: 1px solid #ccc; padding: 10px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s; white-space: nowrap; }
+        .header-textos h2 { color: #555; font-size: 12px; margin: 0 0 2px 0; text-transform: uppercase; font-weight: bold; line-height: 1.1; }
+        .header-textos h1 { color: #004080; font-size: 22px; margin: 0; line-height: 1.1; }
+        .btn-login-admin { background-color: #eee; color: #555; border: 1px solid #ccc; padding: 8px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; white-space: nowrap; }
         .btn-login-admin:hover { background-color: #ddd; color: #333; }
 
         /* ================= TELAS E NAVEGAÇÃO ================= */
@@ -28,10 +29,10 @@
         .btn-voltar-simples:hover { text-decoration: underline; color: #002244; }
 
         /* ================= NAVEGAÇÃO DE MESES (NAV-MES) ================= */
-        .nav-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background-color: #f0f4f8; padding: 10px; border-radius: 5px; gap: 10px; }
-        .nav-mes button { padding: 10px 15px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: #004080; color: white; border: none; border-radius: 4px; transition: 0.2s; min-height: 44px; text-transform: uppercase; }
+        .nav-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background-color: #f0f4f8; padding: 8px 10px; border-radius: 5px; gap: 10px; }
+        .nav-mes button { padding: 8px 15px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: #004080; color: white; border: none; border-radius: 4px; transition: 0.2s; min-height: 40px; text-transform: uppercase; }
         .nav-mes button:hover { background-color: #002244; }
-        .nav-mes h3 { color: #004080; font-size: 17px; margin: 0; text-transform: uppercase; font-weight: bold; text-align: center; }
+        .nav-mes h3 { color: #004080; font-size: 16px; margin: 0; text-transform: uppercase; font-weight: bold; text-align: center; }
         
         .nav-mes.navy-nav { background-color: #004080; }
         .nav-mes.navy-nav h3 { color: white; }
@@ -39,13 +40,13 @@
         .nav-mes.navy-nav button:hover { background-color: #e0e0e0; }
 
         /* ================= CALENDÁRIO INICIAL ================= */
-        .instrucoes { font-size: 14px; margin-bottom: 20px; text-align: left; line-height: 1.5; }
-        .aviso { background-color: #f9f9f9; padding: 12px; border-radius: 4px; border: 1px solid #eee; border-left: 5px solid #d32f2f; margin-top: 15px; font-size: 14px; text-align: justify; width: 100%; box-sizing: border-box; }
+        .instrucoes { font-size: 14px; margin-bottom: 15px; text-align: left; line-height: 1.4; }
+        .aviso { background-color: #f9f9f9; padding: 10px; border-radius: 4px; border: 1px solid #eee; border-left: 5px solid #d32f2f; margin-top: 10px; font-size: 13px; text-align: justify; width: 100%; box-sizing: border-box; }
         
         .calendario-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; text-align: left; margin-bottom: 20px; }
-        .dia-semana { background-color: #004080; color: white; padding: 10px 0; text-align: center; font-size: 14px; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
+        .dia-semana { background-color: #004080; color: white; padding: 8px 0; text-align: center; font-size: 13px; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
         
-        .dia { background-color: #e9e9e9; min-height: 90px; display: flex; flex-direction: column; padding: 6px; cursor: pointer; border: 1px solid #ddd; transition: 0.2s; border-radius: 4px; }
+        .dia { background-color: #e9e9e9; min-height: 85px; display: flex; flex-direction: column; padding: 6px; cursor: pointer; border: 1px solid #ddd; transition: 0.2s; border-radius: 4px; }
         .dia:hover { background-color: #d4d4d4; }
         .dia.vazio { background-color: transparent; border: none; cursor: default; }
         .dia-numero { font-size: 16px; font-weight: bold; width: 100%; text-align: left; margin-bottom: 2px; color: #000; }
@@ -53,14 +54,14 @@
         .prof-fixo { font-size: 10px; color: #004080; font-weight: bold; margin-top: 2px; text-align: left; line-height: 1.2; }
         .texto-proerd { font-size: 10px; color: #d32f2f; font-weight: bold; margin-top: 2px; text-align: left; line-height: 1.2; }
 
-        .container-btn-horarios { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 25px; border-top: 1px dotted #ccc; padding-top: 25px; }
-        .btn-ver-horarios { background-color: #004080; color: white; border: none; padding: 18px 25px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.2s; width: 100%; max-width: 400px; }
+        .container-btn-horarios { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; border-top: 1px dotted #ccc; padding-top: 20px; }
+        .btn-ver-horarios { background-color: #004080; color: white; border: none; padding: 15px 25px; font-size: 15px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.2s; width: 100%; max-width: 400px; }
         .btn-ver-horarios:hover { background-color: #002244; }
 
-        .secao-outros-agendamentos { margin-top: 30px; border-top: 2px dashed #ccc; padding-top: 20px; text-align: center; }
-        .secao-outros-agendamentos h3 { color: #004080; font-size: 18px; margin-bottom: 15px; }
+        .secao-outros-agendamentos { margin-top: 25px; border-top: 2px dashed #ccc; padding-top: 15px; text-align: center; }
+        .secao-outros-agendamentos h3 { color: #004080; font-size: 16px; margin-bottom: 12px; }
         .container-btn-outros { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .btn-outros { background-color: #004080; color: white; padding: 12px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; transition: 0.2s; font-size: 14px; flex: 1; min-width: 200px; text-align: center; }
+        .btn-outros { background-color: #004080; color: white; padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; transition: 0.2s; font-size: 13px; flex: 1; min-width: 200px; text-align: center; }
         .btn-outros:hover { background-color: #002244; }
 
         /* ================= CALENDÁRIO VISUAL (SEMANAL - ESTILO IMAGEM) ================= */
@@ -80,89 +81,86 @@
         .slot-bloqueado { background-color: #f8d7da; color: #721c24; text-decoration: line-through; }
         .slot-proerd { background-color: #fff9c4; color: #b78103; font-weight: bold; }
 
-        /* Esconder a setinha padrão do details no iOS/Safari se necessário */
         details.dropdown-vespertino summary::-webkit-details-marker { display: none; }
 
         /* ================= FORMULÁRIO ================= */
-        .destaque-data { background-color: #e0f7fa; color: #004080; padding: 15px; border-radius: 5px; font-size: 18px; text-align: center; border: 2px dashed #004080; margin-bottom: 20px; font-weight: bold; }
-        .secao-titulo { background-color: #004080; color: white; padding: 10px 20px; border-radius: 5px 5px 0 0; width: fit-content; font-weight: bold; margin-top: 20px; }
-        .caixa-branca { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; border-radius: 0 5px 5px 5px; background-color: #fafafa; }
-        .titulo-periodo { color: #004080; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 15px; margin-bottom: 15px; }
-        .dropdown-vespertino { border-top: 1px dashed #ccc; padding-top: 15px; margin-top: 15px; }
-        .dropdown-vespertino summary { color: #004080; font-size: 16px; font-weight: bold; cursor: pointer; padding: 10px 0; outline: none; list-style: none; }
+        .destaque-data { background-color: #e0f7fa; color: #004080; padding: 12px; border-radius: 5px; font-size: 16px; text-align: center; border: 2px dashed #004080; margin-bottom: 15px; font-weight: bold; }
+        .secao-titulo { background-color: #004080; color: white; padding: 8px 15px; border-radius: 5px 5px 0 0; width: fit-content; font-weight: bold; margin-top: 15px; font-size: 14px;}
+        .caixa-branca { border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 0 5px 5px 5px; background-color: #fafafa; }
+        .titulo-periodo { color: #004080; font-size: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 10px; margin-bottom: 10px; }
+        .dropdown-vespertino { border-top: 1px dashed #ccc; padding-top: 10px; margin-top: 10px; }
+        .dropdown-vespertino summary { color: #004080; font-size: 15px; font-weight: bold; cursor: pointer; padding: 8px 0; outline: none; list-style: none; }
         
-        .grid-horarios { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .horario-item { display: flex; align-items: center; font-size: 14px; color: #333; padding: 8px; background: #fff; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; }
-        .horario-item input { margin-right: 10px; width: 20px; height: 20px; cursor: pointer; }
+        .grid-horarios { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .horario-item { display: flex; align-items: center; font-size: 13px; color: #333; padding: 6px; background: #fff; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; }
+        .horario-item input { margin-right: 8px; width: 16px; height: 16px; cursor: pointer; }
         
         .horario-item.bloqueado { opacity: 0.6; background: #fce4e4; border-color: #f5c6c6; cursor: not-allowed; }
         .horario-item.bloqueado input { cursor: not-allowed; }
         .horario-item.bloqueado::after { content: ' 🚫 Ocupado'; color: #d32f2f; font-size: 11px; margin-left: auto; display: inline-block; font-weight: bold; }
 
-        .form-layout { display: flex; gap: 20px; text-align: left; }
-        .coluna-esq { flex: 1; display: flex; flex-direction: column; gap: 15px; }
-        .coluna-dir { flex: 2; display: flex; flex-direction: column; gap: 15px; }
+        .form-layout { display: flex; gap: 15px; text-align: left; }
+        .coluna-esq { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        .coluna-dir { flex: 2; display: flex; flex-direction: column; gap: 10px; }
         .form-group { display: flex; flex-direction: column; }
-        .form-group label { font-size: 14px; margin-bottom: 5px; font-weight: bold; color: #555; }
-        .form-group input, .form-group textarea { padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px; width: 100%; box-sizing: border-box; }
-        .texto-vermelho { color: #d32f2f; font-weight: bold; font-size: 14px; }
+        .form-group label { font-size: 13px; margin-bottom: 4px; font-weight: bold; color: #555; }
+        .form-group input, .form-group textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 100%; box-sizing: border-box; }
+        .texto-vermelho { color: #d32f2f; font-weight: bold; font-size: 13px; }
         
-        .rodape-form { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 25px; }
-        .btn-agendar { background-color: #004080; color: white; border: none; padding: 18px 40px; font-size: 20px; font-weight: bold; cursor: pointer; border-radius: 5px; width: 100%; max-width: 400px; transition: 0.2s;}
+        .rodape-form { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 20px; }
+        .btn-agendar { background-color: #004080; color: white; border: none; padding: 15px 35px; font-size: 18px; font-weight: bold; cursor: pointer; border-radius: 5px; width: 100%; max-width: 400px; transition: 0.2s;}
         .btn-agendar:hover { background-color: #002244; }
 
         /* ================= TABELAS (DESKTOP) ================= */
         .tabela-wrapper { width: 100%; margin-top: 5px; }
         .tabela-agendamentos { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
-        .tabela-agendamentos th { background-color: #004080; color: white; padding: 12px; border: 1px solid #002244; }
-        .tabela-agendamentos td { border: 1px solid #ddd; padding: 12px; vertical-align: middle; }
+        .tabela-agendamentos th { background-color: #004080; color: white; padding: 10px; border: 1px solid #002244; }
+        .tabela-agendamentos td { border: 1px solid #ddd; padding: 10px; vertical-align: middle; }
         .tabela-agendamentos tr:nth-child(even) { background-color: #f9f9f9; }
         
-        .lbl-mobile { display: none; } /* Oculto no Desktop */
+        .lbl-mobile { display: none; } 
 
         /* ================= PAINEL ADMIN ================= */
-        .badge-admin-aviso { background-color: #d32f2f; color: white; padding: 8px 15px; border-radius: 4px; font-size: 15px; font-weight: bold; display: inline-block; margin-bottom: 20px; }
-        .btn-excluir, .btn-editar { color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; min-height: 40px; }
+        .badge-admin-aviso { background-color: #d32f2f; color: white; padding: 8px 15px; border-radius: 4px; font-size: 14px; font-weight: bold; display: inline-block; margin-bottom: 15px; }
+        .btn-excluir, .btn-editar { color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; min-height: 35px; }
         .btn-excluir { background-color: #d32f2f; }
         .btn-editar { background-color: #f0ad4e; color: #fff; margin-right: 5px; margin-bottom: 5px; }
 
         /* ================= RODAPÉ GLOBAL ================= */
-        .rodape-global { text-align: center; font-size: 13px; color: #555; padding: 25px 10px; margin-top: auto; border-top: 1px solid #ddd; line-height: 1.6; }
+        .rodape-global { text-align: center; font-size: 12px; color: #555; padding: 20px 10px; margin-top: auto; border-top: 1px solid #ddd; line-height: 1.5; }
 
         /* ================= CELULAR (MOBILE) ================= */
         @media (max-width: 768px) {
             body { padding: 0; }
             .container { padding: 10px; border-radius: 0; }
             
-            /* Ajuste do Cabeçalho */
-            .header { padding-top: 35px; flex-direction: column; align-items: flex-start; }
-            .btn-login-admin { position: absolute; top: 10px; right: 10px; padding: 5px 10px; font-size: 10px; }
-            .header-esq { flex-direction: row; align-items: center; margin-bottom: 10px; width: 100%; gap: 6px; }
+            /* Cabeçalho mobile ainda mais compacto */
+            .header { padding-top: 25px; padding-bottom: 8px; margin-bottom: 12px; flex-direction: column; align-items: flex-start; }
+            .btn-login-admin { position: absolute; top: 5px; right: 5px; padding: 4px 8px; font-size: 10px; }
+            .header-esq { flex-direction: row; align-items: center; margin-bottom: 0; width: 100%; gap: 6px; }
             .logo-escola { width: 40px; margin-right: 0; }
-            .header-textos h2 { font-size: 7px; white-space: nowrap; overflow: hidden; max-width: 100%; }
-            .header-textos h1 { font-size: 14px; }
+            .header-textos h2 { font-size: 8px; white-space: nowrap; overflow: hidden; max-width: 100%; margin-bottom: 1px;}
+            .header-textos h1 { font-size: 15px; line-height: 1.1;}
 
-            .nav-mes { flex-direction: row; padding: 8px; }
-            .nav-mes button { padding: 8px 10px; font-size: 11px; min-height: 35px; flex: 1; }
+            .nav-mes { flex-direction: row; padding: 6px; margin-bottom: 12px;}
+            .nav-mes button { padding: 6px 8px; font-size: 11px; min-height: 30px; flex: 1; }
             .nav-mes h3 { font-size: 12px; flex: 1; text-align: center; margin: 0 5px; }
 
-            .calendario-grid { gap: 3px; }
-            .dia { min-height: 75px; padding: 4px; }
+            .calendario-grid { gap: 3px; margin-bottom: 15px;}
+            .dia { min-height: 70px; padding: 4px; }
             .dia-numero { font-size: 14px; color: #000; }
             .texto-proerd, .prof-fixo, .reserve-agora { font-size: 9px; }
-            .dia-semana { font-size: 11px; padding: 6px 0; }
+            .dia-semana { font-size: 11px; padding: 5px 0; }
             
-            .form-layout { flex-direction: column; }
-            .grid-horarios { grid-template-columns: 1fr; }
+            .form-layout { flex-direction: column; gap: 10px;}
+            .grid-horarios { grid-template-columns: 1fr; gap: 6px;}
             .btn-ver-horarios { font-size: 14px; padding: 12px 15px; }
             
-            /* AJUSTE PARA CABER AS 5 COLUNAS NA TELA DO CELULAR */
             .calendario-semana { gap: 2px; }
             .dia-semana-header { font-size: 9px; padding: 4px 0; background-color: #004080; }
             .slot { font-size: 8px; padding: 2px; min-height: 40px; line-height: 1.1; }
             .slot b { font-size: 7px; padding: 0; margin-bottom: 1px; background: none; }
             
-            /* FORMATO DE CARDS PARA TABELAS NO MOBILE */
             .tabela-agendamentos thead { display: none; } 
             .tabela-agendamentos tbody tr {
                 display: flex;
@@ -294,7 +292,7 @@
                 <strong>⚠️ Aviso Importante:</strong> É expressamente proibido retirar o cabo HDMI do computador. Traga seus arquivos em um pendrive ou acesse-os pelo e-mail.
             </div>
             <button class="btn-agendar" id="btn-salvar" onclick="salvarNoFirebase()">📅 AGENDAR AULA</button>
-            <button class="btn-voltar-simples" onclick="fecharFormulario()">⬅️ Clique aqui para voltar ao calendário inicial</button>
+            <button class="btn-voltar-simples" onclick="fecharFormulario()">⬅️ Clique aqui para cancelar e voltar ao calendário inicial</button>
         </div>
     </div>
 
@@ -622,7 +620,7 @@
                 divDia.style.backgroundColor = "#ffebee"; 
             } 
             else if (qtdMatutino >= 5 || qtdVespertino >= 5 || qtdTotal >= 5) { 
-                divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Reservado</div>`; 
+                divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado</div>`; 
             } 
 
             divDia.onclick = () => { abrirFormulario(dataFormatadaStr); };
@@ -772,7 +770,7 @@
                 }
             }
         }
-        htmlGrid += `</div>`; // Fim da grade matutina
+        htmlGrid += `</div>`; 
 
         // ================= VESPERTINO (SUSPENSO / DROPDOWN) =================
         htmlGrid += `<details class="dropdown-vespertino" style="margin-top: 6px; border-top: none; padding-top: 0;">`;
@@ -794,7 +792,7 @@
             }
         }
         
-        htmlGrid += `</div></details>`; // Fim da grade vespertina
+        htmlGrid += `</div></details>`;
 
         gridLista.innerHTML = htmlGrid;
     }

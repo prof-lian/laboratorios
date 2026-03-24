@@ -11,7 +11,6 @@
         
         /* ================= CABEÇALHO E LOGO ================= */
         .header { border-bottom: 2px solid #004080; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; position: relative; }
-        /* Aproximando logo e texto com gap menor */
         .header-esq { display: flex; align-items: center; gap: 8px; width: 100%; }
         .logo-escola { width: 70px; height: auto; cursor: pointer; transition: transform 0.2s; }
         .logo-escola:hover { transform: scale(1.05); }
@@ -34,7 +33,6 @@
         .nav-mes button:hover { background-color: #002244; }
         .nav-mes h3 { color: #004080; font-size: 17px; margin: 0; text-transform: uppercase; font-weight: bold; text-align: center; }
         
-        /* Navy Nav específico para a Grade Semanal */
         .nav-mes.navy-nav { background-color: #004080; }
         .nav-mes.navy-nav h3 { color: white; }
         .nav-mes.navy-nav button { background-color: white; color: #004080; border: 1px solid white; }
@@ -50,7 +48,6 @@
         .dia { background-color: #e9e9e9; min-height: 90px; display: flex; flex-direction: column; padding: 6px; cursor: pointer; border: 1px solid #ddd; transition: 0.2s; border-radius: 4px; }
         .dia:hover { background-color: #d4d4d4; }
         .dia.vazio { background-color: transparent; border: none; cursor: default; }
-        /* Alterado número para preto */
         .dia-numero { font-size: 16px; font-weight: bold; width: 100%; text-align: left; margin-bottom: 2px; color: #000; }
         .reserve-agora { font-size: 11px; margin-top: auto; font-weight: bold; padding-top: 5px; text-align: center; }
         .prof-fixo { font-size: 10px; color: #004080; font-weight: bold; margin-top: 2px; text-align: left; line-height: 1.2; }
@@ -68,23 +65,23 @@
 
         /* ================= CALENDÁRIO VISUAL (SEMANAL - ESTILO IMAGEM) ================= */
         .calendario-semana-wrapper { width: 100%; padding-bottom: 10px; margin-bottom: 20px; }
-        /* Grid visual para alinhar os elementos sequencialmente */
         .calendario-semana { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; width: 100%; }
         
-        .dia-semana-header { background-color: #005f6b; color: white; padding: 6px 0; text-align: center; font-size: 10px; font-weight: bold; border-radius: 4px 4px 0 0; text-transform: uppercase; border-bottom: 1px solid #ddd; }
-        
-        /* Merged headers for Matutino/Vespertino across 5 columns */
+        .dia-semana-header { background-color: #004080; color: white; padding: 6px 0; text-align: center; font-size: 10px; font-weight: bold; border-radius: 4px 4px 0 0; text-transform: uppercase; border-bottom: 1px solid #ddd; }
         .turno-merged-header { background-color: #f4f4f4; color: #666; font-size: 8px; font-weight: bold; text-align: center; letter-spacing: 1px; padding: 4px 0; grid-column: span 5; border: 1px solid #ddd; border-radius: 3px; margin: 4px 0; }
         
-        /* Novos slots menores e mais simples baseados na imagem */
-        .slot { font-size: 9px; padding: 4px; border: 1px solid #ddd; border-radius: 3px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 40px; box-sizing: border-box; line-height: 1.1; width: 100%; overflow: hidden; }
+        .slot { font-size: 9px; padding: 4px; border: 1px solid #ddd; border-radius: 3px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 45px; box-sizing: border-box; line-height: 1.2; width: 100%; overflow: hidden; }
         .slot b { font-size: 8px; color: #555; display: block; margin-bottom: 2px; }
-        .slot-disciplina { display: none; } /* Oculto na visualização sequencial */
+        
+        .slot-disciplina { font-size: 8px; color: #555; display: block; margin-top: 2px; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 2px; text-align: center; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         .slot-livre { color: #888; background-color: #fff; }
-        .slot-ocupado { background-color: #e0f7fa; color: #004080; font-weight: bold; } /* Azul esverdeado claro para ocupado */
+        .slot-ocupado { background-color: #e0f7fa; color: #004080; font-weight: bold; }
         .slot-bloqueado { background-color: #f8d7da; color: #721c24; text-decoration: line-through; }
-        .slot-proerd { background-color: #fff9c4; color: #b78103; font-weight: bold; } /* Amarelo claro igual a imagem */
+        .slot-proerd { background-color: #fff9c4; color: #b78103; font-weight: bold; }
+
+        /* Esconder a setinha padrão do details no iOS/Safari se necessário */
+        details.dropdown-vespertino summary::-webkit-details-marker { display: none; }
 
         /* ================= FORMULÁRIO ================= */
         .destaque-data { background-color: #e0f7fa; color: #004080; padding: 15px; border-radius: 5px; font-size: 18px; text-align: center; border: 2px dashed #004080; margin-bottom: 20px; font-weight: bold; }
@@ -137,12 +134,11 @@
             body { padding: 0; }
             .container { padding: 10px; border-radius: 0; }
             
-            /* Ajuste do Cabeçalho e Botão Admin */
+            /* Ajuste do Cabeçalho */
             .header { padding-top: 35px; flex-direction: column; align-items: flex-start; }
             .btn-login-admin { position: absolute; top: 10px; right: 10px; padding: 5px 10px; font-size: 10px; }
             .header-esq { flex-direction: row; align-items: center; margin-bottom: 10px; width: 100%; gap: 6px; }
             .logo-escola { width: 40px; margin-right: 0; }
-            /* Texto fixo em uma linha com tamanho reduzido para não sobrepor */
             .header-textos h2 { font-size: 7px; white-space: nowrap; overflow: hidden; max-width: 100%; }
             .header-textos h1 { font-size: 14px; }
 
@@ -152,7 +148,6 @@
 
             .calendario-grid { gap: 3px; }
             .dia { min-height: 75px; padding: 4px; }
-            /* Número no calendário geral continua preto */
             .dia-numero { font-size: 14px; color: #000; }
             .texto-proerd, .prof-fixo, .reserve-agora { font-size: 9px; }
             .dia-semana { font-size: 11px; padding: 6px 0; }
@@ -163,13 +158,12 @@
             
             /* AJUSTE PARA CABER AS 5 COLUNAS NA TELA DO CELULAR */
             .calendario-semana { gap: 2px; }
-            /* Headers Azul Marinho padrão */
             .dia-semana-header { font-size: 9px; padding: 4px 0; background-color: #004080; }
-            .slot { font-size: 8px; padding: 2px; min-height: 35px; line-height: 1.0; }
+            .slot { font-size: 8px; padding: 2px; min-height: 40px; line-height: 1.1; }
             .slot b { font-size: 7px; padding: 0; margin-bottom: 1px; background: none; }
             
             /* FORMATO DE CARDS PARA TABELAS NO MOBILE */
-            .tabela-agendamentos thead { display: none; } /* Esconde o cabeçalho padrão */
+            .tabela-agendamentos thead { display: none; } 
             .tabela-agendamentos tbody tr {
                 display: flex;
                 flex-direction: column;
@@ -181,7 +175,7 @@
             .tabela-agendamentos tbody td {
                 display: flex;
                 justify-content: space-between;
-                align-items: flex-start; /* Alinha os textos no topo */
+                align-items: flex-start;
                 border: none;
                 border-bottom: 1px solid #eee;
                 padding: 10px;
@@ -191,14 +185,12 @@
             }
             .tabela-agendamentos tbody td:last-child {
                 border-bottom: none;
-                background-color: #f0f4f8; /* Destaque leve na última linha do card */
+                background-color: #f0f4f8; 
             }
             
-            /* Rótulos à esquerda e valores à direita para os cards */
             .lbl-mobile { display: inline-block; font-weight: bold; color: #004080; font-size: 12px; text-align: left; width: 40%; }
             .val-mobile { text-align: right; max-width: 60%; font-size: 12px; }
             
-            /* Ajuste específico para os botões de ação do admin no mobile */
             .td-acoes { justify-content: flex-end !important; gap: 8px; flex-wrap: wrap; }
             .td-acoes .btn-editar, .td-acoes .btn-excluir { flex: none; margin: 0; }
         }
@@ -248,8 +240,6 @@
     </div>
 
     <div id="tela-formulario" class="tela">
-        <button class="btn-voltar" onclick="fecharFormulario()">&lt;&lt; Voltar para o calendário principal</button>
-        
         <div class="destaque-data">
             📅 Data selecionada: <span id="data-selecionada-texto"></span>
         </div>
@@ -317,9 +307,7 @@
             <button onclick="mudarSemana(1)">PRÓX &gt;</button>
         </div>
 
-        <div class="calendario-semana-wrapper">
-            <div class="calendario-semana" id="grade-dias-lista"></div>
-        </div>
+        <div class="calendario-semana-wrapper" id="grade-dias-lista"></div>
 
         <div style="margin-top: 20px; margin-bottom: 20px;">
             <button class="btn-voltar-simples" onclick="fecharFormulario()">⬅️ Clique aqui para voltar ao calendário inicial</button>
@@ -356,7 +344,11 @@
                 </div>
                 <div class="coluna-dir">
                     <label style="font-size: 14px; font-weight: bold; color: #555; margin-bottom: 5px; display: block;">Quais horários deseja bloquear?</label>
-                    <button class="btn-login-admin" style="margin-bottom:15px; width: 100%; background-color:#e0f7fa; color: #004080; border: 1px solid #004080;" onclick="selecionarTodosAdmin()">☑️ Marcar Todos os Horários</button>
+                    
+                    <label class="horario-item" style="background-color: #f0f4f8; margin-bottom: 15px; border: 1px dashed #004080;">
+                        <input type="checkbox" id="chk-marcar-todos" onchange="alternarTodosHorariosAdmin(this)">
+                        <span style="font-weight: bold; color: #004080;">☑️ Marcar Todos os Horários</span>
+                    </label>
                     
                     <h4 style="margin:0 0 5px 0; color:#004080; font-size:14px;">☀️ Matutino</h4>
                     <div class="grid-horarios" style="gap: 5px; margin-bottom:15px;">
@@ -440,11 +432,11 @@
         if (h.includes("3º Horário (08")) return "3º";
         if (h.includes("4º Horário (09")) return "4º";
         if (h.includes("5º Horário (10")) return "5º";
-        if (h.includes("1º Hor. Vesp")) return "1º (Vesp)";
-        if (h.includes("2º Hor. Vesp")) return "2º (Vesp)";
-        if (h.includes("3º Hor. Vesp")) return "3º (Vesp)";
-        if (h.includes("4º Hor. Vesp")) return "4º (Vesp)";
-        if (h.includes("5º Hor. Vesp")) return "5º (Vesp)";
+        if (h.includes("1º Hor. Vesp")) return "1º"; 
+        if (h.includes("2º Hor. Vesp")) return "2º";
+        if (h.includes("3º Hor. Vesp")) return "3º";
+        if (h.includes("4º Hor. Vesp")) return "4º";
+        if (h.includes("5º Hor. Vesp")) return "5º";
         return h;
     }
 
@@ -495,7 +487,9 @@
         } else if (senha !== null) alert("❌ Senha incorreta!");
     }
 
-    function selecionarTodosAdmin() { document.querySelectorAll('input[name="admin-horario"]').forEach(cb => cb.checked = true); }
+    function alternarTodosHorariosAdmin(source) {
+        document.querySelectorAll('input[name="admin-horario"]').forEach(cb => cb.checked = source.checked);
+    }
 
     async function salvarBloqueioAdmin() {
         const dataRaw = document.getElementById("admin-data-bloqueio").value; 
@@ -521,6 +515,7 @@
             document.getElementById("admin-motivo-bloqueio").value = "";
             document.getElementById("admin-responsavel").value = "";
             checkboxes.forEach(cb => cb.checked = false);
+            document.getElementById('chk-marcar-todos').checked = false; 
             await buscarAgendamentos(); gerarCalendario(); renderizarTabelasMensais(); 
         } catch (erro) { alert("❌ Erro ao bloquear."); }
     }
@@ -602,12 +597,11 @@
             if (diaSemana === 0 || diaSemana === 6) continue;
 
             let divDia = document.createElement("div"); divDia.className = "dia";
-            // Número alterado para preto nas configurações globais (.dia-numero)
             divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div>`;
             
             let dataFormatadaStr = `${dia < 10 ? '0'+dia : dia}/${mesAtual < 9 ? '0'+(mesAtual+1) : (mesAtual+1)}/${anoAtual}`;
             
-            if (diaSemana === 1) divDia.innerHTML += `<div class="texto-proerd">PROERD</div>`; /* Retirados os horários do PROERD */
+            if (diaSemana === 1) divDia.innerHTML += `<div class="texto-proerd">PROERD</div>`;
             else if (diaSemana === 3) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>07:00 às 11:25</div>`;
             else if (diaSemana === 4) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>08:40 às 11:25</div>`;
 
@@ -736,7 +730,8 @@
             if (ag.nomeProfessor === "🔒 BLOQUEADO") {
                 return `<div class="slot slot-bloqueado"><b>${lblVal}</b>🚫</div>`;
             }
-            return `<div class="slot slot-ocupado"><b>${lblVal}</b>${ag.nomeProfessor.split(' ')[0]}</div>`;
+            let disciplinaHTML = ag.disciplina ? `<span class="slot-disciplina">${ag.disciplina}</span>` : '';
+            return `<div class="slot slot-ocupado"><b>${lblVal}</b>${ag.nomeProfessor.split(' ')[0]}${disciplinaHTML}</div>`;
         }
         return `<div class="slot slot-livre"><b>${lblVal}</b>-</div>`;
     }
@@ -749,17 +744,17 @@
         let agsSemana = todosAgendamentosCache.filter(ag => ag.dataParaOrdenacao >= dataSemanaVisao && ag.dataParaOrdenacao <= sexta);
 
         const gridLista = document.getElementById("grade-dias-lista");
-        gridLista.innerHTML = ""; // Limpa a grid
+        gridLista.innerHTML = ""; 
 
-        // 1. Inserir Headers dos Dias (Navy Blue padrão via CSS)
-        gridLista.innerHTML += `<div class="dia-semana-header">Seg</div><div class="dia-semana-header">Ter</div><div class="dia-semana-header">Qua</div><div class="dia-semana-header">Qui</div><div class="dia-semana-header">Sex</div>`;
+        let htmlGrid = "";
 
-        // 2. Inserir Header Mesclado Matutino
-        gridLista.innerHTML += `<div class="turno-merged-header">MATUTINO</div>`;
+        // ================= MATUTINO =================
+        htmlGrid += `<div class="calendario-semana">`;
+        htmlGrid += `<div class="dia-semana-header">SEG</div><div class="dia-semana-header">TER</div><div class="dia-semana-header">QUA</div><div class="dia-semana-header">QUI</div><div class="dia-semana-header">SEX</div>`;
+        htmlGrid += `<div class="turno-merged-header">MATUTINO</div>`;
 
-        // 3. Preparar e Inserir Slots Matutino Sequencialmente (5 dias x 5 horários = 25 slots)
-        for (let h = 0; h < 5; h++) { // Para cada um dos 5 horários matutinos
-            for (let d = 0; d < 5; d++) { // Para cada um dos 5 dias
+        for (let h = 0; h < 5; h++) { 
+            for (let d = 0; d < 5; d++) { 
                 let dataDia = new Date(dataSemanaVisao); dataDia.setDate(dataDia.getDate() + d);
                 let agDoDia = agsSemana.filter(ag => ag.diaNum === dataDia.getDate() && ag.mesNum === dataDia.getMonth() && ag.anoNum === dataDia.getFullYear());
                 let hInfo = [
@@ -770,33 +765,38 @@
                     {val: "5º Horário (10:35 - 11:25)", lbl: "5º"}
                 ][h];
                 
-                // Trata PROERD manualmente para dias 1-3 matutino (Segunda)
                 if (d === 0 && h <= 2) {
-                     gridLista.innerHTML += `<div class="slot slot-proerd"><b>${hInfo.lbl}</b>PROERD</div>`;
+                     htmlGrid += `<div class="slot slot-proerd"><b>${hInfo.lbl}</b>PROERD</div>`;
                 } else {
-                    gridLista.innerHTML += gerarHtmlSlot(hInfo.val, hInfo.lbl, agDoDia);
+                    htmlGrid += gerarHtmlSlot(hInfo.val, hInfo.lbl, agDoDia);
                 }
             }
         }
+        htmlGrid += `</div>`; // Fim da grade matutina
 
-        // 4. Inserir Header Mesclado Vespertino
-        gridLista.innerHTML += `<div class="turno-merged-header">VESPERTINO</div>`;
+        // ================= VESPERTINO (SUSPENSO / DROPDOWN) =================
+        htmlGrid += `<details class="dropdown-vespertino" style="margin-top: 6px; border-top: none; padding-top: 0;">`;
+        htmlGrid += `<summary style="background-color: #004080; color: white; font-size: 11px; font-weight: bold; text-align: center; padding: 8px 0; border-radius: 4px; cursor: pointer; list-style: none; outline: none; margin-bottom: 5px;">🌤️ Período Vespertino <span style="font-weight: normal; color: #ccc; font-size: 10px;">(Clique para expandir)</span> ▼</summary>`;
+        htmlGrid += `<div class="calendario-semana">`;
 
-        // 5. Preparar e Inserir Slots Vespertino Sequencialmente (5 dias x 5 horários = 25 slots)
-        for (let h = 0; h < 5; h++) { // Para cada um dos 5 horários vespertinos
-            for (let d = 0; d < 5; d++) { // Para cada um dos 5 dias
+        for (let h = 0; h < 5; h++) { 
+            for (let d = 0; d < 5; d++) { 
                 let dataDia = new Date(dataSemanaVisao); dataDia.setDate(dataDia.getDate() + d);
                 let agDoDia = agsSemana.filter(ag => ag.diaNum === dataDia.getDate() && ag.mesNum === dataDia.getMonth() && ag.anoNum === dataDia.getFullYear());
                 let hInfo = [
-                    {val: "1º Hor. Vesp (13:00 - 13:50)", lbl: "1º (V)"},
-                    {val: "2º Hor. Vesp (13:50 - 14:40)", lbl: "2º (V)"},
-                    {val: "3º Hor. Vesp (14:40 - 15:30)", lbl: "3º (V)"},
-                    {val: "4º Hor. Vesp (15:45 - 16:35)", lbl: "4º (V)"},
-                    {val: "5º Hor. Vesp (16:35 - 17:25)", lbl: "5º (V)"}
+                    {val: "1º Hor. Vesp (13:00 - 13:50)", lbl: "1º"},
+                    {val: "2º Hor. Vesp (13:50 - 14:40)", lbl: "2º"},
+                    {val: "3º Hor. Vesp (14:40 - 15:30)", lbl: "3º"},
+                    {val: "4º Hor. Vesp (15:45 - 16:35)", lbl: "4º"},
+                    {val: "5º Hor. Vesp (16:35 - 17:25)", lbl: "5º"}
                 ][h];
-                 gridLista.innerHTML += gerarHtmlSlot(hInfo.val, hInfo.lbl, agDoDia);
+                 htmlGrid += gerarHtmlSlot(hInfo.val, hInfo.lbl, agDoDia);
             }
         }
+        
+        htmlGrid += `</div></details>`; // Fim da grade vespertina
+
+        gridLista.innerHTML = htmlGrid;
     }
 
     function renderizarTabelasMensais() {
@@ -820,7 +820,6 @@
 
                 let diaDaSemanaTexto = diasSemanaNomes[ag.dataParaOrdenacao.getDay()];
 
-                // Geração do HTML em formato de Card para Mobile com rótulos e alinhamento
                 htmlPublico += `<tr>
                     <td><span class="lbl-mobile">Data:</span> <span class="val-mobile"><strong>${ag.data}</strong><br><small style="color:#666;">(${diaDaSemanaTexto})</small></span></td>
                     <td><span class="lbl-mobile">Horários:</span> <span class="val-mobile"><strong>${horStr}</strong></span></td>

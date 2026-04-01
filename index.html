@@ -49,7 +49,7 @@
         .dia:hover { background-color: #d4d4d4; }
         .dia.vazio { background-color: transparent; border: none; cursor: default; }
         .dia-numero { font-size: 16px; font-weight: bold; width: 100%; text-align: left; margin-bottom: 2px; color: #000; }
-        .reserve-agora { font-size: 11px; margin-top: auto; font-weight: bold; padding-top: 5px; text-align: center; }
+        .reserve-agora { font-size: 11px; margin-top: auto; font-weight: bold; padding-top: 5px; text-align: center; line-height: 1.2; }
         .prof-fixo { font-size: 10px; color: #004080; font-weight: bold; margin-top: 2px; text-align: left; line-height: 1.2; }
         
         .container-btn-horarios { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; border-top: 1px dotted #ccc; padding-top: 20px; }
@@ -95,7 +95,6 @@
         
         .horario-item.bloqueado { opacity: 0.6; background: #fce4e4; border-color: #f5c6c6; cursor: not-allowed; }
         .horario-item.bloqueado input { cursor: not-allowed; }
-        /* Alterado de "Ocupado" para "Reservado" */
         .horario-item.bloqueado::after { content: ' 🚫 Reservado'; color: #d32f2f; font-size: 11px; margin-left: auto; display: inline-block; font-weight: bold; }
         .horario-item.bloqueado.bloqueado-proerd::after { content: ' 🚫 PROERD'; color: #b78103; }
 
@@ -104,7 +103,7 @@
         .coluna-dir { flex: 2; display: flex; flex-direction: column; gap: 10px; }
         .form-group { display: flex; flex-direction: column; }
         .form-group label { font-size: 13px; margin-bottom: 4px; font-weight: bold; color: #555; }
-        .form-group input, .form-group textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 100%; box-sizing: border-box; }
+        .form-group input, .form-group textarea, .form-group select { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 100%; box-sizing: border-box; }
         .texto-vermelho { color: #d32f2f; font-weight: bold; font-size: 13px; }
         
         .rodape-form { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 20px; }
@@ -359,7 +358,14 @@
             <div class="form-layout">
                 <div class="coluna-esq">
                     <div class="form-group"><label>Selecione a Data:</label><input type="date" id="admin-data-bloqueio"></div>
-                    <div class="form-group"><label>Motivo do Fechamento:</label><input type="text" id="admin-motivo-bloqueio" placeholder="Ex: Manutenção, Feriado..."></div>
+                    <div class="form-group"><label>Motivo do Fechamento:</label>
+                        <select id="admin-motivo-bloqueio">
+                            <option value="Manutenção">Manutenção / Fechado</option>
+                            <option value="Feriado">Feriado</option>
+                            <option value="Recesso">Recesso</option>
+                            <option value="Férias">Férias</option>
+                        </select>
+                    </div>
                     <div class="form-group"><label>Responsável:</label><input type="text" id="admin-responsavel" placeholder="Quem autorizou o bloqueio?"></div>
                 </div>
                 <div class="coluna-dir">
@@ -472,7 +478,6 @@
     function fecharFormulario() {
         idAgendamentoEdicao = null;
         
-        // CORREÇÃO DO BUG DO BOTÃO "TRAVANDO": 
         const btn = document.getElementById("btn-salvar");
         btn.innerHTML = "📅 AGENDAR AULA";
         btn.disabled = false;
@@ -498,13 +503,19 @@
 
     async function salvarBloqueioAdmin() {
         const dataRaw = document.getElementById("admin-data-bloqueio").value; 
-        const motivo = document.getElementById("admin-motivo-bloqueio").value.trim() || "Fechado pelo Administrador";
+        const motivo = document.getElementById("admin-motivo-bloqueio").value;
         const responsavel = document.getElementById("admin-responsavel").value.trim();
         const checkboxes = document.querySelectorAll('input[name="admin-horario"]:checked');
+        
         let horariosSelecionados = Array.from(checkboxes).map(cb => cb.value);
 
+        // Se for Feriado, Recesso ou Férias, seleciona todos os 10 horários automaticamente
+        if (["Feriado", "Recesso", "Férias"].includes(motivo)) {
+            horariosSelecionados = [...ordemHorarios]; 
+        }
+
         if(!dataRaw) return alert("⚠️ Selecione uma data.");
-        if(horariosSelecionados.length === 0) return alert("⚠️ Selecione um horário.");
+        if(horariosSelecionados.length === 0) return alert("⚠️ Selecione um horário (ou escolha um motivo que bloqueie o dia todo).");
 
         let partes = dataRaw.split('-');
         let dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
@@ -517,7 +528,7 @@
             });
             alert(`✅ Bloqueio salvo!`);
             document.getElementById("admin-data-bloqueio").value = ""; 
-            document.getElementById("admin-motivo-bloqueio").value = "";
+            document.getElementById("admin-motivo-bloqueio").value = "Manutenção";
             document.getElementById("admin-responsavel").value = "";
             checkboxes.forEach(cb => cb.checked = false);
             document.getElementById('chk-marcar-todos').checked = false; 
@@ -542,7 +553,6 @@
         let partes = dataAtualSelecionada.split('/');
         let d = parseInt(partes[0]), m = parseInt(partes[1]) - 1, a = parseInt(partes[2]);
         
-        // Lógica do PROERD no modo de edição - Ajustado para 17/04/2026 (Mês 3 no JS)
         let dataForm = new Date(a, m, d);
         let limiteProerd = new Date(2026, 3, 17); 
         if (dataForm.getDay() === 1 && dataForm >= limiteProerd) {
@@ -623,24 +633,32 @@
             if (diaSemana === 3) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>07:00 às 11:25</div>`;
             else if (diaSemana === 4) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>08:40 às 11:25</div>`;
 
-            let qtdMatutino = 0; let qtdVespertino = 0;
+            let qtdMatutino = 0;
+            let isEspecial = false;
+            let nomeEspecial = "";
+
             let agDoDia = todosAgendamentosCache.filter(ag => ag.diaNum === dia && ag.mesNum === mesAtual && ag.anoNum === anoAtual);
             
             agDoDia.forEach(ag => { 
+                if (ag.nomeProfessor === "🔒 BLOQUEADO") {
+                    if (ag.descricaoAula.includes("Feriado")) { isEspecial = true; nomeEspecial = "FERIADO"; }
+                    else if (ag.descricaoAula.includes("Recesso")) { isEspecial = true; nomeEspecial = "RECESSO"; }
+                    else if (ag.descricaoAula.includes("Férias")) { isEspecial = true; nomeEspecial = "FÉRIAS"; }
+                }
+
                 ag.horarios.forEach(h => {
-                    if (h.includes("Vesp")) qtdVespertino++;
-                    else qtdMatutino++;
+                    if (!h.includes("Vesp")) qtdMatutino++; // Só conta o matutino
                 });
             });
 
-            let qtdTotal = qtdMatutino + qtdVespertino;
-
-            if (qtdTotal >= 10) { 
-                divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado</div>`; 
+            if (isEspecial) {
+                // Substitui os textos padrão do dia para destacar apenas o feriado/recesso/férias
+                divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div><div class="reserve-agora" style="color:#d32f2f; font-size: 13px; margin-top: auto; font-weight: bold;">🔴 ${nomeEspecial}</div>`;
+                divDia.style.backgroundColor = "#ffebee";
+                divDia.style.borderColor = "#d32f2f";
+            } else if (qtdMatutino >= 5) { 
+                divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado <br><span style="font-size: 9px; font-weight: normal; color: #555;">(Matutino)</span></div>`; 
                 divDia.style.backgroundColor = "#ffebee"; 
-            } 
-            else if (qtdMatutino >= 5 || qtdVespertino >= 5 || qtdTotal >= 5) { 
-                divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado</div>`; 
             } 
 
             divDia.onclick = () => { abrirFormulario(dataFormatadaStr); };
@@ -663,7 +681,6 @@
         let partes = dataStr.split('/');
         let d = parseInt(partes[0]), m = parseInt(partes[1]) - 1, a = parseInt(partes[2]);
         
-        // Bloqueio PROERD automático a partir de 17/04/2026
         let dataForm = new Date(a, m, d);
         let limiteProerd = new Date(2026, 3, 17); // Mês 3 é Abril
         if (dataForm.getDay() === 1 && dataForm >= limiteProerd) {
@@ -738,7 +755,6 @@
         renderizarGradeSemanal();
     }
     
-    // Função para abrir a nova tela do relatório mensal
     function abrirRelatorioMensal() {
         mesTabelaGlobal = new Date().getMonth(); 
         anoTabelaGlobal = new Date().getFullYear();
@@ -846,12 +862,14 @@
         htmlGrid += `</div></details>`;
         gridLista.innerHTML = htmlGrid;
 
-        // Renderiza a tabela da semana atual
+        // Renderiza a tabela da semana atual, Ocultando Feriado, Recesso e Férias
         let htmlSemana = "";
-        if (agsSemana.length === 0) {
+        let agsSemanaTabela = agsSemana.filter(ag => !["Feriado", "Recesso", "Férias"].some(m => ag.descricaoAula && ag.descricaoAula.includes(m)));
+
+        if (agsSemanaTabela.length === 0) {
             htmlSemana = "<tr><td colspan='3' style='text-align:center;'>Nenhum agendamento nesta semana.</td></tr>";
         } else {
-            agsSemana.forEach(ag => {
+            agsSemanaTabela.forEach(ag => {
                 let horOrd = ordenarHorarios(ag.horarios);
                 let horStr = horOrd.map(h => formatarHorario(h)).join(", ");
                 let corNome = ag.nomeProfessor.includes("BLOQUEADO") ? "color: #d32f2f;" : "color: #333;";
@@ -884,18 +902,21 @@
         atualizarBotoesMesTabela();
 
         let agsMes = todosAgendamentosCache.filter(ag => ag.mesNum === mesTabelaGlobal && ag.anoNum === anoTabelaGlobal);
+        
+        // Tabela Pública filtra os eventos de Feriado, Recesso e Férias para não poluir
+        let agsMesPublico = agsMes.filter(ag => !["Feriado", "Recesso", "Férias"].some(m => ag.descricaoAula && ag.descricaoAula.includes(m)));
 
         let htmlPublico = "", htmlAdmin = "";
-        if (agsMes.length === 0) {
+        
+        // Render Tabela Pública
+        if (agsMesPublico.length === 0) {
             htmlPublico = "<tr><td colspan='3' style='text-align:center;'>Nenhum agendamento neste mês.</td></tr>";
-            htmlAdmin = "<tr><td colspan='5' style='text-align:center;'>Nenhum agendamento neste mês.</td></tr>";
         } else {
-            agsMes.forEach(ag => {
+            agsMesPublico.forEach(ag => {
                 let horOrd = ordenarHorarios(ag.horarios);
                 let horStr = horOrd.map(h => formatarHorario(h)).join(", ");
                 let corNome = ag.nomeProfessor.includes("BLOQUEADO") ? "color: #d32f2f;" : "color: #333;";
                 let dis = ag.disciplina || "Sem disciplina";
-
                 let diaDaSemanaTexto = diasSemanaNomes[ag.dataParaOrdenacao.getDay()];
 
                 htmlPublico += `<tr>
@@ -912,7 +933,20 @@
                         </div>
                     </td>
                 </tr>`;
-                
+            });
+        }
+
+        // Render Tabela Admin (Exibe tudo para possibilitar a exclusão de feriados e recessos)
+        if (agsMes.length === 0) {
+            htmlAdmin = "<tr><td colspan='5' style='text-align:center;'>Nenhum agendamento neste mês.</td></tr>";
+        } else {
+            agsMes.forEach(ag => {
+                let horOrd = ordenarHorarios(ag.horarios);
+                let horStr = horOrd.map(h => formatarHorario(h)).join(", ");
+                let corNome = ag.nomeProfessor.includes("BLOQUEADO") ? "color: #d32f2f;" : "color: #333;";
+                let dis = ag.disciplina || "Sem disciplina";
+                let diaDaSemanaTexto = diasSemanaNomes[ag.dataParaOrdenacao.getDay()];
+
                 htmlAdmin += `<tr>
                     <td><span class="lbl-mobile">Data:</span> <span class="val-mobile"><strong>${ag.data}</strong><br><small style="color:#666;">(${diaDaSemanaTexto})</small></span></td>
                     <td><span class="lbl-mobile">Horários:</span> <span class="val-mobile"><strong>${horStr}</strong></span></td>
@@ -925,6 +959,7 @@
                 </tr>`;
             });
         }
+        
         document.getElementById("corpo-tabela-publica").innerHTML = htmlPublico;
         document.getElementById("corpo-tabela-admin").innerHTML = htmlAdmin;
     }

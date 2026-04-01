@@ -641,9 +641,9 @@
             
             agDoDia.forEach(ag => { 
                 if (ag.nomeProfessor === "🔒 BLOQUEADO") {
-                    if (ag.descricaoAula.includes("Feriado")) { isEspecial = true; nomeEspecial = "FERIADO"; }
-                    else if (ag.descricaoAula.includes("Recesso")) { isEspecial = true; nomeEspecial = "RECESSO"; }
-                    else if (ag.descricaoAula.includes("Férias")) { isEspecial = true; nomeEspecial = "FÉRIAS"; }
+                    if (ag.descricaoAula && ag.descricaoAula.includes("Feriado")) { isEspecial = true; nomeEspecial = "FERIADO"; }
+                    else if (ag.descricaoAula && ag.descricaoAula.includes("Recesso")) { isEspecial = true; nomeEspecial = "RECESSO"; }
+                    else if (ag.descricaoAula && ag.descricaoAula.includes("Férias")) { isEspecial = true; nomeEspecial = "FÉRIAS"; }
                 }
 
                 ag.horarios.forEach(h => {
@@ -791,7 +791,13 @@
         let ag = agendamentosDoDia.find(a => a.horarios.includes(horarioVal));
         if (ag) {
             if (ag.nomeProfessor === "🔒 BLOQUEADO") {
-                return `<div class="slot slot-bloqueado"><b>${lblVal}</b>🚫</div>`;
+                let motivo = "Bloqueado";
+                if (ag.descricaoAula && ag.descricaoAula.includes("Feriado")) motivo = "Feriado";
+                else if (ag.descricaoAula && ag.descricaoAula.includes("Recesso")) motivo = "Recesso";
+                else if (ag.descricaoAula && ag.descricaoAula.includes("Férias")) motivo = "Férias";
+                
+                // Alterado text-decoration para none para não ficar riscado e melhorar a leitura
+                return `<div class="slot slot-bloqueado" style="text-decoration: none; font-weight: bold; font-size: 9px;"><b>${lblVal}</b>${motivo}</div>`;
             }
             let disciplinaHTML = ag.disciplina ? `<span class="slot-disciplina">${ag.disciplina}</span>` : '';
             return `<div class="slot slot-ocupado"><b>${lblVal}</b>${ag.nomeProfessor.split(' ')[0]}${disciplinaHTML}</div>`;

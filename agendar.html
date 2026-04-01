@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar - Reserva Laboratório 02</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="header-esq">
+            <a href="index.html"><img src="https://iili.io/q4Q2Puj.png" alt="Logo Escola" class="logo-escola"></a>
+            <div class="header-textos">
+                <h2>Escola Municipal Cívico-Militar Prof. José Geraldo Guimarães</h2>
+                <h1>Reserva Laboratório de Informática 02</h1>
+            </div>
+        </div>
+        <button class="btn-login-admin" onclick="solicitarSenhaAdmin()">⚙️ Admin</button>
+    </div>
+
+    <div id="tela-formulario" class="tela ativa">
+        <div class="destaque-data">📅 Data selecionada: <span id="data-selecionada-texto">Carregando...</span></div>
+
+        <div class="secao-titulo">Selecione os horários:</div>
+        <div class="caixa-branca">
+            <h4 class="titulo-periodo" style="margin-top:0;">☀️ Período Matutino</h4>
+            <div class="grid-horarios">
+                <label class="horario-item"><input type="checkbox" name="horario" value="1º Horário (07:00 - 07:50)"> 1º Horário</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="2º Horário (07:50 - 08:40)"> 2º Horário</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="3º Horário (08:40 - 09:30)"> 3º Horário</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="4º Horário (09:45 - 10:35)"> 4º Horário</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="5º Horário (10:35 - 11:25)"> 5º Horário</label>
+            </div>
+
+            <details id="acordeon-vespertino" class="dropdown-vespertino">
+                <summary>🌤️ Período Vespertino <span style="font-size: 13px; font-weight: normal; color: #666;">(Clique para expandir)</span> ▼</summary>
+                <div class="grid-horarios" style="margin-bottom: 0;">
+                    <label class="horario-item"><input type="checkbox" name="horario" value="1º Hor. Vesp (13:00 - 13:50)"> 1º Hor (Vesp)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="2º Hor. Vesp (13:50 - 14:40)"> 2º Hor (Vesp)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="3º Hor. Vesp (14:40 - 15:30)"> 3º Hor (Vesp)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="4º Hor. Vesp (15:45 - 16:35)"> 4º Hor (Vesp)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="5º Hor. Vesp (16:35 - 17:25)"> 5º Hor (Vesp)</label>
+                </div>
+            </details>
+        </div>
+
+        <div class="secao-titulo">Preencha os dados abaixo:</div>
+        <div class="caixa-branca">
+            <div class="form-layout">
+                <div class="coluna-esq">
+                    <div class="form-group"><label>Nome do Professor:</label><input type="text" id="nome"></div>
+                    <div class="form-group"><label>Telefone:</label><input type="text" id="telefone"></div>
+                    <div class="form-group"><label>Disciplina (Opcional):</label><input type="text" id="disciplina" placeholder="Ex: Matemática, Português..."></div>
+                </div>
+                <div class="coluna-dir">
+                    <div class="texto-vermelho">Descreva o que será utilizado na aula <br><span style="font-weight: normal; font-size: 13px; color: #555;">- Informe o link, jogos ou plataformas.<br>- Indique a Habilidade do Currículo SEMED.<br><strong style="color: #d32f2f;">Lembre-se de registrar no Planejamento.</strong></span></div>
+                    <textarea id="descricao" rows="6"></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="rodape-form">
+            <div class="aviso"><strong>⚠️ Aviso Importante:</strong> É expressamente proibido retirar o cabo HDMI do computador. Traga seus arquivos em um pendrive ou acesse-os pelo e-mail.</div>
+            <button class="btn-agendar" id="btn-salvar" onclick="salvarNoFirebase()">📅 AGENDAR AULA</button>
+            <button class="btn-voltar-simples" onclick="window.location.href='index.html'">⬅️ Cancelar e voltar ao calendário inicial</button>
+        </div>
+    </div>
+</div>
+<div class="rodape-global"><strong>Dúvidas e informações:</strong> Lian.ribeiro@edu.uberabadigital.br<br>© 2026 Professor Lian - Escola Municipal José Geraldo Guimarães.</div>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

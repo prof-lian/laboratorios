@@ -285,13 +285,19 @@
                 </div>
             </div>
         </div>
+
+        <div style="text-align: center; margin-bottom: 25px;">
+            <button class="btn-agendar" id="btn-salvar" onclick="salvarNoFirebase()">📅 AGENDAR AULA</button>
+        </div>
         
-        <div class="rodape-form">
+        <div class="rodape-form" style="margin-top: 0; padding-top: 20px; border-top: 1px dashed #ccc;">
             <div class="aviso">
                 <strong>⚠️ Aviso Importante:</strong> É expressamente proibido retirar o cabo HDMI do computador. Traga seus arquivos em um pendrive ou acesse-os pelo e-mail.
             </div>
-            <button class="btn-agendar" id="btn-salvar" onclick="salvarNoFirebase()">📅 AGENDAR AULA</button>
-            <button class="btn-voltar-simples" onclick="fecharFormulario()">⬅️ Clique aqui para cancelar e voltar ao calendário inicial</button>
+            
+            <button class="btn-ver-horarios" type="button" style="width: 100%; max-width: 400px; margin-top: 10px;" onclick="abrirListaPublica()">📋 Visualizar agendamentos</button>
+            
+            <button class="btn-voltar-simples" type="button" onclick="fecharFormulario()">⬅️ Clique aqui para cancelar e voltar ao calendário inicial</button>
         </div>
     </div>
 
@@ -652,8 +658,8 @@
             });
 
             if (isEspecial) {
-                // Substitui os textos padrão do dia para destacar apenas o feriado/recesso/férias
-                divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div><div class="reserve-agora" style="color:#d32f2f; font-size: 13px; margin-top: auto; font-weight: bold;">🔴 ${nomeEspecial}</div>`;
+                // Feriados/Recessos centralizados e com a letra menor 
+                divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div><div class="reserve-agora" style="color:#d32f2f; font-size: 10px; margin-top: auto; margin-bottom: 10px; font-weight: bold; text-align: center; width: 100%;">🔴<br>${nomeEspecial}</div>`;
                 divDia.style.backgroundColor = "#ffebee";
                 divDia.style.borderColor = "#d32f2f";
             } else if (qtdMatutino >= 5) { 
@@ -796,7 +802,6 @@
                 else if (ag.descricaoAula && ag.descricaoAula.includes("Recesso")) motivo = "Recesso";
                 else if (ag.descricaoAula && ag.descricaoAula.includes("Férias")) motivo = "Férias";
                 
-                // Alterado text-decoration para none para não ficar riscado e melhorar a leitura
                 return `<div class="slot slot-bloqueado" style="text-decoration: none; font-weight: bold; font-size: 9px;"><b>${lblVal}</b>${motivo}</div>`;
             }
             let disciplinaHTML = ag.disciplina ? `<span class="slot-disciplina">${ag.disciplina}</span>` : '';

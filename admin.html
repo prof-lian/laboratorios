@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Reserva Laboratório 02</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="header-esq">
+            <a href="index.html"><img src="https://iili.io/q4Q2Puj.png" alt="Logo Escola" class="logo-escola"></a>
+            <div class="header-textos">
+                <h2>Escola Municipal Cívico-Militar Prof. José Geraldo Guimarães</h2>
+                <h1>Reserva Laboratório de Informática 02</h1>
+            </div>
+        </div>
+    </div>
+
+    <div id="tela-admin" class="tela ativa">
+        <button class="btn-voltar" onclick="window.location.href='index.html'">&lt;&lt; Sair do Painel Admin e Voltar ao Site</button>
+        <div style="text-align: center;"><div class="badge-admin-aviso">🔐 MODO ADMINISTRADOR ATIVADO</div></div>
+
+        <div class="caixa-branca" style="border-left: 5px solid #d32f2f; margin-bottom: 30px;">
+            <h3 style="margin-top:0; color:#d32f2f;">🔒 Bloquear Horários / Fechar Laboratório</h3>
+            <div class="form-layout">
+                <div class="coluna-esq">
+                    <div class="form-group"><label>Selecione a Data:</label><input type="date" id="admin-data-bloqueio"></div>
+                    <div class="form-group"><label>Motivo do Fechamento:</label><input type="text" id="admin-motivo-bloqueio" placeholder="Ex: Manutenção, Feriado..."></div>
+                    <div class="form-group"><label>Responsável:</label><input type="text" id="admin-responsavel" placeholder="Quem autorizou o bloqueio?"></div>
+                </div>
+                <div class="coluna-dir">
+                    <label style="font-size: 14px; font-weight: bold; color: #555; margin-bottom: 5px; display: block;">Quais horários deseja bloquear?</label>
+                    <label class="horario-item" style="background-color: #f0f4f8; margin-bottom: 15px; border: 1px dashed #004080;">
+                        <input type="checkbox" id="chk-marcar-todos" onchange="alternarTodosHorariosAdmin(this)">
+                        <span style="font-weight: bold; color: #004080;">☑️ Marcar Todos os Horários</span>
+                    </label>
+                    <h4 style="margin:0 0 5px 0; color:#004080; font-size:14px;">☀️ Matutino</h4>
+                    <div class="grid-horarios" style="gap: 5px; margin-bottom:15px;">
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="1º Horário (07:00 - 07:50)"> 1º Hor</label>
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="2º Horário (07:50 - 08:40)"> 2º Hor</label>
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="3º Horário (08:40 - 09:30)"> 3º Hor</label>
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="4º Horário (09:45 - 10:35)"> 4º Hor</label>
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="5º Horário (10:35 - 11:25)"> 5º Hor</label>
+                    </div>
+                    <h4 style="margin:0 0 5px 0; color:#004080; font-size:14px;">🌤️ Vespertino</h4>
+                    <div class="grid-horarios" style="gap: 5px;">
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="1º Hor. Vesp (13:00 - 13:50)"> 1º Hor (Vesp)</label>
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="2º Hor. Vesp (13:50 - 14:40)"> 2º Hor (Vesp)</label>
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="3º Hor. Vesp (14:40 - 15:30)"> 3º Hor (Vesp)</label>
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="4º Hor. Vesp (15:45 - 16:35)"> 4º Hor (Vesp)</label>
+                        <label class="horario-item"><input type="checkbox" name="admin-horario" value="5º Hor. Vesp (16:35 - 17:25)"> 5º Hor (Vesp)</label>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: right; margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 20px;">
+                <button class="btn-excluir" style="padding: 15px 30px; font-size: 16px; width: 100%; max-width: 300px;" onclick="salvarBloqueioAdmin()">🔒 Confirmar Bloqueio</button>
+            </div>
+        </div>
+        
+        <div class="caixa-branca">
+            <h3 style="margin-top:0; color:#004080; text-align: center;">Gerenciar Agendamentos</h3>
+            <div class="nav-mes" style="margin-bottom: 15px; background-color: #f0f4f8;">
+                <button onclick="mudarMesTabela(-1)">&lt; ANT</button>
+                <h3 id="titulo-tabela-admin" style="color: #004080; font-size: 14px;">Carregando...</h3>
+                <button onclick="mudarMesTabela(1)">PRÓX &gt;</button>
+            </div>
+            <div class="tabela-wrapper">
+                <table class="tabela-agendamentos">
+                    <thead style="background-color: #004080; color: white;">
+                        <tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th><th>Descrição</th><th style="text-align: center;">Ações</th></tr>
+                    </thead>
+                    <tbody id="corpo-tabela-admin"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="rodape-global"><strong>Dúvidas e informações:</strong> Lian.ribeiro@edu.uberabadigital.br<br>© 2026 Professor Lian - Escola Municipal José Geraldo Guimarães.</div>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

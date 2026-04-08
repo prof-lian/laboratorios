@@ -641,15 +641,14 @@
 
             let qtdMatutino = 0;
             let isEspecial = false;
-            let nomeEspecial = "";
 
             let agDoDia = todosAgendamentosCache.filter(ag => ag.diaNum === dia && ag.mesNum === mesAtual && ag.anoNum === anoAtual);
             
             agDoDia.forEach(ag => { 
                 if (ag.nomeProfessor === "🔒 BLOQUEADO") {
-                    if (ag.descricaoAula && ag.descricaoAula.includes("Feriado")) { isEspecial = true; nomeEspecial = "FERIADO"; }
-                    else if (ag.descricaoAula && ag.descricaoAula.includes("Recesso")) { isEspecial = true; nomeEspecial = "RECESSO"; }
-                    else if (ag.descricaoAula && ag.descricaoAula.includes("Férias")) { isEspecial = true; nomeEspecial = "FÉRIAS"; }
+                    if (ag.descricaoAula && (ag.descricaoAula.includes("Feriado") || ag.descricaoAula.includes("Recesso") || ag.descricaoAula.includes("Férias"))) {
+                        isEspecial = true;
+                    }
                 }
 
                 ag.horarios.forEach(h => {
@@ -658,9 +657,9 @@
             });
 
             if (isEspecial) {
-                // Feriados/Recessos centralizados e com a letra menor 
-                divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div><div class="reserve-agora" style="color:#d32f2f; font-size: 10px; margin-top: auto; margin-bottom: 10px; font-weight: bold; text-align: center; width: 100%;">🔴<br>${nomeEspecial}</div>`;
-                divDia.style.backgroundColor = "#ffebee";
+                // Apenas fundo vermelho, sem nenhum texto
+                divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div>`;
+                divDia.style.backgroundColor = "#ffcdd2"; // Vermelho mais forte para preencher o dia
                 divDia.style.borderColor = "#d32f2f";
             } else if (qtdMatutino >= 5) { 
                 divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado <br><span style="font-size: 9px; font-weight: normal; color: #555;">(Matutino)</span></div>`; 

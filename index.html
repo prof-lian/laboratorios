@@ -79,14 +79,15 @@
         .slot-bloqueado { background-color: #f8d7da; color: #721c24; text-decoration: line-through; }
         .slot-proerd { background-color: #fff9c4; color: #b78103; font-weight: bold; }
 
-        details.dropdown-vespertino summary::-webkit-details-marker { display: none; }
+        details summary::-webkit-details-marker { display: none; }
 
         /* ================= FORMULÁRIO ================= */
         .destaque-data { background-color: #e0f7fa; color: #004080; padding: 12px; border-radius: 5px; font-size: 16px; text-align: center; border: 2px dashed #004080; margin-bottom: 15px; font-weight: bold; }
         .secao-titulo { background-color: #004080; color: white; padding: 8px 15px; border-radius: 5px 5px 0 0; width: fit-content; font-weight: bold; margin-top: 15px; font-size: 14px;}
         .caixa-branca { border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 0 5px 5px 5px; background-color: #fafafa; }
         .titulo-periodo { color: #004080; font-size: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 10px; margin-bottom: 10px; }
-        .dropdown-vespertino { border-top: 1px dashed #ccc; padding-top: 10px; margin-top: 10px; }
+        
+        .dropdown-vespertino, .dropdown-dados { border-top: 1px dashed #ccc; padding-top: 10px; margin-top: 10px; }
         .dropdown-vespertino summary { color: #004080; font-size: 15px; font-weight: bold; cursor: pointer; padding: 8px 0; outline: none; list-style: none; }
         
         .grid-horarios { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
@@ -134,62 +135,33 @@
         @media (max-width: 768px) {
             body { padding: 0; }
             .container { padding: 10px; border-radius: 0; }
-            
-            /* Cabeçalho mobile mais compacto */
             .header { padding-top: 25px; padding-bottom: 8px; margin-bottom: 12px; flex-direction: column; align-items: flex-start; }
             .btn-login-admin { position: absolute; top: 5px; right: 5px; padding: 4px 8px; font-size: 10px; }
             .header-esq { flex-direction: row; align-items: center; margin-bottom: 0; width: 100%; gap: 6px; }
             .logo-escola { width: 40px; margin-right: 0; }
             .header-textos h2 { font-size: 8px; white-space: nowrap; overflow: hidden; max-width: 100%; margin-bottom: 1px;}
             .header-textos h1 { font-size: 15px; line-height: 1.1;}
-
             .nav-mes { flex-direction: row; padding: 6px; margin-bottom: 12px;}
             .nav-mes button { padding: 6px 8px; font-size: 11px; min-height: 30px; flex: 1; }
             .nav-mes h3 { font-size: 12px; flex: 1; text-align: center; margin: 0 5px; }
-
             .calendario-grid { gap: 3px; margin-bottom: 15px;}
             .dia { min-height: 70px; padding: 4px; }
             .dia-numero { font-size: 14px; color: #000; }
             .texto-proerd, .prof-fixo, .reserve-agora { font-size: 9px; }
             .dia-semana { font-size: 11px; padding: 5px 0; }
-            
             .form-layout { flex-direction: column; gap: 10px;}
             .grid-horarios { grid-template-columns: 1fr; gap: 6px;}
             .btn-ver-horarios { font-size: 14px; padding: 12px 15px; }
-            
             .calendario-semana { gap: 2px; }
             .dia-semana-header { font-size: 9px; padding: 4px 0; background-color: #004080; }
             .slot { font-size: 8px; padding: 2px; min-height: 40px; line-height: 1.1; }
             .slot b { font-size: 7px; padding: 0; margin-bottom: 1px; background: none; }
-            
             .tabela-agendamentos thead { display: none; } 
-            .tabela-agendamentos tbody tr {
-                display: flex;
-                flex-direction: column;
-                margin-bottom: 15px;
-                border: 1px solid #004080;
-                border-radius: 6px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .tabela-agendamentos tbody td {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                border: none;
-                border-bottom: 1px solid #eee;
-                padding: 10px;
-                width: 100%;
-                box-sizing: border-box;
-                text-align: right;
-            }
-            .tabela-agendamentos tbody td:last-child {
-                border-bottom: none;
-                background-color: #f0f4f8; 
-            }
-            
+            .tabela-agendamentos tbody tr { display: flex; flex-direction: column; margin-bottom: 15px; border: 1px solid #004080; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+            .tabela-agendamentos tbody td { display: flex; justify-content: space-between; align-items: flex-start; border: none; border-bottom: 1px solid #eee; padding: 10px; width: 100%; box-sizing: border-box; text-align: right; }
+            .tabela-agendamentos tbody td:last-child { border-bottom: none; background-color: #f0f4f8; }
             .lbl-mobile { display: inline-block; font-weight: bold; color: #004080; font-size: 12px; text-align: left; width: 40%; }
             .val-mobile { text-align: right; max-width: 60%; font-size: 12px; }
-            
             .td-acoes { justify-content: flex-end !important; gap: 8px; flex-wrap: wrap; }
             .td-acoes .btn-editar, .td-acoes .btn-excluir { flex: none; margin: 0; }
         }
@@ -254,7 +226,7 @@
                 <label class="horario-item"><input type="checkbox" name="horario" value="5º Horário (10:35 - 11:25)"> 5º Horário</label>
             </div>
 
-            <details id="acordeon-vespertino" class="dropdown-vespertino">
+            <details id="acordeon-vespertino" class="dropdown-vespertino" open>
                 <summary>🌤️ Período Vespertino <span style="font-size: 13px; font-weight: normal; color: #666;">(Clique para expandir)</span> ▼</summary>
                 <div class="grid-horarios" style="margin-bottom: 0;">
                     <label class="horario-item"><input type="checkbox" name="horario" value="1º Hor. Vesp (13:00 - 13:50)"> 1º Horário (Vesp)</label>
@@ -266,33 +238,39 @@
             </details>
         </div>
 
-        <div class="secao-titulo">Preencha os dados abaixo:</div>
-        <div class="caixa-branca">
-            <div class="form-layout">
-                <div class="coluna-esq">
-                    <div class="form-group"><label>Nome do Professor:</label><input type="text" id="nome"></div>
-                    <div class="form-group"><label>Telefone:</label><input type="text" id="telefone"></div>
-                    <div class="form-group"><label>Disciplina (Opcional):</label><input type="text" id="disciplina" placeholder="Ex: Matemática, Português..."></div>
-                </div>
-                <div class="coluna-dir">
-                    <div class="texto-vermelho">
-                        Descreva o que será utilizado na aula <br>
-                        <span style="font-weight: normal; font-size: 13px; color: #555;">
-                            - Informe o link, jogos ou plataformas.<br>
-                            - Indique a Habilidade do Currículo SEMED.<br>
-                            <strong style="color: #d32f2f;">Lembre-se de registrar no Planejamento.</strong>
-                        </span>
+        <details id="acordeon-dados" class="dropdown-dados" style="margin-top: 15px; border: none; padding: 0;">
+            <summary style="background-color: #004080; color: white; padding: 12px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                📝 Preencher Dados do Agendamento
+                <span>▼</span>
+            </summary>
+            
+            <div class="caixa-branca" style="border-top-left-radius: 0; border-top-right-radius: 0; margin-bottom: 0; margin-top: -5px; padding-top: 20px;">
+                <div class="form-layout">
+                    <div class="coluna-esq">
+                        <div class="form-group"><label>Nome do Professor:</label><input type="text" id="nome"></div>
+                        <div class="form-group"><label>Telefone:</label><input type="text" id="telefone"></div>
+                        <div class="form-group"><label>Disciplina (Opcional):</label><input type="text" id="disciplina" placeholder="Ex: Matemática, Português..."></div>
                     </div>
-                    <textarea id="descricao" rows="6"></textarea>
+                    <div class="coluna-dir">
+                        <div class="texto-vermelho">
+                            Descreva o que será utilizado na aula <br>
+                            <span style="font-weight: normal; font-size: 13px; color: #555;">
+                                - Informe o link, jogos ou plataformas.<br>
+                                - Indique a Habilidade do Currículo SEMED.<br>
+                                <strong style="color: #d32f2f;">Lembre-se de registrar no Planejamento.</strong>
+                            </span>
+                        </div>
+                        <textarea id="descricao" rows="6"></textarea>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn-agendar" id="btn-salvar" onclick="salvarNoFirebase()">📅 AGENDAR AULA</button>
                 </div>
             </div>
-        </div>
-
-        <div style="text-align: center; margin-bottom: 25px;">
-            <button class="btn-agendar" id="btn-salvar" onclick="salvarNoFirebase()">📅 AGENDAR AULA</button>
-        </div>
+        </details>
         
-        <div class="rodape-form" style="margin-top: 0; padding-top: 20px; border-top: 1px dashed #ccc;">
+        <div class="rodape-form" style="margin-top: 0; padding-top: 20px;">
             <div class="aviso">
                 <strong>⚠️ Aviso Importante:</strong> É expressamente proibido retirar o cabo HDMI do computador. Traga seus arquivos em um pendrive ou acesse-os pelo e-mail.
             </div>
@@ -314,15 +292,23 @@
 
         <div class="calendario-semana-wrapper" id="grade-dias-lista"></div>
 
-        <h3 style="color:#004080; text-align: center; font-size: 15px;">📌 Agendamentos da Semana</h3>
-        <div class="tabela-wrapper">
-            <table class="tabela-agendamentos">
-                <thead>
-                    <tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th></tr>
-                </thead>
-                <tbody id="corpo-tabela-semana"></tbody>
-            </table>
-        </div>
+        <details class="dropdown-dados" style="margin-top: 20px; border: none; padding: 0;">
+            <summary style="background-color: #004080; color: white; padding: 10px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+                📋 Ver detalhes agendamento desta semana.
+                <span>▼</span>
+            </summary>
+            
+            <div class="caixa-branca" style="border-top-left-radius: 0; border-top-right-radius: 0; margin-bottom: 0; margin-top: -5px; padding-top: 15px;">
+                <div class="tabela-wrapper">
+                    <table class="tabela-agendamentos">
+                        <thead>
+                            <tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th></tr>
+                        </thead>
+                        <tbody id="corpo-tabela-semana"></tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
 
         <div style="text-align: center; margin-top: 25px;">
             <button class="btn-ver-horarios" style="max-width: 350px;" onclick="abrirRelatorioMensal()">📅 Relatório Agendamento Mensal</button>
@@ -464,7 +450,7 @@
 
     // Regra das Quintas-feiras (Vespertino)
     function getProfessorQuinta(dataAlvo) {
-        let dBase = new Date(2026, 4, 7); // 07/05/2026 - Mês 4 é Maio
+        let dBase = new Date(2026, 4, 7); // 07/05/2026
         let data1 = Date.UTC(dBase.getFullYear(), dBase.getMonth(), dBase.getDate());
         let data2 = Date.UTC(dataAlvo.getFullYear(), dataAlvo.getMonth(), dataAlvo.getDate());
         
@@ -544,7 +530,6 @@
         
         let horariosSelecionados = Array.from(checkboxes).map(cb => cb.value);
 
-        // Se for Feriado, Recesso ou Férias, seleciona todos os 10 horários automaticamente
         if (["Feriado", "Recesso", "Férias"].includes(selectMotivo)) {
             horariosSelecionados = [...ordemHorarios]; 
         }
@@ -584,6 +569,10 @@
         document.getElementById("descricao").value = ag.descricaoAula;
 
         mudarTela('tela-formulario');
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        
+        const acordeonDados = document.getElementById('acordeon-dados');
+        if (acordeonDados) acordeonDados.setAttribute('open', 'true');
 
         document.querySelectorAll('.horario-item').forEach(lbl => { lbl.classList.remove('bloqueado', 'bloqueado-proerd', 'bloqueado-claudia', 'bloqueado-lian'); lbl.querySelector('input').disabled = false; lbl.querySelector('input').checked = false; });
 
@@ -592,8 +581,10 @@
         
         let dataForm = new Date(a, m, d);
         let limiteProerd = new Date(2026, 3, 17); 
+        
+        // Bloqueio PROERD (Segunda-feira - Todos os 5 matutinos + 5 vespertinos)
         if (dataForm.getDay() === 1 && dataForm >= limiteProerd) {
-            ['1º Horário (07:00 - 07:50)', '2º Horário (07:50 - 08:40)', '3º Horário (08:40 - 09:30)'].forEach(hr => {
+            ['1º Horário (07:00 - 07:50)', '2º Horário (07:50 - 08:40)', '3º Horário (08:40 - 09:30)', '4º Horário (09:45 - 10:35)', '5º Horário (10:35 - 11:25)', '1º Hor. Vesp (13:00 - 13:50)', '2º Hor. Vesp (13:50 - 14:40)', '3º Hor. Vesp (14:40 - 15:30)', '4º Hor. Vesp (15:45 - 16:35)', '5º Hor. Vesp (16:35 - 17:25)'].forEach(hr => {
                 const cb = document.querySelector(`#tela-formulario input[name="horario"][value="${hr}"]`);
                 if(cb) {
                     cb.disabled = true;
@@ -684,8 +675,15 @@
             
             let dataFormatadaStr = `${dia < 10 ? '0'+dia : dia}/${mesAtual < 9 ? '0'+(mesAtual+1) : (mesAtual+1)}/${anoAtual}`;
             
-            if (diaSemana === 3) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>07:00 às 11:25</div>`;
-            else if (diaSemana === 4) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>08:40 às 11:25</div>`;
+            // Regra Visual PROERD (Texto limpo, sem o matutino)
+            if (diaSemana === 1 && dataReal >= new Date(2026, 3, 17)) {
+                divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 PROERD</div>`;
+                divDia.style.backgroundColor = "#ffebee";
+            } else if (diaSemana === 3) {
+                divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>07:00 às 11:25</div>`;
+            } else if (diaSemana === 4) {
+                divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>08:40 às 11:25</div>`;
+            }
 
             let qtdMatutino = 0;
             let isEspecial = false;
@@ -700,18 +698,19 @@
                 }
 
                 ag.horarios.forEach(h => {
-                    if (!h.includes("Vesp")) qtdMatutino++; // Só conta o matutino
+                    if (!h.includes("Vesp")) qtdMatutino++; 
                 });
             });
 
             if (isEspecial) {
-                // Apenas fundo vermelho, sem nenhum texto
                 divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div>`;
-                divDia.style.backgroundColor = "#ffcdd2"; // Vermelho mais forte para preencher o dia
+                divDia.style.backgroundColor = "#ffcdd2"; 
                 divDia.style.borderColor = "#d32f2f";
             } else if (qtdMatutino >= 5) { 
-                divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado <br><span style="font-size: 9px; font-weight: normal; color: #555;">(Matutino)</span></div>`; 
-                divDia.style.backgroundColor = "#ffebee"; 
+                if (!(diaSemana === 1 && dataReal >= new Date(2026, 3, 17))) {
+                    divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado <br><span style="font-size: 9px; font-weight: normal; color: #555;">(Matutino)</span></div>`; 
+                    divDia.style.backgroundColor = "#ffebee"; 
+                }
             } 
 
             divDia.onclick = () => { abrirFormulario(dataFormatadaStr); };
@@ -728,6 +727,11 @@
 
         dataAtualSelecionada = dataStr; document.getElementById("data-selecionada-texto").innerText = dataAtualSelecionada;
         mudarTela('tela-formulario');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        
+        const acordeonDados = document.getElementById('acordeon-dados');
+        if (acordeonDados) acordeonDados.removeAttribute('open');
 
         document.querySelectorAll('.horario-item').forEach(lbl => { lbl.classList.remove('bloqueado', 'bloqueado-proerd', 'bloqueado-claudia', 'bloqueado-lian'); lbl.querySelector('input').disabled = false; lbl.querySelector('input').checked = false; });
 
@@ -735,9 +739,11 @@
         let d = parseInt(partes[0]), m = parseInt(partes[1]) - 1, a = parseInt(partes[2]);
         
         let dataForm = new Date(a, m, d);
-        let limiteProerd = new Date(2026, 3, 17); // Mês 3 é Abril
+        let limiteProerd = new Date(2026, 3, 17); 
+        
+        // Bloqueio PROERD (Segunda-feira - Todos os 5 matutinos + 5 vespertinos)
         if (dataForm.getDay() === 1 && dataForm >= limiteProerd) {
-            ['1º Horário (07:00 - 07:50)', '2º Horário (07:50 - 08:40)', '3º Horário (08:40 - 09:30)'].forEach(hr => {
+            ['1º Horário (07:00 - 07:50)', '2º Horário (07:50 - 08:40)', '3º Horário (08:40 - 09:30)', '4º Horário (09:45 - 10:35)', '5º Horário (10:35 - 11:25)', '1º Hor. Vesp (13:00 - 13:50)', '2º Hor. Vesp (13:50 - 14:40)', '3º Hor. Vesp (14:40 - 15:30)', '4º Hor. Vesp (15:45 - 16:35)', '5º Hor. Vesp (16:35 - 17:25)'].forEach(hr => {
                 const cb = document.querySelector(`#tela-formulario input[name="horario"][value="${hr}"]`);
                 if(cb) {
                     cb.disabled = true;
@@ -823,6 +829,7 @@
         dataSemanaVisao = getSegundaFeira(new Date());
         mudarTela('tela-lista-publica');
         renderizarGradeSemanal();
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
     }
     
     function abrirRelatorioMensal() {
@@ -891,7 +898,7 @@
         htmlGrid += `<div class="dia-semana-header">SEG</div><div class="dia-semana-header">TER</div><div class="dia-semana-header">QUA</div><div class="dia-semana-header">QUI</div><div class="dia-semana-header">SEX</div>`;
         htmlGrid += `<div class="turno-merged-header">MATUTINO</div>`;
 
-        let limiteProerd = new Date(2026, 3, 17); // Alterado para 17/04/2026
+        let limiteProerd = new Date(2026, 3, 17);
 
         for (let h = 0; h < 5; h++) { 
             for (let d = 0; d < 5; d++) { 
@@ -905,7 +912,7 @@
                     {val: "5º Horário (10:35 - 11:25)", lbl: "5º"}
                 ][h];
                 
-                if (d === 0 && h <= 2 && dataDia >= limiteProerd) {
+                if (d === 0 && dataDia >= limiteProerd) {
                      htmlGrid += `<div class="slot slot-proerd"><b>${hInfo.lbl}</b>PROERD</div>`;
                 } else {
                     htmlGrid += gerarHtmlSlot(hInfo.val, hInfo.lbl, agDoDia);
@@ -931,8 +938,10 @@
                     {val: "5º Hor. Vesp (16:35 - 17:25)", lbl: "5º"}
                 ][h];
                 
-                // NOVA LÓGICA QUINTA-FEIRA
-                if (d === 3 && h <= 2 && dataDia >= new Date(2026, 4, 7)) {
+                // Bloqueio PROERD à tarde também
+                if (d === 0 && dataDia >= limiteProerd) {
+                     htmlGrid += `<div class="slot slot-proerd"><b>${hInfo.lbl}</b>PROERD</div>`;
+                } else if (d === 3 && h <= 2 && dataDia >= new Date(2026, 4, 7)) {
                     let prof = getProfessorQuinta(dataDia);
                     htmlGrid += `<div class="slot slot-ocupado" style="background-color: #e8eaf6; color: #004080;"><b>${hInfo.lbl}</b>${prof}<br><span style="font-size:7px; color:#666; border-top: 1px dashed rgba(0,0,0,0.1); margin-top:2px; padding-top:2px;">Aula de Informática</span></div>`;
                 } else {
@@ -985,7 +994,6 @@
 
         let agsMes = todosAgendamentosCache.filter(ag => ag.mesNum === mesTabelaGlobal && ag.anoNum === anoTabelaGlobal);
         
-        // Tabela Pública filtra os eventos de Feriado, Recesso e Férias para não poluir
         let agsMesPublico = agsMes.filter(ag => !["Feriado", "Recesso", "Férias"].some(m => ag.descricaoAula && ag.descricaoAula.includes(m)));
 
         let htmlPublico = "", htmlAdmin = "";
@@ -1018,7 +1026,7 @@
             });
         }
 
-        // Render Tabela Admin (Exibe tudo para possibilitar a exclusão de feriados e recessos)
+        // Render Tabela Admin
         if (agsMes.length === 0) {
             htmlAdmin = "<tr><td colspan='5' style='text-align:center;'>Nenhum agendamento neste mês.</td></tr>";
         } else {

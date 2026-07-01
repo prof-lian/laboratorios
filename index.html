@@ -126,6 +126,11 @@
         
         .lbl-mobile { display: none; } 
 
+        /* ================= BLOCO DE DESCRIÇÃO (Público) ================= */
+        .desc-bloco { margin-top: 5px; text-align: left; width: 100%; box-sizing: border-box; }
+        .desc-bloco .desc-titulo { color: #004080; font-size: 12px; font-weight: bold; display: block; margin-bottom: 3px; }
+        .desc-bloco .desc-texto { font-size: 12px; color: #444; line-height: 1.4; display: block; white-space: normal; overflow-wrap: break-word; word-wrap: break-word; }
+
         /* ================= PAINEL ADMIN ================= */
         .badge-admin-aviso { background-color: #d32f2f; color: white; padding: 8px 15px; border-radius: 4px; font-size: 14px; font-weight: bold; display: inline-block; margin-bottom: 15px; }
         .btn-excluir, .btn-editar { color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; min-height: 35px; }
@@ -168,6 +173,10 @@
             .val-mobile { text-align: right; max-width: 60%; font-size: 12px; overflow-wrap: break-word; word-wrap: break-word; white-space: normal; }
             .td-acoes { justify-content: flex-end !important; gap: 8px; flex-wrap: wrap; }
             .td-acoes .btn-editar, .td-acoes .btn-excluir { flex: none; margin: 0; }
+
+            /* Descrição pública: bloco cheio, justificado, sem esticar a largura do card */
+            .tabela-agendamentos tbody td.td-descricao { flex-direction: column; align-items: stretch; text-align: left; }
+            .desc-bloco .desc-texto { text-align: justify; max-width: 100%; }
         }
     </style>
 </head>
@@ -306,7 +315,7 @@
                 <div class="tabela-wrapper">
                     <table class="tabela-agendamentos">
                         <thead>
-                            <tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th></tr>
+                            <tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th><th>Descrição</th></tr>
                         </thead>
                         <tbody id="corpo-tabela-semana"></tbody>
                     </table>
@@ -335,7 +344,7 @@
         <div class="tabela-wrapper">
             <table class="tabela-agendamentos">
                 <thead>
-                    <tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th></tr>
+                    <tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th><th>Descrição</th></tr>
                 </thead>
                 <tbody id="corpo-tabela-publica"></tbody>
             </table>
@@ -656,7 +665,7 @@
         const acordeonDados = document.getElementById('acordeon-dados');
         if (acordeonDados) acordeonDados.setAttribute('open', 'true');
 
-        document.querySelectorAll('.horario-item').forEach(lbl => { lbl.classList.remove('bloqueado', 'bloqueado-proerd', 'bloqueado-claudia', 'bloqueado-lian'); lbl.querySelector('input').disabled = false; lbl.querySelector('input').checked = false; });
+        document.querySelectorAll('#tela-formulario .horario-item').forEach(lbl => { lbl.classList.remove('bloqueado', 'bloqueado-proerd', 'bloqueado-claudia', 'bloqueado-lian'); lbl.querySelector('input').disabled = false; lbl.querySelector('input').checked = false; });
 
         let partes = dataAtualSelecionada.split('/');
         let d = parseInt(partes[0]), m = parseInt(partes[1]) - 1, a = parseInt(partes[2]);
@@ -819,7 +828,17 @@
         const acordeonDados = document.getElementById('acordeon-dados');
         if (acordeonDados) acordeonDados.removeAttribute('open');
 
-        document.querySelectorAll('.horario-item').forEach(lbl => { lbl.classList.remove('bloqueado', 'bloqueado-proerd', 'bloqueado-claudia', 'bloqueado-lian'); lbl.querySelector('input').disabled = false; lbl.querySelector('input').checked = false; });
+        aplicarBloqueiosNoFormulario(dataStr);
+    }
+
+    // Aplica (ou reaplica) os bloqueios de horário no formulário para a data informada,
+    // sempre lendo o cache mais atual (todosAgendamentosCache), sem apagar seleções já marcadas pelo usuário.
+    function aplicarBloqueiosNoFormulario(dataStr) {
+        document.querySelectorAll('#tela-formulario .horario-item').forEach(lbl => {
+            lbl.classList.remove('bloqueado', 'bloqueado-proerd', 'bloqueado-claudia', 'bloqueado-lian');
+            let input = lbl.querySelector('input');
+            input.disabled = false;
+        });
 
         let partes = dataStr.split('/');
         let d = parseInt(partes[0]), m = parseInt(partes[1]) - 1, a = parseInt(partes[2]);
@@ -833,7 +852,7 @@
             ['1º Horário (07:00 - 07:50)', '2º Horário (07:50 - 08:40)', '3º Horário (08:40 - 09:30)', '4º Horário (09:45 - 10:35)', '5º Horário (10:35 - 11:25)', '1º Hor. Vesp (13:00 - 13:50)', '2º Hor. Vesp (13:50 - 14:40)', '3º Hor. Vesp (14:40 - 15:30)', '4º Hor. Vesp (15:45 - 16:35)', '5º Hor. Vesp (16:35 - 17:25)'].forEach(hr => {
                 const cb = document.querySelector(`#tela-formulario input[name="horario"][value="${hr}"]`);
                 if(cb) {
-                    cb.disabled = true;
+                    cb.disabled = true; cb.checked = false;
                     let item = cb.closest('.horario-item');
                     item.classList.add('bloqueado', 'bloqueado-proerd');
                 }
@@ -847,7 +866,7 @@
                 ['1º Hor. Vesp (13:00 - 13:50)', '2º Hor. Vesp (13:50 - 14:40)', '3º Hor. Vesp (14:40 - 15:30)'].forEach(hr => {
                     const cb = document.querySelector(`#tela-formulario input[name="horario"][value="${hr}"]`);
                     if(cb) {
-                        cb.disabled = true;
+                        cb.disabled = true; cb.checked = false;
                         let item = cb.closest('.horario-item');
                         item.classList.add('bloqueado');
                         if (prof === "Prof. Cláudia") item.classList.add('bloqueado-claudia');
@@ -857,12 +876,12 @@
             }
         }
 
-        let agDoDia = todosAgendamentosCache.filter(ag => ag.diaNum === d && ag.mesNum === m && ag.anoNum === a);
+        let agDoDia = todosAgendamentosCache.filter(ag => ag.diaNum === d && ag.mesNum === m && ag.anoNum === a && ag.id !== idAgendamentoEdicao);
         
         agDoDia.forEach(ag => {
             ag.horarios.forEach(hr => {
                 const cb = document.querySelector(`#tela-formulario input[name="horario"][value="${hr}"]`);
-                if(cb) { cb.disabled = true; cb.closest('.horario-item').classList.add('bloqueado'); }
+                if(cb) { cb.disabled = true; cb.checked = false; cb.closest('.horario-item').classList.add('bloqueado'); }
             });
         });
     }
@@ -874,6 +893,26 @@
         let horariosSelecionados = Array.from(checkboxes).map(cb => cb.value);
 
         if(nome.trim() === "" || horariosSelecionados.length === 0) return alert("⚠️ Preencha seu nome e selecione um horário.");
+
+        // ===== REVALIDAÇÃO ANTI-CONFLITO =====
+        // Antes de gravar, confere no cache mais atual (mantido em tempo real pelo onSnapshot)
+        // se algum dos horários escolhidos já foi ocupado por OUTRO agendamento nesta mesma data
+        // desde que o formulário foi aberto. Isso evita que reservas concorrentes/formulário
+        // desatualizado gravem horários que não pertencem ao professor.
+        let partes = dataAtualSelecionada.split('/');
+        let d = parseInt(partes[0]), m = parseInt(partes[1]) - 1, a = parseInt(partes[2]);
+
+        let conflitos = todosAgendamentosCache.filter(ag =>
+            ag.diaNum === d && ag.mesNum === m && ag.anoNum === a &&
+            ag.id !== idAgendamentoEdicao &&
+            ag.horarios.some(hr => horariosSelecionados.includes(hr))
+        );
+
+        if (conflitos.length > 0) {
+            alert("⚠️ Um ou mais horários selecionados acabaram de ser reservados por outra pessoa. A tela será atualizada, revise sua seleção.");
+            aplicarBloqueiosNoFormulario(dataAtualSelecionada);
+            return;
+        }
 
         const btn = document.getElementById("btn-salvar");
         btn.innerHTML = "⏳ Salvando..."; btn.disabled = true;
@@ -1051,7 +1090,7 @@
         let agsSemanaTabela = agsSemana.filter(ag => !["Feriado", "Recesso", "Férias"].some(m => ag.descricaoAula && ag.descricaoAula.includes(m)));
 
         if (agsSemanaTabela.length === 0) {
-            htmlSemana = "<tr><td colspan='3' style='text-align:center;'>Nenhum agendamento nesta semana.</td></tr>";
+            htmlSemana = "<tr><td colspan='4' style='text-align:center;'>Nenhum agendamento nesta semana.</td></tr>";
         } else {
             agsSemanaTabela.forEach(ag => {
                 let horOrd = ordenarHorarios(ag.horarios);
@@ -1066,6 +1105,8 @@
                     nomeProfExibicao = `🔒 ${ag.descricaoAula || 'Bloqueado'}`;
                 }
 
+                let descTexto = ag.descricaoAula && ag.descricaoAula.trim() !== "" ? ag.descricaoAula : "Sem descrição informada.";
+
                 htmlSemana += `<tr>
                     <td><span class="lbl-mobile">Data:</span> <span class="val-mobile"><strong>${ag.data}</strong><br><small style="color:#666;">(${diaDaSemanaTexto})</small></span></td>
                     <td><span class="lbl-mobile">Horários:</span> <span class="val-mobile"><strong>${horStr}</strong></span></td>
@@ -1076,6 +1117,12 @@
                         </div>
                         <div style="margin-top: 5px; text-align: left; width: 100%;">
                             <span style="color:#004080; font-size:12px; font-weight:bold;">📚 ${dis}</span>
+                        </div>
+                    </td>
+                    <td class="td-descricao">
+                        <div class="desc-bloco">
+                            <span class="lbl-mobile desc-titulo">📝 Descrição:</span>
+                            <span class="desc-texto">${descTexto}</span>
                         </div>
                     </td>
                 </tr>`;
@@ -1098,7 +1145,7 @@
         
         // Render Tabela Pública
         if (agsMesPublico.length === 0) {
-            htmlPublico = "<tr><td colspan='3' style='text-align:center;'>Nenhum agendamento neste mês.</td></tr>";
+            htmlPublico = "<tr><td colspan='4' style='text-align:center;'>Nenhum agendamento neste mês.</td></tr>";
         } else {
             agsMesPublico.forEach(ag => {
                 let horOrd = ordenarHorarios(ag.horarios);
@@ -1112,6 +1159,8 @@
                     nomeProfExibicao = `🔒 ${ag.descricaoAula || 'Bloqueado'}`;
                 }
 
+                let descTexto = ag.descricaoAula && ag.descricaoAula.trim() !== "" ? ag.descricaoAula : "Sem descrição informada.";
+
                 htmlPublico += `<tr>
                     <td><span class="lbl-mobile">Data:</span> <span class="val-mobile"><strong>${ag.data}</strong><br><small style="color:#666;">(${diaDaSemanaTexto})</small></span></td>
                     <td><span class="lbl-mobile">Horários:</span> <span class="val-mobile"><strong>${horStr}</strong></span></td>
@@ -1122,6 +1171,12 @@
                         </div>
                         <div style="margin-top: 5px; text-align: left; width: 100%;">
                             <span style="color:#004080; font-size:12px; font-weight:bold;">📚 ${dis}</span>
+                        </div>
+                    </td>
+                    <td class="td-descricao">
+                        <div class="desc-bloco">
+                            <span class="lbl-mobile desc-titulo">📝 Descrição:</span>
+                            <span class="desc-texto">${descTexto}</span>
                         </div>
                     </td>
                 </tr>`;
@@ -1193,6 +1248,10 @@
                 renderizarTabelasMensais();
             } else if (document.getElementById('tela-admin').classList.contains('ativa')) {
                 renderizarTabelasMensais();
+            } else if (document.getElementById('tela-formulario').classList.contains('ativa') && dataAtualSelecionada) {
+                // Formulário de agendamento está aberto: reaplica os bloqueios com dados atualizados,
+                // sem apagar o que o professor já selecionou manualmente (evita salvar horário já ocupado por outra pessoa).
+                aplicarBloqueiosNoFormulario(dataAtualSelecionada);
             }
         }, (error) => {
             console.error("Erro na sincronização em tempo real: ", error);

@@ -352,7 +352,7 @@
         <div id="tab-agendamentos" class="admin-tab-content active">
             <div class="caixa-branca">
                 <h3 style="margin-top:0; color:#004080; text-align: center;">Gerenciar Agendamentos (Mês Atual)</h3>
-                <p style="font-size: 13px; text-align: center; color: #666; margin-top: -10px;">Apenas reservas de professores são mostradas aqui. Vá em "Bloqueios e Regras" para ver os fechamentos.</p>
+                <p style="font-size: 13px; text-align: center; color: #666; margin-top: -10px;">Apenas reservas de professores são mostradas aqui. Vá em "Bloqueios e Regras" para gerenciar fechamentos e textos azuis.</p>
                 
                 <div class="nav-mes" style="margin-bottom: 15px; background-color: #f0f4f8;">
                     <button id="btn-mes-admin-ant" onclick="mudarMesTabela(-1)">&lt; ANT</button>
@@ -634,7 +634,7 @@
     }
 
     async function salvarConfigsFirebase() {
-        try { await db.collection("configuracoes").doc("regras_v2").set(cfgGerais); } 
+        try { await db.collection("agendamentos").doc("CONFIG_REGRAS_V2").set(cfgGerais); } 
         catch(e) { alert("Erro ao salvar regras sistêmicas!"); console.error(e); }
     }
 
@@ -783,7 +783,7 @@
         }
 
         try { 
-            await db.collection("configuracoes").doc("geral").set({ avisoTexto: txt, avisoAtivo: ativo, avisoInicio: inicio, avisoFim: fim }, { merge: true }); 
+            await db.collection("agendamentos").doc("CONFIG_AVISO_GERAL").set({ avisoTexto: txt, avisoAtivo: ativo, avisoInicio: inicio, avisoFim: fim }, { merge: true }); 
             alert("✅ Aviso global atualizado!"); 
         } catch(e) { 
             console.error(e);
@@ -884,10 +884,10 @@
             let regrasRec = getRegrasRecorrentesDia(dataR);
             regrasRec.filter(r => r.tipo === "anotacao").forEach(r => { divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${r.cor};">${r.nome}</div>`; });
             
-            // Bloqueios recorrentes: Ocultos no visual se forem SÓ da tarde. Exibe se afetar o MATUTINO.
+            // Bloqueios recorrentes: Ocultos no visual se forem só da tarde (Vespertino)
             regrasRec.filter(r => r.tipo === "bloqueio").forEach(r => {
                 let temMatutino = r.horarios && r.horarios.some(h => !h.includes("Vesp"));
-                if(temMatutino) {
+                if(temMatutino && r.horarios.length >= 5) {
                     divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 ${r.nome}</div>`;
                 }
             });
@@ -1078,21 +1078,21 @@
     window.onload = () => { 
         
         // Listener Configs/Regras
-        db.collection("configuracoes").doc("regras_v2").onSnapshot(doc => {
+        db.collection("agendamentos").doc("CONFIG_REGRAS_V2").onSnapshot(doc => {
             if(doc.exists) { 
                 let d = doc.data();
                 cfgGerais.textosFixos = d.textosFixos || [];
                 cfgGerais.alternanciaVesp = d.alternanciaVesp || null;
                 cfgGerais.recorrentes = d.recorrentes || [];
             } else { 
-                db.collection("configuracoes").doc("regras_v2").set(cfgGerais); 
+                db.collection("agendamentos").doc("CONFIG_REGRAS_V2").set(cfgGerais); 
             }
             let elCal = document.getElementById('tela-calendario'); if(elCal && elCal.classList.contains('ativa')) gerarCalendario();
             let elAdm = document.getElementById('tela-admin'); if(elAdm && elAdm.classList.contains('ativa')) preencherFormulariosConfig();
         });
 
         // Listener Avisos Globais
-        db.collection("configuracoes").doc("geral").onSnapshot(doc => {
+        db.collection("agendamentos").doc("CONFIG_AVISO_GERAL").onSnapshot(doc => {
             if(doc.exists) {
                 let cfg = doc.data();
                 let popOv = document.getElementById("popup-aviso-global");
@@ -1120,16 +1120,20 @@
             }
         });
         
-        // Listener Agendamentos
+        // Listener Agendamentos (Filtra documentos de configuração para não bugar o calendário)
         db.collection("agendamentos").onSnapshot(s => {
-            todosAgendamentosCache = s.docs.map(d => { 
+            todosAgendamentosCache = [];
+            s.forEach(d => { 
+                if(d.id.startsWith("CONFIG_")) return; // Impede leitura das regras como agendamentos
+                
                 let a = d.data(); a.id = d.id; 
                 a.horarios = a.horarios || []; a.nomeProfessor = a.nomeProfessor || ""; a.descricaoAula = a.descricaoAula || ""; a.disciplina = a.disciplina || "";
                 let p = (a.data || "").split('/'); 
                 if(p.length===3){ a.diaNum = parseInt(p[0]); a.mesNum = parseInt(p[1])-1; a.anoNum = parseInt(p[2]); a.dataParaOrdenacao = new Date(a.anoNum, a.mesNum, a.diaNum); } 
                 else { a.dataParaOrdenacao = new Date(0); }
-                return a; 
-            }).sort((a, b) => a.dataParaOrdenacao - b.dataParaOrdenacao);
+                todosAgendamentosCache.push(a);
+            });
+            todosAgendamentosCache.sort((a, b) => a.dataParaOrdenacao - b.dataParaOrdenacao);
             
             let elCal = document.getElementById('tela-calendario');
             let elPub = document.getElementById('tela-lista-publica');

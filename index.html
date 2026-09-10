@@ -58,7 +58,7 @@
         .dia-numero { font-size: 16px; font-weight: bold; width: 100%; text-align: left; margin-bottom: 2px; color: #000; }
         .reserve-agora { font-size: 11px; margin-top: auto; font-weight: bold; padding-top: 5px; text-align: center; line-height: 1.2; }
         
-        /* ESTILO EXATO ANOTAÇÃO FIXA (AZUL) */
+        /* ESTILO EXATO PROF LIAN MATUTINO */
         .prof-fixo { font-size: 10px; color: #004080; font-weight: bold; margin-top: 2px; text-align: left; line-height: 1.2; }
         
         /* ESTILO LIMPO ANOTAÇÃO VISUAL */
@@ -884,10 +884,10 @@
             let regrasRec = getRegrasRecorrentesDia(dataR);
             regrasRec.filter(r => r.tipo === "anotacao").forEach(r => { divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${r.cor};">${r.nome}</div>`; });
             
-            // Bloqueios recorrentes: Ocultos no visual se forem só da tarde (Vespertino)
+            // Bloqueios recorrentes: Ocultos no visual se forem SÓ da tarde. Exibe se afetar o MATUTINO.
             regrasRec.filter(r => r.tipo === "bloqueio").forEach(r => {
                 let temMatutino = r.horarios && r.horarios.some(h => !h.includes("Vesp"));
-                if(temMatutino && r.horarios.length >= 5) {
+                if(temMatutino) {
                     divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 ${r.nome}</div>`;
                 }
             });
@@ -1098,7 +1098,7 @@
                 let popOv = document.getElementById("popup-aviso-global");
                 let txtP = document.getElementById("texto-popup-aviso");
                 if(cfg.avisoAtivo && cfg.avisoTexto) {
-                    // Trata datas locais
+                    // Converter a data do dispositivo local em formato YYYY-MM-DD para evitar bug de fuso horário
                     let hj = new Date();
                     let y = hj.getFullYear(); let m = String(hj.getMonth() + 1).padStart(2, '0'); let d = String(hj.getDate()).padStart(2, '0');
                     let hStr = `${y}-${m}-${d}`;

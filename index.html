@@ -49,7 +49,7 @@
         .nav-mes.navy-nav button { background-color: white; color: #004080; border: 1px solid white; }
 
         /* ================= CALENDÁRIO INICIAL ================= */
-        .aviso { background-color: #f9f9f9; padding: 12px; border-radius: 4px; border: 1px solid #eee; border-left: 5px solid #d32f2f; margin-bottom: 15px; font-size: 13px; text-align: justify; width: 100%; box-sizing: border-box; line-height: 1.5;}
+        .aviso { background-color: #f9f9f9; padding: 12px; border-radius: 4px; border: 1px solid #eee; border-left: 5px solid #d32f2f; margin-bottom: 15px; font-size: 13px; text-align: left; width: 100%; box-sizing: border-box; line-height: 1.5; white-space: pre-wrap;}
         
         .calendario-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; text-align: left; margin-bottom: 20px; }
         .dia-semana { background-color: #004080; color: white; padding: 8px 0; text-align: center; font-size: 13px; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
@@ -167,8 +167,6 @@
             .dia-semana-header { font-size: 9px; padding: 4px 0; background-color: #004080; }
             .slot { font-size: 8px; padding: 2px; min-height: 40px; line-height: 1.1; }
             .slot b { font-size: 7px; padding: 0; margin-bottom: 1px; background: none; }
-            
-            /* Ajuste de tabela para não ter rolagem horizontal no celular */
             .tabela-agendamentos { min-width: unset; width: 100%; }
             .tabela-agendamentos thead { display: none; } 
             .tabela-agendamentos tbody tr { display: flex; flex-direction: column; border: 1px solid #004080; margin-bottom: 10px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
@@ -176,7 +174,6 @@
             .tabela-agendamentos tbody td:last-child { border-bottom: none; background-color: #f0f4f8; }
             .lbl-mobile { display: block; font-weight: bold; color: #004080; width: 100%; text-align: left; margin-bottom: 4px; font-size: 11px; text-transform: uppercase;}
             .val-mobile { width: 100%; text-align: left; word-break: break-word; white-space: normal;}
-            
             .td-acoes { flex-direction: row !important; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
             .td-acoes .btn-editar, .td-acoes .btn-excluir { flex: none; margin: 0; }
             .admin-tabs { gap: 2px; }
@@ -218,6 +215,13 @@
             <a class="link-cadastrados" onclick="abrirListaPublica()">Horários já cadastrados &gt;&gt;</a>
         </div>
         
+        <div style="background: #e3f2fd; padding: 10px; border-radius: 5px; margin-bottom: 15px; display: inline-block;">
+            <label style="font-size: 13px; font-weight: bold; color: #004080; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" id="chk-detalhes-calendario" onchange="gerarCalendario()" style="width: 18px; height: 18px; cursor: pointer;">
+                👁️ Ver horários reservados (Matutino)
+            </label>
+        </div>
+        
         <div class="nav-mes">
             <button id="btn-mes-ant" onclick="mudarMes(-1)">&lt; ANT</button>
             <h3 id="mes-ano-texto">MÊS ANO</h3>
@@ -225,6 +229,13 @@
         </div>
         
         <div class="calendario-grid" id="grade-dias"></div>
+
+        <div class="container-btn-horarios">
+            <button class="btn-ver-horarios" onclick="abrirListaPublica()">📋 Visualizar horários reservados</button>
+        </div>
+
+        <!-- NOVO: TEXTO RODAPÉ (Interface Configs) -->
+        <div class="aviso" id="texto-aviso-rodape" style="display:none; margin-top: 25px; margin-bottom: 10px;"></div>
 
         <div class="secao-outros-agendamentos">
             <h3 id="titulo-outros-agendamentos">🔗 Outros Agendamentos:</h3>
@@ -546,6 +557,11 @@
                 </div>
                 
                 <div class="form-group">
+                    <label>Aviso de Rodapé (Acima de Outros Agendamentos):</label>
+                    <textarea id="admin-texto-rodape" rows="2" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" placeholder="Deixe em branco para ocultar"></textarea>
+                </div>
+                
+                <div class="form-group">
                     <label>Título da Seção de Outros Agendamentos:</label>
                     <input type="text" id="admin-titulo-outros" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;">
                 </div>
@@ -616,6 +632,7 @@
         recorrentes: [],
         interface: {
             avisoCabecalho: "⚠️ Atenção: Em agendamentos fora dos horários de suporte do Professor Lian, o professor regente será responsável por retirar a chave, operar os equipamentos e trancar o laboratório.",
+            avisoRodape: "",
             tituloOutros: "🔗 Outros Agendamentos:",
             botoesOutros: [
                 {id: "b1", label: "💻 Lab 01 Informática", url: "https://www.professoraangela.com.br/agendamento/"},
@@ -670,6 +687,16 @@
         let tCab = document.getElementById("texto-aviso-cabecalho");
         if(tCab) tCab.innerText = inf.avisoCabecalho || "⚠️ Atenção: Em agendamentos fora dos horários de suporte do Professor Lian, o professor regente será responsável por retirar a chave, operar os equipamentos e trancar o laboratório.";
         
+        let tRodape = document.getElementById("texto-aviso-rodape");
+        if(tRodape) {
+            if(inf.avisoRodape && inf.avisoRodape.trim() !== "") {
+                tRodape.innerText = inf.avisoRodape;
+                tRodape.style.display = "block";
+            } else {
+                tRodape.style.display = "none";
+            }
+        }
+        
         let tOutros = document.getElementById("titulo-outros-agendamentos");
         if(tOutros) tOutros.innerText = inf.tituloOutros || "🔗 Outros Agendamentos:";
         
@@ -716,6 +743,7 @@
     function salvarInterfaceGeral() {
         if(!cfgGerais.interface) cfgGerais.interface = {};
         cfgGerais.interface.avisoCabecalho = document.getElementById("admin-texto-cabecalho").value.trim();
+        cfgGerais.interface.avisoRodape = document.getElementById("admin-texto-rodape").value.trim();
         cfgGerais.interface.tituloOutros = document.getElementById("admin-titulo-outros").value.trim();
         salvarConfigsFirebase(); alert("✅ Textos da interface atualizados!");
     }
@@ -802,6 +830,9 @@
         let inf = cfgGerais.interface || {};
         let taAviso = document.getElementById("admin-texto-cabecalho");
         if(taAviso) taAviso.value = inf.avisoCabecalho || "⚠️ Atenção: Em agendamentos fora dos horários de suporte do Professor Lian, o professor regente será responsável por retirar a chave, operar os equipamentos e trancar o laboratório.";
+        
+        let taRoda = document.getElementById("admin-texto-rodape");
+        if(taRoda) taRoda.value = inf.avisoRodape || "";
         
         let iptTit = document.getElementById("admin-titulo-outros");
         if(iptTit) iptTit.value = inf.tituloOutros || "🔗 Outros Agendamentos:";
@@ -972,6 +1003,22 @@
     }
     function mudarMes(delta) { mesAtual += delta; if (mesAtual > 11) { mesAtual = 0; anoAtual++; } if (mesAtual < 0) { mesAtual = 11; anoAtual--; } gerarCalendario(); }
 
+    function gerarMiniSlot(horarioVal, lblVal, agendamentosDoDia, regrasDoDia, profAltVesp, isVesp, dataDia) {
+        let ag = agendamentosDoDia.find(a => Array.isArray(a.horarios) && a.horarios.includes(horarioVal));
+        if (ag) {
+            if (ag.nomeProfessor === "🔒 BLOQUEADO") {
+                let mot = "Fech."; if (ag.descricaoAula && ag.descricaoAula.includes("Feriado")) mot = "Feriad"; else if (ag.descricaoAula && ag.descricaoAula.includes("Recesso")) mot = "Reces";
+                return `<div class="slot slot-bloqueado" style="text-decoration:none; font-size:8px; padding:2px; min-height:auto;"><b>${lblVal}</b>${mot}</div>`;
+            }
+            return `<div class="slot slot-ocupado" style="font-size:8px; padding:2px; min-height:auto;"><b>${lblVal}</b>${ag.nomeProfessor.split(' ')[0]}</div>`;
+        }
+        
+        let blockRec = regrasDoDia.find(r => r.tipo === "bloqueio" && Array.isArray(r.horarios) && r.horarios.includes(horarioVal));
+        if(blockRec) return `<div class="slot slot-proerd" style="background-color:#ffcdd2; color:#d32f2f; font-size:8px; padding:2px; min-height:auto;"><b>${lblVal}</b>${blockRec.nome.substring(0,6)}</div>`;
+        
+        return `<div class="slot slot-livre" style="font-size:8px; padding:2px; min-height:auto;"><b>${lblVal}</b>Disponível</div>`;
+    }
+
     function gerarCalendario() {
         let elTxt = document.getElementById("mes-ano-texto"); if(elTxt) elTxt.innerText = `${mesesNomes[mesAtual]} ${anoAtual}`; 
         atualizarBotoesMes();
@@ -983,50 +1030,79 @@
         let pDia = new Date(anoAtual, mesAtual, 1).getDay(); let esp = (pDia >= 1 && pDia <= 5) ? pDia - 1 : 0;
         for (let i = 0; i < esp; i++) grid.innerHTML += `<div class="dia vazio"></div>`;
 
+        let chkDetalhes = document.getElementById('chk-detalhes-calendario');
+        let mostrarDetalhes = chkDetalhes && chkDetalhes.checked;
+
         let diasNoMes = new Date(anoAtual, mesAtual + 1, 0).getDate();
         for (let dia = 1; dia <= diasNoMes; dia++) {
             let dataR = new Date(anoAtual, mesAtual, dia); let dSem = dataR.getDay(); if (dSem === 0 || dSem === 6) continue;
-            let divDia = document.createElement("div"); divDia.className = "dia"; divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div>`;
+            let divDia = document.createElement("div"); divDia.className = "dia"; 
+            if(mostrarDetalhes) divDia.style.minHeight = "auto";
+            
+            divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div>`;
             let dataStr = `${dia < 10 ? '0'+dia : dia}/${mesAtual < 9 ? '0'+(mesAtual+1) : (mesAtual+1)}/${anoAtual}`;
             
-            // Regras Visuais Diretas (Anotação Azul)
-            if(cfgGerais && cfgGerais.textosFixos && Array.isArray(cfgGerais.textosFixos)) {
-                let txts = cfgGerais.textosFixos.filter(t => t.diaSemana === dSem);
-                // Converte \n em tag <br> para quebra de linha visual correta
-                txts.forEach(t => { 
-                    let sHtml = t.texto.replace(/\n/g, '<br>');
-                    divDia.innerHTML += `<div class="prof-fixo">${sHtml}</div>`; 
-                });
-            }
-
-            let qtdMatutino = 0; let fechado = false;
+            let pVesp = getProfessorAlternancia(dataR);
             let regrasRec = getRegrasRecorrentesDia(dataR);
-            regrasRec.filter(r => r.tipo === "anotacao").forEach(r => { divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${r.cor};">${r.nome}</div>`; });
-            
-            // Bloqueios recorrentes: Ocultos no visual se forem só da tarde (Vespertino). Exibe se afetar o MATUTINO.
-            regrasRec.filter(r => r.tipo === "bloqueio").forEach(r => {
-                let temMatutino = r.horarios && r.horarios.some(h => !h.includes("Vesp"));
-                if(temMatutino) {
-                    divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 ${r.nome}</div>`;
-                }
-            });
-
             let agDoDia = todosAgendamentosCache.filter(ag => ag.diaNum === dia && ag.mesNum === mesAtual && ag.anoNum === anoAtual);
+            
+            let fechado = false;
             agDoDia.forEach(ag => { 
                 if (ag.nomeProfessor === "🔒 BLOQUEADO" && ag.descricaoAula && (ag.descricaoAula.includes("Feriado") || ag.descricaoAula.includes("Recesso") || ag.descricaoAula.includes("Férias"))) fechado = true;
-                if(ag.nomeProfessor !== "📌 ANOTAÇÃO" && ag.horarios && Array.isArray(ag.horarios)) { ag.horarios.forEach(h => { if (!h.includes("Vesp")) qtdMatutino++; }); }
             });
 
-            if (fechado) { divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div>`; divDia.style.backgroundColor = "#ffcdd2"; divDia.style.borderColor = "#d32f2f"; } 
-            else if (qtdMatutino >= 5) { 
-                let temBloqMat = regrasRec.some(r => r.tipo === "bloqueio" && r.horarios && r.horarios.some(h => !h.includes("Vesp")));
-                if(!temBloqMat) { divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado <br><span style="font-size: 9px; font-weight: normal; color: #555;">(Matutino)</span></div>`; divDia.style.backgroundColor = "#ffebee"; }
-            } 
+            if (fechado) { 
+                divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div>`; 
+                divDia.style.backgroundColor = "#ffcdd2"; 
+                divDia.style.borderColor = "#d32f2f"; 
+            } else {
+                if (mostrarDetalhes) {
+                    // MODO RAIO-X: APENAS MATUTINO
+                    let htmlSlots = `<div style="display:flex; flex-direction:column; gap:1px; margin-top:2px;">`;
+                    let slotsM = ["1º Horário (07:00 - 07:50)", "2º Horário (07:50 - 08:40)", "3º Horário (08:40 - 09:30)", "4º Horário (09:45 - 10:35)", "5º Horário (10:35 - 11:25)"];
+                    htmlSlots += `<div style="font-size:8px; font-weight:bold; color:#004080; text-align:center; background:#e0f7fa; margin-bottom:1px; padding:1px;">MATUTINO</div>`;
+                    slotsM.forEach((h, i) => { htmlSlots += gerarMiniSlot(h, `${i+1}º`, agDoDia, regrasRec, pVesp, false, dataR); });
+                    htmlSlots += `</div>`;
+                    divDia.innerHTML += htmlSlots;
+                }
 
-            // Anotações criadas isoladamente
-            agDoDia.filter(ag => ag.nomeProfessor === "📌 ANOTAÇÃO").forEach(anot => {
-                divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${anot.disciplina};">${anot.descricaoAula}</div>`;
-            });
+                // Regras Visuais Diretas (Anotação Azul)
+                if(cfgGerais && cfgGerais.textosFixos && Array.isArray(cfgGerais.textosFixos)) {
+                    let txts = cfgGerais.textosFixos.filter(t => t.diaSemana === dSem);
+                    txts.forEach(t => { 
+                        let sHtml = t.texto.replace(/\n/g, '<br>');
+                        divDia.innerHTML += `<div class="prof-fixo">${sHtml}</div>`; 
+                    });
+                }
+
+                regrasRec.filter(r => r.tipo === "anotacao").forEach(r => { divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${r.cor};">${r.nome}</div>`; });
+                
+                if (!mostrarDetalhes) {
+                    regrasRec.filter(r => r.tipo === "bloqueio").forEach(r => {
+                        let temMatutino = r.horarios && r.horarios.some(h => !h.includes("Vesp"));
+                        if(temMatutino) divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 ${r.nome}</div>`;
+                    });
+                }
+
+                let qtdMatutino = 0;
+                agDoDia.forEach(ag => { 
+                    if(ag.nomeProfessor !== "📌 ANOTAÇÃO" && ag.horarios && Array.isArray(ag.horarios)) { 
+                        ag.horarios.forEach(h => { if (!h.includes("Vesp")) qtdMatutino++; }); 
+                    }
+                });
+
+                if (!mostrarDetalhes && qtdMatutino >= 5) { 
+                    let temBloqMat = regrasRec.some(r => r.tipo === "bloqueio" && r.horarios && r.horarios.some(h => !h.includes("Vesp")));
+                    if(!temBloqMat) { 
+                        divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado <br><span style="font-size: 9px; font-weight: normal; color: #555;">(Matutino)</span></div>`; 
+                        divDia.style.backgroundColor = "#ffebee"; 
+                    }
+                } 
+
+                agDoDia.filter(ag => ag.nomeProfessor === "📌 ANOTAÇÃO").forEach(anot => {
+                    divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${anot.disciplina};">${anot.descricaoAula}</div>`;
+                });
+            }
 
             divDia.onclick = () => { abrirFormulario(dataStr); }; grid.appendChild(divDia);
         }
@@ -1219,7 +1295,6 @@
                 let popOv = document.getElementById("popup-aviso-global");
                 let txtP = document.getElementById("texto-popup-aviso");
                 if(cfg.avisoAtivo && cfg.avisoTexto) {
-                    // Converter a data do dispositivo local em formato YYYY-MM-DD para evitar bug de fuso horário
                     let hj = new Date();
                     let y = hj.getFullYear(); let m = String(hj.getMonth() + 1).padStart(2, '0'); let d = String(hj.getDate()).padStart(2, '0');
                     let hStr = `${y}-${m}-${d}`;

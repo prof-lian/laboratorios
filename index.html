@@ -23,7 +23,7 @@
         /* ================= POPUP AVISO ================= */
         .popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
         .popup-overlay.mostrar { display: flex; }
-        .popup-box { background: #fff; padding: 25px; border-radius: 8px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-top: 5px solid #e67e22; }
+        .popup-box { background: #fff; padding: 25px; border-radius: 8px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-top: 5px solid #e67e22; max-height: 80vh; overflow-y: auto; }
         .popup-titulo { color: #e67e22; font-size: 20px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .popup-texto { font-size: 16px; color: #333; margin-bottom: 25px; line-height: 1.5; white-space: pre-wrap; text-align: left; }
         .btn-fechar-popup { background: #004080; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; width: 100%; }
@@ -37,9 +37,6 @@
         .btn-voltar-simples:hover { text-decoration: underline; color: #002244; }
 
         /* ================= NAVEGAÇÃO DE MESES ================= */
-        .link-cadastrados { color: #1fb0e6; font-size: 15px; text-decoration: none; cursor: pointer; transition: 0.2s; border-bottom: 1px solid #1fb0e6; padding-bottom: 1px; }
-        .link-cadastrados:hover { color: #004080; border-color: #004080; }
-        
         .nav-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background-color: #f0f4f8; padding: 8px 10px; border-radius: 5px; gap: 10px; }
         .nav-mes button { padding: 8px 15px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: #004080; color: white; border: none; border-radius: 4px; transition: 0.2s; min-height: 40px; text-transform: uppercase; }
         .nav-mes button:hover { background-color: #002244; }
@@ -186,7 +183,7 @@
 <!-- POPUP AVISO GLOBAL -->
 <div class="popup-overlay" id="popup-aviso-global">
     <div class="popup-box">
-        <div class="popup-titulo">📢 Aviso Importante</div>
+        <div class="popup-titulo">📢 Avisos Importantes</div>
         <div class="popup-texto" id="texto-popup-aviso"></div>
         <button class="btn-fechar-popup" onclick="fecharPopupAviso()">Estou Ciente</button>
     </div>
@@ -211,14 +208,10 @@
             ⚠️ Atenção: Em agendamentos fora dos horários de suporte do Professor Lian, o professor regente será responsável por retirar a chave, operar os equipamentos e trancar o laboratório.
         </div>
         
-        <div style="text-align: right; margin-bottom: 5px;">
-            <a class="link-cadastrados" onclick="abrirListaPublica()">Horários já cadastrados &gt;&gt;</a>
-        </div>
-        
         <div style="background: #e3f2fd; padding: 10px; border-radius: 5px; margin-bottom: 15px; display: inline-block;">
             <label style="font-size: 13px; font-weight: bold; color: #004080; cursor: pointer; display: flex; align-items: center; gap: 8px;">
                 <input type="checkbox" id="chk-detalhes-calendario" onchange="gerarCalendario()" style="width: 18px; height: 18px; cursor: pointer;">
-                👁️ Ver horários reservados (Matutino)
+                ⬅️ Selecione p/ ver horarios já reservados (Matutino)
             </label>
         </div>
         
@@ -234,7 +227,6 @@
             <button class="btn-ver-horarios" onclick="abrirListaPublica()">📋 Visualizar horários reservados</button>
         </div>
 
-        <!-- NOVO: TEXTO RODAPÉ (Interface Configs) -->
         <div class="aviso" id="texto-aviso-rodape" style="display:none; margin-top: 25px; margin-bottom: 10px;"></div>
 
         <div class="secao-outros-agendamentos">
@@ -309,7 +301,6 @@
         </div>
         <div class="calendario-semana-wrapper" id="grade-dias-lista"></div>
 
-        <!-- REGRISTROS DA SEMANA -->
         <div class="caixa-branca" style="padding: 15px;">
             <h4 style="margin-top:0; color:#004080; border-bottom:1px solid #ccc; padding-bottom:5px;">📋 Detalhes dos agendamentos desta semana</h4>
             <div class="tabela-wrapper">
@@ -381,7 +372,6 @@
             
             <h2 style="color: #004080; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom: 5px;">➕ Criar Novas Regras / Bloqueios</h2>
 
-            <!-- 1. ANOTAÇÃO FIXA AZUL NO CALENDÁRIO -->
             <div class="caixa-branca" style="border-left: 5px solid #004080; padding: 15px; margin-bottom: 15px;">
                 <h4 style="margin-top:0; margin-bottom: 10px; color:#004080;">👨‍🏫 Anotação Fixa (Azul no Calendário)</h4>
                 <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
@@ -399,7 +389,6 @@
                 </div>
             </div>
 
-            <!-- 2. ALTERNÂNCIA 15/15 -->
             <div class="caixa-branca" style="border-left: 5px solid #8e44ad; padding: 15px; margin-bottom: 15px;">
                 <h4 style="margin-top:0; margin-bottom: 10px; color:#8e44ad;">🔄 Alternância 15/15 Dias (Vespertino)</h4>
                 <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-start;">
@@ -429,7 +418,6 @@
                 </div>
             </div>
 
-            <!-- 3. BLOQUEIO RECORRENTE OU ANOTAÇÃO -->
             <div class="caixa-branca" style="border-left: 5px solid #2ecc71; padding: 15px; margin-bottom: 15px;">
                 <h4 style="margin-top:0; margin-bottom: 10px; color:#2ecc71;">🛑 Bloqueio Recorrente ou 📌 Anotação Visual</h4>
                 <div class="form-layout">
@@ -485,7 +473,6 @@
                 <div style="text-align: right; margin-top: 15px;"><button style="background:#2ecc71; color:#fff; border:none; padding:9px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="adicionarRegraRecorrente()">➕ Adicionar Regra</button></div>
             </div>
 
-            <!-- 4. BLOQUEIO DE DATA ESPECÍFICA (Feriados) -->
             <div class="caixa-branca" style="border-left: 5px solid #e74c3c; padding: 15px; margin-bottom: 30px;">
                 <h4 style="margin-top:0; margin-bottom: 10px; color:#e74c3c;">🔒 Bloquear Dia Único / Feriado / Data Específica</h4>
                 <div class="form-layout">
@@ -525,11 +512,13 @@
 
         </div>
 
-        <!-- ABA 3: POPUP DE AVISO -->
+        <!-- ABA 3: POPUP DE AVISOS (MÚLTIPLOS) -->
         <div id="tab-config-aviso" class="admin-tab-content">
             <div class="caixa-branca" style="border-left: 5px solid #e67e22;">
                 <h3 style="margin-top:0; color:#e67e22;">📢 Configurar Aviso Pop-up</h3>
-                <p style="font-size:13px; color:#555;">O aviso pula na tela de todos que acessarem o site dentro deste período.</p>
+                <p style="font-size:13px; color:#555;">Adicione avisos que pularão na tela dos professores no período configurado.</p>
+                <input type="hidden" id="admin-aviso-id">
+                
                 <div class="form-layout">
                     <div class="coluna-esq">
                         <div class="form-group"><label>Exibir a partir de:</label><input type="date" id="admin-aviso-inicio"></div>
@@ -540,32 +529,35 @@
                     </div>
                 </div>
                 <label style="font-weight:bold; cursor:pointer; display:flex; align-items:center; gap:10px; margin-top:10px;">
-                    <input type="checkbox" id="admin-aviso-ativo" style="width:20px; height:20px;"> Ativar aviso (Interruptor Geral)
+                    <input type="checkbox" id="admin-aviso-ativo" style="width:20px; height:20px;"> Ativar este aviso
                 </label>
-                <div style="text-align: right; margin-top: 15px;"><button class="btn-agendar" style="background:#e67e22; padding: 10px 20px; font-size: 14px; width:auto;" onclick="salvarAvisoGlobal()">📢 Salvar Configuração de Aviso</button></div>
+                
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 15px;">
+                    <button style="background:transparent; border:none; color:#d32f2f; cursor:pointer; font-weight:bold; text-decoration:underline;" onclick="limparFormAviso()">Limpar Campos</button>
+                    <button id="btn-salvar-aviso" class="btn-agendar" style="background:#e67e22; padding: 10px 20px; font-size: 14px; width:auto;" onclick="salvarAvisoGlobal()">➕ Adicionar Novo Aviso</button>
+                </div>
             </div>
+
+            <h2 style="color: #004080; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-top: 30px;">📋 Lista de Avisos (Ativos e Inativos)</h2>
+            <div id="lista-avisos-admin" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px; margin-bottom:15px;"></div>
         </div>
         
         <!-- ABA 4: INTERFACE E LINKS -->
         <div id="tab-config-interface" class="admin-tab-content">
             <div class="caixa-branca" style="border-left: 5px solid #3498db; margin-bottom: 20px;">
                 <h3 style="margin-top:0; color:#3498db;">🎨 Editar Textos da Interface Principal</h3>
-                
                 <div class="form-group">
                     <label>Aviso do Cabeçalho (Fundo cinza / borda vermelha):</label>
                     <textarea id="admin-texto-cabecalho" rows="3" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;"></textarea>
                 </div>
-                
                 <div class="form-group">
                     <label>Aviso de Rodapé (Acima de Outros Agendamentos):</label>
                     <textarea id="admin-texto-rodape" rows="2" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" placeholder="Deixe em branco para ocultar"></textarea>
                 </div>
-                
                 <div class="form-group">
                     <label>Título da Seção de Outros Agendamentos:</label>
                     <input type="text" id="admin-titulo-outros" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;">
                 </div>
-                
                 <div style="text-align: right; margin-top: 10px;">
                     <button style="background:#3498db; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="salvarInterfaceGeral()">💾 Salvar Textos Principais</button>
                 </div>
@@ -573,20 +565,11 @@
 
             <div class="caixa-branca" style="border-left: 5px solid #3498db;">
                 <h3 style="margin-top:0; color:#3498db;">🔗 Botões "Outros Agendamentos"</h3>
-                <p style="font-size:13px; color:#555;">Adicione ou remova os botões azuis da página inicial (links externos).</p>
-                
                 <div class="form-layout" style="align-items: flex-end; background:#f0f4f8; padding:10px; border-radius:5px; margin-bottom:15px;">
-                    <div class="form-group" style="flex:1; margin-bottom:0;">
-                        <label style="font-size:11px;">Nome no Botão (Ex: Lab Ciências):</label>
-                        <input type="text" id="admin-btn-label">
-                    </div>
-                    <div class="form-group" style="flex:2; margin-bottom:0;">
-                        <label style="font-size:11px;">Link (URL Completa com https://):</label>
-                        <input type="text" id="admin-btn-url">
-                    </div>
+                    <div class="form-group" style="flex:1; margin-bottom:0;"><label style="font-size:11px;">Nome no Botão (Ex: Lab Ciências):</label><input type="text" id="admin-btn-label"></div>
+                    <div class="form-group" style="flex:2; margin-bottom:0;"><label style="font-size:11px;">Link (URL Completa com https://):</label><input type="text" id="admin-btn-url"></div>
                     <button style="background:#3498db; color:#fff; border:none; padding:10px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="addBotaoOutros()">➕ Adicionar</button>
                 </div>
-                
                 <h4 style="margin: 10px 0 5px 0; color:#555;">Botões Cadastrados Atualmente:</h4>
                 <div id="lista-botoes-outros" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px;"></div>
             </div>
@@ -625,27 +608,34 @@
         "1º Hor. Vesp (13:00 - 13:50)", "2º Hor. Vesp (13:50 - 14:40)", "3º Hor. Vesp (14:40 - 15:30)", "4º Hor. Vesp (15:45 - 16:35)", "5º Hor. Vesp (16:35 - 17:25)"
     ];
 
-    // ESTADO DAS CONFIGURAÇÕES GLOBAIS
-    let cfgGerais = { 
-        textosFixos: [], 
-        alternanciaVesp: null, 
-        recorrentes: [],
-        interface: {
-            avisoCabecalho: "⚠️ Atenção: Em agendamentos fora dos horários de suporte do Professor Lian, o professor regente será responsável por retirar a chave, operar os equipamentos e trancar o laboratório.",
-            avisoRodape: "",
-            tituloOutros: "🔗 Outros Agendamentos:",
-            botoesOutros: [
-                {id: "b1", label: "💻 Lab 01 Informática", url: "https://www.professoraangela.com.br/agendamento/"},
-                {id: "b2", label: "🔬 Lab Ciências", url: "https://professoraangela.com.br/ciencias/"}
-            ]
+    let cfgGerais = { textosFixos: [], alternanciaVesp: null, recorrentes: [], interface: {} };
+    let cfgAvisos = { avisos: [] };
+
+    // FUNÇÃO QUE PERMITE VOLTAR PELO NAVEGADOR
+    function mudarTela(idTela, adicionarAoHistorico = true) { 
+        document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa')); 
+        let el = document.getElementById(idTela); 
+        if(el) el.classList.add('ativa'); 
+        
+        if (adicionarAoHistorico) {
+            try { history.pushState({ tela: idTela }, "", "#" + idTela); } catch(e) { console.log(e); }
         }
-    };
+    }
+
+    window.addEventListener('popstate', function(event) {
+        if (event.state && event.state.tela) {
+            mudarTela(event.state.tela, false);
+        } else {
+            mudarTela('tela-calendario', false);
+        }
+    });
 
     // PROCESSADORES DE REGRAS
     function getProfessorAlternancia(dataAlvo) {
         if(!cfgGerais || !cfgGerais.alternanciaVesp || !cfgGerais.alternanciaVesp.dataInicioLian) return null;
         if(dataAlvo.getDay() !== parseInt(cfgGerais.alternanciaVesp.diaSemana)) return null;
         let dBase = new Date(cfgGerais.alternanciaVesp.dataInicioLian + "T12:00:00");
+        if(isNaN(dBase.getTime())) return null;
         let data1 = Date.UTC(dBase.getFullYear(), dBase.getMonth(), dBase.getDate());
         let data2 = Date.UTC(dataAlvo.getFullYear(), dataAlvo.getMonth(), dataAlvo.getDate());
         if (data2 < data1) return null;
@@ -658,7 +648,7 @@
         let diaAtivo = dataAlvo.getDay(); 
         let y = dataAlvo.getFullYear(); let m = String(dataAlvo.getMonth() + 1).padStart(2, '0'); let d = String(dataAlvo.getDate()).padStart(2, '0');
         let dataIso = `${y}-${m}-${d}`;
-        return cfgGerais.recorrentes.filter(r => (r.dias || []).includes(diaAtivo) && dataIso >= r.dataInicio && dataIso <= r.dataFim);
+        return cfgGerais.recorrentes.filter(r => (r.dias || []).includes(diaAtivo) && dataIso >= (r.dataInicio || "0000") && dataIso <= (r.dataFim || "9999"));
     }
 
     // UTILITÁRIOS
@@ -671,8 +661,6 @@
         if(!arrayHorarios || !Array.isArray(arrayHorarios)) return [];
         return arrayHorarios.sort((a, b) => ordemHorarios.indexOf(a) - ordemHorarios.indexOf(b)); 
     }
-    
-    function mudarTela(idTela) { document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa')); let el = document.getElementById(idTela); if(el) el.classList.add('ativa'); }
     
     function fecharFormulario() {
         idAgendamentoEdicao = null; const btn = document.getElementById("btn-salvar"); if(btn) { btn.innerHTML = "📅 AGENDAR AULA"; btn.disabled = false; }
@@ -721,7 +709,7 @@
         if (senha === SENHA_ADMIN) {
             try {
                 mesTabelaGlobal = new Date().getMonth(); anoTabelaGlobal = new Date().getFullYear();
-                mudarTela('tela-admin'); renderizarTabelasMensais(); preencherFormulariosConfig();
+                mudarTela('tela-admin'); renderizarTabelasMensais(); preencherFormulariosConfig(); renderListaAvisos();
             } catch (e) {
                 alert("Erro interno ao abrir o painel. Verifique o console."); console.error(e);
             }
@@ -851,7 +839,7 @@
         if(cfgGerais && cfgGerais.textosFixos && Array.isArray(cfgGerais.textosFixos)) {
             cfgGerais.textosFixos.forEach(t => {
                 let dNome = diasSemanaNomes[t.diaSemana];
-                let safeHtml = t.texto.replace(/\n/g, ' '); 
+                let safeHtml = (t.texto || "").replace(/\n/g, ' '); 
                 htmlFixos += `<div class="lista-condensada-item">
                     <span>🟦 <strong>Anotação Fixa</strong> - ${dNome}s - ${safeHtml}</span>
                     <button style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;" onclick="removerAnotacaoFixa('${t.id}')">Excluir</button>
@@ -914,30 +902,148 @@
         if(el) el.innerHTML = html || "<span style='font-size:13px; color:#777;'>Nenhum bloqueio extra neste mês.</span>";
     }
 
-    // --- AVISOS POPUP ---
-    function fecharPopupAviso() { 
-        let el = document.getElementById("popup-aviso-global"); if(el) el.classList.remove("mostrar"); 
-        let tEl = document.getElementById("texto-popup-aviso");
-        if(tEl) sessionStorage.setItem("avisoLido_" + btoa(unescape(encodeURIComponent(tEl.innerText))), "true"); 
+    // --- AVISOS POPUP MÚLTIPLOS ---
+    function limparFormAviso() {
+        document.getElementById("admin-aviso-id").value = "";
+        document.getElementById("admin-aviso-texto").value = "";
+        document.getElementById("admin-aviso-inicio").value = "";
+        document.getElementById("admin-aviso-fim").value = "";
+        document.getElementById("admin-aviso-ativo").checked = false;
+        document.getElementById("btn-salvar-aviso").innerHTML = "➕ Adicionar Novo Aviso";
     }
-    
+
+    function renderListaAvisos() {
+        let html = "";
+        if(!cfgAvisos || !cfgAvisos.avisos || cfgAvisos.avisos.length === 0) {
+            html = "<span style='font-size:13px; color:#777;'>Nenhum aviso cadastrado.</span>";
+        } else {
+            cfgAvisos.avisos.forEach(a => {
+                let status = a.ativo ? "<span style='color:green;font-weight:bold;'>Ativo</span>" : "<span style='color:red;font-weight:bold;'>Inativo</span>";
+                let periodo = (a.inicio && a.fim) ? `${a.inicio.split('-').reverse().join('/')} a ${a.fim.split('-').reverse().join('/')}` : "Sempre";
+                let tHtml = (a.texto || "").replace(/\n/g, '<br>');
+                html += `<div class="lista-condensada-item" style="flex-direction:column; align-items:flex-start; margin-bottom: 10px; border-bottom: 2px dashed #eee; padding-bottom: 10px;">
+                    <div style="width:100%; display:flex; justify-content:space-between; margin-bottom:5px;">
+                        <span>${status} | 🗓️ ${periodo}</span>
+                        <div>
+                            <button style="color:#004080; background:none; border:none; cursor:pointer; font-weight:bold; margin-right:10px;" onclick="editarAviso('${a.id}')">Editar</button>
+                            <button style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;" onclick="excluirAviso('${a.id}')">Excluir</button>
+                        </div>
+                    </div>
+                    <div style="font-size:12px; color:#444; background:#f9f9f9; padding:5px; border-radius:3px; width:100%; box-sizing:border-box;">${tHtml}</div>
+                </div>`;
+            });
+        }
+        let lstAv = document.getElementById("lista-avisos-admin");
+        if(lstAv) lstAv.innerHTML = html;
+    }
+
+    function editarAviso(id) {
+        if(!cfgAvisos || !cfgAvisos.avisos) return;
+        let a = cfgAvisos.avisos.find(x => x.id === id);
+        if(!a) return;
+        document.getElementById("admin-aviso-id").value = a.id || "";
+        document.getElementById("admin-aviso-texto").value = a.texto || "";
+        document.getElementById("admin-aviso-inicio").value = a.inicio || "";
+        document.getElementById("admin-aviso-fim").value = a.fim || "";
+        document.getElementById("admin-aviso-ativo").checked = !!a.ativo;
+        document.getElementById("btn-salvar-aviso").innerText = "💾 Atualizar Aviso";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function excluirAviso(id) {
+        if(confirm("Deseja excluir este aviso?")) {
+            if(!cfgAvisos || !cfgAvisos.avisos) return;
+            cfgAvisos.avisos = cfgAvisos.avisos.filter(x => x.id !== id);
+            try { 
+                await db.collection("agendamentos").doc("CONFIG_AVISO_GERAL").set(cfgAvisos); 
+                renderListaAvisos();
+            } catch(e) { alert("❌ Erro ao excluir."); }
+        }
+    }
+
     async function salvarAvisoGlobal() {
+        const idEdit = document.getElementById("admin-aviso-id").value;
         const txt = document.getElementById("admin-aviso-texto").value.trim(); 
         const ativo = document.getElementById("admin-aviso-ativo").checked; 
         const inicio = document.getElementById("admin-aviso-inicio").value; 
         const fim = document.getElementById("admin-aviso-fim").value;
 
-        if (ativo && (!inicio || !fim || !txt)) {
-            alert("⚠️ Para ativar o aviso, você precisa preencher a Mensagem, a Data Inicial e a Data Final.");
-            return;
+        if(!txt) return alert("⚠️ Digite a mensagem do aviso.");
+        if (ativo && (!inicio || !fim)) {
+            return alert("⚠️ Para ativar o aviso, você precisa preencher a Data Inicial e a Data Final.");
+        }
+
+        if(!cfgAvisos) cfgAvisos = { avisos: [] };
+        if(!cfgAvisos.avisos) cfgAvisos.avisos = [];
+
+        let novoAviso = {
+            id: idEdit ? idEdit : Date.now().toString(),
+            texto: txt,
+            ativo: ativo,
+            inicio: inicio,
+            fim: fim
+        };
+
+        if (idEdit) {
+            let idx = cfgAvisos.avisos.findIndex(x => x.id === idEdit);
+            if(idx !== -1) cfgAvisos.avisos[idx] = novoAviso;
+        } else {
+            cfgAvisos.avisos.push(novoAviso);
         }
 
         try { 
-            await db.collection("agendamentos").doc("CONFIG_AVISO_GERAL").set({ avisoTexto: txt, avisoAtivo: ativo, avisoInicio: inicio, avisoFim: fim }, { merge: true }); 
-            alert("✅ Aviso global atualizado!"); 
+            await db.collection("agendamentos").doc("CONFIG_AVISO_GERAL").set(cfgAvisos); 
+            alert("✅ Aviso salvo com sucesso!");
+            limparFormAviso();
         } catch(e) { 
             console.error(e);
             alert("❌ Erro ao salvar: " + e.message); 
+        }
+    }
+
+    function verificarAvisosAtivos() {
+        let hj = new Date();
+        let y = hj.getFullYear(); let m = String(hj.getMonth() + 1).padStart(2, '0'); let d = String(hj.getDate()).padStart(2, '0');
+        let hStr = `${y}-${m}-${d}`;
+        
+        let popOv = document.getElementById("popup-aviso-global");
+        let txtP = document.getElementById("texto-popup-aviso");
+        
+        if(!cfgAvisos || !cfgAvisos.avisos || cfgAvisos.avisos.length === 0) {
+            if(popOv) popOv.classList.remove("mostrar");
+            return;
+        }
+
+        let avisosExibir = cfgAvisos.avisos.filter(a => {
+            if(!a.ativo) return false;
+            let inPer = true;
+            if(a.inicio && a.fim) inPer = (hStr >= a.inicio && hStr <= a.fim);
+            let jaLido = sessionStorage.getItem("avisoLido_" + btoa(unescape(encodeURIComponent(a.texto || ""))));
+            return inPer && !jaLido;
+        });
+
+        if(avisosExibir.length > 0) {
+            if(txtP) txtP.innerHTML = avisosExibir.map(a => (a.texto || "").replace(/\n/g, '<br>')).join("<hr style='border:1px dashed #ccc; margin: 15px 0;'>");
+            if(popOv) popOv.classList.add("mostrar");
+        } else {
+            if(popOv) popOv.classList.remove("mostrar");
+        }
+    }
+    
+    function fecharPopupAviso() { 
+        let popOv = document.getElementById("popup-aviso-global"); 
+        if(popOv) popOv.classList.remove("mostrar"); 
+        
+        let hj = new Date();
+        let y = hj.getFullYear(); let m = String(hj.getMonth() + 1).padStart(2, '0'); let d = String(hj.getDate()).padStart(2, '0');
+        let hStr = `${y}-${m}-${d}`;
+        
+        if(cfgAvisos && Array.isArray(cfgAvisos.avisos)) {
+            cfgAvisos.avisos.forEach(a => {
+                if(a.ativo && a.inicio && a.fim && hStr >= a.inicio && hStr <= a.fim) {
+                    sessionStorage.setItem("avisoLido_" + btoa(unescape(encodeURIComponent(a.texto || ""))), "true"); 
+                }
+            });
         }
     }
 
@@ -1003,19 +1109,18 @@
     }
     function mudarMes(delta) { mesAtual += delta; if (mesAtual > 11) { mesAtual = 0; anoAtual++; } if (mesAtual < 0) { mesAtual = 11; anoAtual--; } gerarCalendario(); }
 
-    function gerarMiniSlot(horarioVal, lblVal, agendamentosDoDia, regrasDoDia, profAltVesp, isVesp, dataDia) {
+    function gerarMiniSlot(horarioVal, lblVal, agendamentosDoDia, regrasDoDia, dataDia) {
+        let blockRec = regrasDoDia.find(r => r.tipo === "bloqueio" && Array.isArray(r.horarios) && r.horarios.includes(horarioVal));
+        if(blockRec) return `<div class="slot slot-proerd" style="background-color:#ffcdd2; color:#d32f2f; font-size:8px; padding:2px; min-height:auto;"><b>${lblVal}</b>${(blockRec.nome||"").substring(0,6)}</div>`;
+        
         let ag = agendamentosDoDia.find(a => Array.isArray(a.horarios) && a.horarios.includes(horarioVal));
         if (ag) {
             if (ag.nomeProfessor === "🔒 BLOQUEADO") {
                 let mot = "Fech."; if (ag.descricaoAula && ag.descricaoAula.includes("Feriado")) mot = "Feriad"; else if (ag.descricaoAula && ag.descricaoAula.includes("Recesso")) mot = "Reces";
                 return `<div class="slot slot-bloqueado" style="text-decoration:none; font-size:8px; padding:2px; min-height:auto;"><b>${lblVal}</b>${mot}</div>`;
             }
-            return `<div class="slot slot-ocupado" style="font-size:8px; padding:2px; min-height:auto;"><b>${lblVal}</b>${ag.nomeProfessor.split(' ')[0]}</div>`;
+            return `<div class="slot slot-ocupado" style="font-size:8px; padding:2px; min-height:auto;"><b>${lblVal}</b>${(ag.nomeProfessor||"").split(' ')[0]}</div>`;
         }
-        
-        let blockRec = regrasDoDia.find(r => r.tipo === "bloqueio" && Array.isArray(r.horarios) && r.horarios.includes(horarioVal));
-        if(blockRec) return `<div class="slot slot-proerd" style="background-color:#ffcdd2; color:#d32f2f; font-size:8px; padding:2px; min-height:auto;"><b>${lblVal}</b>${blockRec.nome.substring(0,6)}</div>`;
-        
         return `<div class="slot slot-livre" style="font-size:8px; padding:2px; min-height:auto;"><b>${lblVal}</b>Disponível</div>`;
     }
 
@@ -1042,7 +1147,6 @@
             divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div>`;
             let dataStr = `${dia < 10 ? '0'+dia : dia}/${mesAtual < 9 ? '0'+(mesAtual+1) : (mesAtual+1)}/${anoAtual}`;
             
-            let pVesp = getProfessorAlternancia(dataR);
             let regrasRec = getRegrasRecorrentesDia(dataR);
             let agDoDia = todosAgendamentosCache.filter(ag => ag.diaNum === dia && ag.mesNum === mesAtual && ag.anoNum === anoAtual);
             
@@ -1057,51 +1161,45 @@
                 divDia.style.borderColor = "#d32f2f"; 
             } else {
                 if (mostrarDetalhes) {
-                    // MODO RAIO-X: APENAS MATUTINO
+                    // MODO RAIO-X: APENAS MATUTINO (SEM TEXTO "MATUTINO")
                     let htmlSlots = `<div style="display:flex; flex-direction:column; gap:1px; margin-top:2px;">`;
                     let slotsM = ["1º Horário (07:00 - 07:50)", "2º Horário (07:50 - 08:40)", "3º Horário (08:40 - 09:30)", "4º Horário (09:45 - 10:35)", "5º Horário (10:35 - 11:25)"];
-                    htmlSlots += `<div style="font-size:8px; font-weight:bold; color:#004080; text-align:center; background:#e0f7fa; margin-bottom:1px; padding:1px;">MATUTINO</div>`;
-                    slotsM.forEach((h, i) => { htmlSlots += gerarMiniSlot(h, `${i+1}º`, agDoDia, regrasRec, pVesp, false, dataR); });
+                    slotsM.forEach((h, i) => { htmlSlots += gerarMiniSlot(h, `${i+1}º`, agDoDia, regrasRec, dataR); });
                     htmlSlots += `</div>`;
                     divDia.innerHTML += htmlSlots;
-                }
 
-                // Regras Visuais Diretas (Anotação Azul)
-                if(cfgGerais && cfgGerais.textosFixos && Array.isArray(cfgGerais.textosFixos)) {
-                    let txts = cfgGerais.textosFixos.filter(t => t.diaSemana === dSem);
-                    txts.forEach(t => { 
-                        let sHtml = t.texto.replace(/\n/g, '<br>');
-                        divDia.innerHTML += `<div class="prof-fixo">${sHtml}</div>`; 
-                    });
-                }
+                } else {
+                    // MODO PADRÃO
+                    // Regras Visuais Diretas (Anotação Azul)
+                    if(cfgGerais && cfgGerais.textosFixos && Array.isArray(cfgGerais.textosFixos)) {
+                        let txts = cfgGerais.textosFixos.filter(t => t.diaSemana === dSem);
+                        txts.forEach(t => { 
+                            let sHtml = (t.texto || "").replace(/\n/g, '<br>');
+                            divDia.innerHTML += `<div class="prof-fixo">${sHtml}</div>`; 
+                        });
+                    }
 
-                regrasRec.filter(r => r.tipo === "anotacao").forEach(r => { divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${r.cor};">${r.nome}</div>`; });
-                
-                if (!mostrarDetalhes) {
+                    let qtdMatutino = 0; 
+                    regrasRec.filter(r => r.tipo === "anotacao").forEach(r => { divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${r.cor || '#ccc'};">${r.nome || ''}</div>`; });
+                    
                     regrasRec.filter(r => r.tipo === "bloqueio").forEach(r => {
-                        let temMatutino = r.horarios && r.horarios.some(h => !h.includes("Vesp"));
-                        if(temMatutino) divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 ${r.nome}</div>`;
+                        let temMatutino = r.horarios && Array.isArray(r.horarios) && r.horarios.some(h => typeof h === 'string' && !h.includes("Vesp"));
+                        if(temMatutino) divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 ${r.nome || 'Fechado'}</div>`;
+                    });
+
+                    agDoDia.forEach(ag => { 
+                        if(ag.nomeProfessor !== "📌 ANOTAÇÃO" && ag.horarios && Array.isArray(ag.horarios)) { ag.horarios.forEach(h => { if (typeof h === 'string' && !h.includes("Vesp")) qtdMatutino++; }); }
+                    });
+
+                    if (qtdMatutino >= 5) { 
+                        let temBloqMat = regrasRec.some(r => r.tipo === "bloqueio" && r.horarios && Array.isArray(r.horarios) && r.horarios.some(h => typeof h === 'string' && !h.includes("Vesp")));
+                        if(!temBloqMat) { divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado <br><span style="font-size: 9px; font-weight: normal; color: #555;">(Matutino)</span></div>`; divDia.style.backgroundColor = "#ffebee"; }
+                    } 
+
+                    agDoDia.filter(ag => ag.nomeProfessor === "📌 ANOTAÇÃO").forEach(anot => {
+                        divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${anot.disciplina || '#ccc'};">${anot.descricaoAula || ''}</div>`;
                     });
                 }
-
-                let qtdMatutino = 0;
-                agDoDia.forEach(ag => { 
-                    if(ag.nomeProfessor !== "📌 ANOTAÇÃO" && ag.horarios && Array.isArray(ag.horarios)) { 
-                        ag.horarios.forEach(h => { if (!h.includes("Vesp")) qtdMatutino++; }); 
-                    }
-                });
-
-                if (!mostrarDetalhes && qtdMatutino >= 5) { 
-                    let temBloqMat = regrasRec.some(r => r.tipo === "bloqueio" && r.horarios && r.horarios.some(h => !h.includes("Vesp")));
-                    if(!temBloqMat) { 
-                        divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 Lotado <br><span style="font-size: 9px; font-weight: normal; color: #555;">(Matutino)</span></div>`; 
-                        divDia.style.backgroundColor = "#ffebee"; 
-                    }
-                } 
-
-                agDoDia.filter(ag => ag.nomeProfessor === "📌 ANOTAÇÃO").forEach(anot => {
-                    divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${anot.disciplina};">${anot.descricaoAula}</div>`;
-                });
             }
 
             divDia.onclick = () => { abrirFormulario(dataStr); }; grid.appendChild(divDia);
@@ -1179,7 +1277,7 @@
     function gerarHtmlSlot(horarioVal, lblVal, agendamentosDoDia, regrasDoDia, profAltVesp, isVesp, dataDia) {
         if(isVesp && profAltVesp && cfgGerais && cfgGerais.alternanciaVesp && Array.isArray(cfgGerais.alternanciaVesp.horarios) && cfgGerais.alternanciaVesp.horarios.includes(horarioVal)) return `<div class="slot slot-ocupado" style="background-color: #e8eaf6; color: #004080;"><b>${lblVal}</b>${profAltVesp.split(' ')[1]}</div>`;
         let blockRec = regrasDoDia.find(r => r.tipo === "bloqueio" && Array.isArray(r.horarios) && r.horarios.includes(horarioVal));
-        if(blockRec) return `<div class="slot slot-proerd" style="background-color:#ffcdd2; color:#d32f2f;"><b>${lblVal}</b>${blockRec.nome.substring(0,6)}</div>`;
+        if(blockRec) return `<div class="slot slot-proerd" style="background-color:#ffcdd2; color:#d32f2f;"><b>${lblVal}</b>${(blockRec.nome||"").substring(0,6)}</div>`;
         
         let ag = agendamentosDoDia.find(a => Array.isArray(a.horarios) && a.horarios.includes(horarioVal));
         if (ag) {
@@ -1187,7 +1285,7 @@
                 let mot = "Fechado"; if (ag.descricaoAula && ag.descricaoAula.includes("Feriado")) mot = "Feriado"; else if (ag.descricaoAula && ag.descricaoAula.includes("Recesso")) mot = "Recesso";
                 return `<div class="slot slot-bloqueado" style="text-decoration:none;"><b>${lblVal}</b>${mot}</div>`;
             }
-            return `<div class="slot slot-ocupado"><b>${lblVal}</b>${ag.nomeProfessor.split(' ')[0]}<br><span class="slot-disciplina">${ag.disciplina || ''}</span></div>`;
+            return `<div class="slot slot-ocupado"><b>${lblVal}</b>${(ag.nomeProfessor||"").split(' ')[0]}<br><span class="slot-disciplina">${ag.disciplina || ''}</span></div>`;
         }
         return `<div class="slot slot-livre"><b>${lblVal}</b>-</div>`;
     }
@@ -1198,7 +1296,7 @@
         let agsSemana = todosAgendamentosCache.filter(ag => ag.dataParaOrdenacao >= dataSemanaVisao && ag.dataParaOrdenacao <= sexta);
         const gridLista = document.getElementById("grade-dias-lista"); if(!gridLista) return; gridLista.innerHTML = ""; let htmlGrid = "";
 
-        htmlGrid += `<div class="calendario-semana"><div class="dia-semana-header">SEG</div><div class="dia-semana-header">TER</div><div class="dia-semana-header">QUA</div><div class="dia-semana-header">QUI</div><div class="dia-semana-header">SEX</div><div class="turno-merged-header">MATUTINO</div>`;
+        htmlGrid += `<div class="calendario-semana"><div class="dia-semana-header">SEG</div><div class="dia-semana-header">TER</div><div class="dia-semana-header">QUA</div><div class="dia-semana-header">QUI</div><div class="dia-semana-header">SEX</div>`;
         for (let h = 0; h < 5; h++) { 
             for (let d = 0; d < 5; d++) { 
                 let dDia = new Date(dataSemanaVisao); dDia.setDate(dDia.getDate() + d);
@@ -1272,6 +1370,8 @@
     // ================= CARREGAMENTO INICIAL =================
     window.onload = () => { 
         
+        try { history.replaceState({ tela: 'tela-calendario' }, "", "#tela-calendario"); } catch(e) {}
+        
         // Listener Configs/Regras
         db.collection("agendamentos").doc("CONFIG_REGRAS_V2").onSnapshot(doc => {
             if(doc.exists) { 
@@ -1291,54 +1391,72 @@
         // Listener Avisos Globais
         db.collection("agendamentos").doc("CONFIG_AVISO_GERAL").onSnapshot(doc => {
             if(doc.exists) {
-                let cfg = doc.data();
-                let popOv = document.getElementById("popup-aviso-global");
-                let txtP = document.getElementById("texto-popup-aviso");
-                if(cfg.avisoAtivo && cfg.avisoTexto) {
-                    let hj = new Date();
-                    let y = hj.getFullYear(); let m = String(hj.getMonth() + 1).padStart(2, '0'); let d = String(hj.getDate()).padStart(2, '0');
-                    let hStr = `${y}-${m}-${d}`;
-                    
-                    let inPer = true; if(cfg.avisoInicio && cfg.avisoFim) inPer = (hStr >= cfg.avisoInicio && hStr <= cfg.avisoFim);
-                    if(inPer) {
-                        if(txtP) txtP.innerText = cfg.avisoTexto;
-                        if(popOv && !sessionStorage.getItem("avisoLido_" + btoa(unescape(encodeURIComponent(cfg.avisoTexto))))) popOv.classList.add("mostrar");
-                    } else { if(popOv) popOv.classList.remove("mostrar"); }
-                } else { if(popOv) popOv.classList.remove("mostrar"); }
-                
-                let adTxt = document.getElementById("admin-aviso-texto");
-                if(adTxt) {
-                    adTxt.value = cfg.avisoTexto || ""; 
-                    let adAt = document.getElementById("admin-aviso-ativo"); if(adAt) adAt.checked = cfg.avisoAtivo || false;
-                    let adIn = document.getElementById("admin-aviso-inicio"); if(adIn && cfg.avisoInicio) adIn.value = cfg.avisoInicio; 
-                    let adFim = document.getElementById("admin-aviso-fim"); if(adFim && cfg.avisoFim) adFim.value = cfg.avisoFim;
+                let d = doc.data();
+                // Migração de aviso antigo se houver
+                if (d.avisoTexto && (!d.avisos || d.avisos.length === 0)) {
+                    cfgAvisos.avisos = [{ id: Date.now().toString(), texto: d.avisoTexto, ativo: d.avisoAtivo, inicio: d.avisoInicio, fim: d.avisoFim }];
+                } else if (d.avisos) {
+                    cfgAvisos.avisos = d.avisos;
+                } else {
+                    cfgAvisos.avisos = [];
                 }
+            } else {
+                cfgAvisos.avisos = [];
             }
+            
+            verificarAvisosAtivos();
+            let elAdm = document.getElementById('tela-admin');
+            if (elAdm && elAdm.classList.contains('ativa')) renderListaAvisos();
         });
         
         // Listener Agendamentos (Filtra documentos de configuração para não bugar o calendário)
+        let _limpezaFeita = false;
         db.collection("agendamentos").onSnapshot(s => {
-            todosAgendamentosCache = [];
-            s.forEach(d => { 
-                if(d.id.startsWith("CONFIG_")) return; // Impede leitura das regras como agendamentos
+            try {
+                todosAgendamentosCache = [];
+                s.forEach(d => { 
+                    if(d.id.startsWith("CONFIG_")) return; 
+                    
+                    let a = d.data(); a.id = d.id; 
+                    
+                    a.horarios = Array.isArray(a.horarios) ? a.horarios : []; 
+                    a.nomeProfessor = String(a.nomeProfessor || ""); 
+                    a.descricaoAula = String(a.descricaoAula || ""); 
+                    a.disciplina = String(a.disciplina || "");
+                    
+                    // FAXINA: Ignora na leitura as antigas marcações em azul
+                    if (a.nomeProfessor === "📌 ANOTAÇÃO" && a.descricaoAula.toLowerCase().includes("lian")) {
+                        if(!_limpezaFeita) db.collection("agendamentos").doc(a.id).delete().catch(e => console.log(e));
+                        return; 
+                    }
+
+                    let p = String(a.data || "").split('/'); 
+                    if(p.length===3){ 
+                        a.diaNum = parseInt(p[0]); 
+                        a.mesNum = parseInt(p[1])-1; 
+                        a.anoNum = parseInt(p[2]); 
+                        a.dataParaOrdenacao = new Date(a.anoNum, a.mesNum, a.diaNum); 
+                    } else { 
+                        a.dataParaOrdenacao = new Date(0); 
+                    }
+                    
+                    todosAgendamentosCache.push(a);
+                });
+                _limpezaFeita = true;
                 
-                let a = d.data(); a.id = d.id; 
-                a.horarios = a.horarios || []; a.nomeProfessor = a.nomeProfessor || ""; a.descricaoAula = a.descricaoAula || ""; a.disciplina = a.disciplina || "";
-                let p = (a.data || "").split('/'); 
-                if(p.length===3){ a.diaNum = parseInt(p[0]); a.mesNum = parseInt(p[1])-1; a.anoNum = parseInt(p[2]); a.dataParaOrdenacao = new Date(a.anoNum, a.mesNum, a.diaNum); } 
-                else { a.dataParaOrdenacao = new Date(0); }
-                todosAgendamentosCache.push(a);
-            });
-            todosAgendamentosCache.sort((a, b) => a.dataParaOrdenacao - b.dataParaOrdenacao);
-            
-            let elCal = document.getElementById('tela-calendario');
-            let elPub = document.getElementById('tela-lista-publica');
-            let elMen = document.getElementById('tela-relatorio-mensal');
-            let elAdm = document.getElementById('tela-admin');
-            
-            if (elCal && elCal.classList.contains('ativa')) gerarCalendario();
-            else if (elPub && elPub.classList.contains('ativa')) renderizarGradeSemanal();
-            else if ((elMen && elMen.classList.contains('ativa')) || (elAdm && elAdm.classList.contains('ativa'))) renderizarTabelasMensais();
+                todosAgendamentosCache.sort((a, b) => a.dataParaOrdenacao - b.dataParaOrdenacao);
+                
+                let elCal = document.getElementById('tela-calendario');
+                let elPub = document.getElementById('tela-lista-publica');
+                let elMen = document.getElementById('tela-relatorio-mensal');
+                let elAdm = document.getElementById('tela-admin');
+                
+                if (elCal && elCal.classList.contains('ativa')) gerarCalendario();
+                else if (elPub && elPub.classList.contains('ativa')) renderizarGradeSemanal();
+                else if ((elMen && elMen.classList.contains('ativa')) || (elAdm && elAdm.classList.contains('ativa'))) renderizarTabelasMensais();
+            } catch (err) {
+                console.error("Erro crítico ao processar agendamentos: ", err);
+            }
         }, e => console.error(e));
     };
 </script>

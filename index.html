@@ -37,6 +37,9 @@
         .btn-voltar-simples:hover { text-decoration: underline; color: #002244; }
 
         /* ================= NAVEGAÇÃO DE MESES ================= */
+        .link-cadastrados { color: #1fb0e6; font-size: 15px; text-decoration: none; cursor: pointer; transition: 0.2s; border-bottom: 1px solid #1fb0e6; padding-bottom: 1px; }
+        .link-cadastrados:hover { color: #004080; border-color: #004080; }
+        
         .nav-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background-color: #f0f4f8; padding: 8px 10px; border-radius: 5px; gap: 10px; }
         .nav-mes button { padding: 8px 15px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: #004080; color: white; border: none; border-radius: 4px; transition: 0.2s; min-height: 40px; text-transform: uppercase; }
         .nav-mes button:hover { background-color: #002244; }
@@ -46,8 +49,7 @@
         .nav-mes.navy-nav button { background-color: white; color: #004080; border: 1px solid white; }
 
         /* ================= CALENDÁRIO INICIAL ================= */
-        .instrucoes { font-size: 14px; margin-bottom: 15px; text-align: left; line-height: 1.4; }
-        .aviso { background-color: #f9f9f9; padding: 10px; border-radius: 4px; border: 1px solid #eee; border-left: 5px solid #d32f2f; margin-top: 10px; font-size: 13px; text-align: justify; width: 100%; box-sizing: border-box; }
+        .aviso { background-color: #f9f9f9; padding: 12px; border-radius: 4px; border: 1px solid #eee; border-left: 5px solid #d32f2f; margin-bottom: 15px; font-size: 13px; text-align: justify; width: 100%; box-sizing: border-box; line-height: 1.5;}
         
         .calendario-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; text-align: left; margin-bottom: 20px; }
         .dia-semana { background-color: #004080; color: white; padding: 8px 0; text-align: center; font-size: 13px; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
@@ -58,10 +60,8 @@
         .dia-numero { font-size: 16px; font-weight: bold; width: 100%; text-align: left; margin-bottom: 2px; color: #000; }
         .reserve-agora { font-size: 11px; margin-top: auto; font-weight: bold; padding-top: 5px; text-align: center; line-height: 1.2; }
         
-        /* ESTILO EXATO PROF LIAN MATUTINO */
+        /* ESTILOS DE ANOTAÇÕES VISUAIS */
         .prof-fixo { font-size: 10px; color: #004080; font-weight: bold; margin-top: 2px; text-align: left; line-height: 1.2; }
-        
-        /* ESTILO LIMPO ANOTAÇÃO VISUAL */
         .anotacao-visual { background-color: #fafafa; color: #444; border: 1px solid #eee; border-left-width: 4px; padding: 4px; font-size: 10px; font-weight: bold; border-radius: 3px; margin-top: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); text-align: left; }
 
         .container-btn-horarios { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; border-top: 1px dotted #ccc; padding-top: 20px; }
@@ -102,8 +102,6 @@
         .horario-item.bloqueado { opacity: 0.6; background: #fce4e4; border-color: #f5c6c6; cursor: not-allowed; }
         .horario-item.bloqueado input { cursor: not-allowed; }
         .horario-item.bloqueado::after { content: ' 🚫 Reservado'; color: #d32f2f; font-size: 11px; margin-left: auto; display: inline-block; font-weight: bold; }
-        
-        /* Classes dinâmicas para regras bloqueadas no formulário */
         .horario-item.bloq-regra::after { content: attr(data-motivo); color: #b78103; }
 
         .form-layout { display: flex; gap: 15px; text-align: left; }
@@ -122,7 +120,7 @@
         .tabela-wrapper { width: 100%; margin-top: 5px; overflow-x: auto;}
         .tabela-agendamentos { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; min-width: 500px; }
         .tabela-agendamentos th { background-color: #004080; color: white; padding: 10px; border: 1px solid #002244; }
-        .tabela-agendamentos td { border: 1px solid #ddd; padding: 10px; vertical-align: middle; }
+        .tabela-agendamentos td { border: 1px solid #ddd; padding: 10px; vertical-align: middle; word-wrap: break-word; }
         .tabela-agendamentos tr:nth-child(even) { background-color: #f9f9f9; }
         .lbl-mobile { display: none; } 
 
@@ -139,7 +137,6 @@
         .btn-excluir { background-color: #d32f2f; }
         .btn-editar { background-color: #f0ad4e; color: #fff; margin-right: 5px; margin-bottom: 5px; }
         
-        /* Lista Condensada */
         .lista-condensada-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 8px 0; font-size: 13px; }
         .lista-condensada-item:last-child { border-bottom: none; }
 
@@ -170,11 +167,18 @@
             .dia-semana-header { font-size: 9px; padding: 4px 0; background-color: #004080; }
             .slot { font-size: 8px; padding: 2px; min-height: 40px; line-height: 1.1; }
             .slot b { font-size: 7px; padding: 0; margin-bottom: 1px; background: none; }
+            
+            /* Ajuste de tabela para não ter rolagem horizontal no celular */
+            .tabela-agendamentos { min-width: unset; width: 100%; }
             .tabela-agendamentos thead { display: none; } 
-            .tabela-agendamentos tbody tr { display: flex; flex-direction: column; border: 1px solid #004080; margin-bottom: 10px; border-radius: 6px; }
-            .tabela-agendamentos td { display: flex; justify-content: space-between; border: none; border-bottom: 1px solid #eee; }
-            .lbl-mobile { display: inline-block; font-weight: bold; color: #004080; width: 40%; text-align: left; }
-            .val-mobile { text-align: right; width: 60%; }
+            .tabela-agendamentos tbody tr { display: flex; flex-direction: column; border: 1px solid #004080; margin-bottom: 10px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+            .tabela-agendamentos td { display: flex; flex-direction: column; align-items: flex-start; text-align: left; border: none; border-bottom: 1px solid #eee; width: 100%; box-sizing: border-box; }
+            .tabela-agendamentos tbody td:last-child { border-bottom: none; background-color: #f0f4f8; }
+            .lbl-mobile { display: block; font-weight: bold; color: #004080; width: 100%; text-align: left; margin-bottom: 4px; font-size: 11px; text-transform: uppercase;}
+            .val-mobile { width: 100%; text-align: left; word-break: break-word; white-space: normal;}
+            
+            .td-acoes { flex-direction: row !important; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+            .td-acoes .btn-editar, .td-acoes .btn-excluir { flex: none; margin: 0; }
             .admin-tabs { gap: 2px; }
             .admin-tab-btn { font-size: 11px; padding: 8px 10px; }
         }
@@ -205,11 +209,13 @@
 
     <!-- TELA 1: CALENDÁRIO INICIAL -->
     <div id="tela-calendario" class="tela ativa">
-        <div class="instrucoes">
-            O laboratório 02 pode ser agendado em qualquer dia e horário letivo, mediante disponibilidade e obrigatoriedade da indicação da habilidade SEMED.
-            <div class="aviso">
-                <strong>⚠️ Atenção:</strong> Em agendamentos fora dos horários de suporte (aulas fixas), o professor regente será responsável por retirar a chave, operar os equipamentos e trancar o laboratório.
-            </div>
+        
+        <div class="aviso" id="texto-aviso-cabecalho">
+            ⚠️ Atenção: Em agendamentos fora dos horários de suporte do Professor Lian, o professor regente será responsável por retirar a chave, operar os equipamentos e trancar o laboratório.
+        </div>
+        
+        <div style="text-align: right; margin-bottom: 5px;">
+            <a class="link-cadastrados" onclick="abrirListaPublica()">Horários já cadastrados &gt;&gt;</a>
         </div>
         
         <div class="nav-mes">
@@ -220,15 +226,10 @@
         
         <div class="calendario-grid" id="grade-dias"></div>
 
-        <div class="container-btn-horarios">
-            <button class="btn-ver-horarios" onclick="abrirListaPublica()">📋 Visualizar horários reservados</button>
-        </div>
-
         <div class="secao-outros-agendamentos">
-            <h3>🔗 Outros Agendamentos:</h3>
-            <div class="container-btn-outros">
-                <a href="https://www.professoraangela.com.br/agendamento/" target="_blank" class="btn-outros">💻 Lab 01 Informática</a>
-                <a href="https://professoraangela.com.br/ciencias/" target="_blank" class="btn-outros">🔬 Lab Ciências</a>
+            <h3 id="titulo-outros-agendamentos">🔗 Outros Agendamentos:</h3>
+            <div class="container-btn-outros" id="container-botoes-outros">
+                <!-- Gerado via JS -->
             </div>
         </div>
     </div>
@@ -283,9 +284,7 @@
         </div>
         
         <div class="rodape-form" style="margin-top: 0; padding-top: 20px;">
-            <div class="aviso"><strong>⚠️ Aviso Importante:</strong> É expressamente proibido retirar o cabo HDMI do computador. Traga seus arquivos em um pendrive ou acesse-os pelo e-mail.</div>
-            <button class="btn-ver-horarios" type="button" style="width: 100%; max-width: 400px; margin-top: 10px;" onclick="abrirListaPublica()">📋 Visualizar agendamentos</button>
-            <button class="btn-voltar-simples" type="button" onclick="fecharFormulario()">⬅️ Clique aqui para cancelar e voltar ao calendário inicial</button>
+            <button class="btn-voltar-simples" type="button" onclick="fecharFormulario()">⬅️ Cancelar e voltar ao calendário</button>
         </div>
     </div>
 
@@ -299,19 +298,16 @@
         </div>
         <div class="calendario-semana-wrapper" id="grade-dias-lista"></div>
 
-        <details class="dropdown-dados" style="margin-top: 20px; border: none; padding: 0;">
-            <summary style="background-color: #004080; color: white; padding: 10px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
-                📋 Ver detalhes agendamento desta semana. <span>▼</span>
-            </summary>
-            <div class="caixa-branca" style="border-top-left-radius: 0; border-top-right-radius: 0; margin-bottom: 0; margin-top: -5px; padding-top: 15px;">
-                <div class="tabela-wrapper">
-                    <table class="tabela-agendamentos">
-                        <thead><tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th></tr></thead>
-                        <tbody id="corpo-tabela-semana"></tbody>
-                    </table>
-                </div>
+        <!-- REGRISTROS DA SEMANA -->
+        <div class="caixa-branca" style="padding: 15px;">
+            <h4 style="margin-top:0; color:#004080; border-bottom:1px solid #ccc; padding-bottom:5px;">📋 Detalhes dos agendamentos desta semana</h4>
+            <div class="tabela-wrapper">
+                <table class="tabela-agendamentos">
+                    <thead><tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th><th>Atividade</th></tr></thead>
+                    <tbody id="corpo-tabela-semana"></tbody>
+                </table>
             </div>
-        </details>
+        </div>
 
         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 25px; margin-bottom: 20px;">
             <button style="flex: 1; min-width: 200px; max-width: 300px; background-color: #f0f4f8; color: #004080; border: 1px solid #004080; padding: 12px 15px; font-size: 14px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.2s;" onclick="fecharFormulario()">&lt; Voltar para calendário</button>
@@ -329,7 +325,7 @@
         </div>
         <div class="tabela-wrapper">
             <table class="tabela-agendamentos">
-                <thead><tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th></tr></thead>
+                <thead><tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th><th>Atividade</th></tr></thead>
                 <tbody id="corpo-tabela-publica"></tbody>
             </table>
         </div>
@@ -346,6 +342,7 @@
             <button class="admin-tab-btn active" onclick="switchAdminTab('tab-agendamentos', this)">📋 Agendamentos do Mês</button>
             <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-regras', this)">🔒 Bloqueios e Regras</button>
             <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-aviso', this)">📢 Avisos Pop-up</button>
+            <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-interface', this)">🎨 Interface & Links</button>
         </div>
 
         <!-- ABA 1: TABELA DE AGENDAMENTOS NORMAIS -->
@@ -537,6 +534,47 @@
                 <div style="text-align: right; margin-top: 15px;"><button class="btn-agendar" style="background:#e67e22; padding: 10px 20px; font-size: 14px; width:auto;" onclick="salvarAvisoGlobal()">📢 Salvar Configuração de Aviso</button></div>
             </div>
         </div>
+        
+        <!-- ABA 4: INTERFACE E LINKS -->
+        <div id="tab-config-interface" class="admin-tab-content">
+            <div class="caixa-branca" style="border-left: 5px solid #3498db; margin-bottom: 20px;">
+                <h3 style="margin-top:0; color:#3498db;">🎨 Editar Textos da Interface Principal</h3>
+                
+                <div class="form-group">
+                    <label>Aviso do Cabeçalho (Fundo cinza / borda vermelha):</label>
+                    <textarea id="admin-texto-cabecalho" rows="3" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Título da Seção de Outros Agendamentos:</label>
+                    <input type="text" id="admin-titulo-outros" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;">
+                </div>
+                
+                <div style="text-align: right; margin-top: 10px;">
+                    <button style="background:#3498db; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="salvarInterfaceGeral()">💾 Salvar Textos Principais</button>
+                </div>
+            </div>
+
+            <div class="caixa-branca" style="border-left: 5px solid #3498db;">
+                <h3 style="margin-top:0; color:#3498db;">🔗 Botões "Outros Agendamentos"</h3>
+                <p style="font-size:13px; color:#555;">Adicione ou remova os botões azuis da página inicial (links externos).</p>
+                
+                <div class="form-layout" style="align-items: flex-end; background:#f0f4f8; padding:10px; border-radius:5px; margin-bottom:15px;">
+                    <div class="form-group" style="flex:1; margin-bottom:0;">
+                        <label style="font-size:11px;">Nome no Botão (Ex: Lab Ciências):</label>
+                        <input type="text" id="admin-btn-label">
+                    </div>
+                    <div class="form-group" style="flex:2; margin-bottom:0;">
+                        <label style="font-size:11px;">Link (URL Completa com https://):</label>
+                        <input type="text" id="admin-btn-url">
+                    </div>
+                    <button style="background:#3498db; color:#fff; border:none; padding:10px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="addBotaoOutros()">➕ Adicionar</button>
+                </div>
+                
+                <h4 style="margin: 10px 0 5px 0; color:#555;">Botões Cadastrados Atualmente:</h4>
+                <div id="lista-botoes-outros" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px;"></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -572,7 +610,19 @@
     ];
 
     // ESTADO DAS CONFIGURAÇÕES GLOBAIS
-    let cfgGerais = { textosFixos: [], alternanciaVesp: null, recorrentes: [] };
+    let cfgGerais = { 
+        textosFixos: [], 
+        alternanciaVesp: null, 
+        recorrentes: [],
+        interface: {
+            avisoCabecalho: "⚠️ Atenção: Em agendamentos fora dos horários de suporte do Professor Lian, o professor regente será responsável por retirar a chave, operar os equipamentos e trancar o laboratório.",
+            tituloOutros: "🔗 Outros Agendamentos:",
+            botoesOutros: [
+                {id: "b1", label: "💻 Lab 01 Informática", url: "https://www.professoraangela.com.br/agendamento/"},
+                {id: "b2", label: "🔬 Lab Ciências", url: "https://professoraangela.com.br/ciencias/"}
+            ]
+        }
+    };
 
     // PROCESSADORES DE REGRAS
     function getProfessorAlternancia(dataAlvo) {
@@ -613,6 +663,30 @@
         mudarTela('tela-calendario'); window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // ================= INTERFACE DINAMICA =================
+    function renderizarInterface() {
+        let inf = cfgGerais.interface || {};
+        
+        let tCab = document.getElementById("texto-aviso-cabecalho");
+        if(tCab) tCab.innerText = inf.avisoCabecalho || "⚠️ Atenção: Em agendamentos fora dos horários de suporte do Professor Lian, o professor regente será responsável por retirar a chave, operar os equipamentos e trancar o laboratório.";
+        
+        let tOutros = document.getElementById("titulo-outros-agendamentos");
+        if(tOutros) tOutros.innerText = inf.tituloOutros || "🔗 Outros Agendamentos:";
+        
+        let bContainer = document.getElementById("container-botoes-outros");
+        if(bContainer) {
+            let htmlBotoes = "";
+            let botoes = inf.botoesOutros || [
+                {id: "b1", label: "💻 Lab 01 Informática", url: "https://www.professoraangela.com.br/agendamento/"},
+                {id: "b2", label: "🔬 Lab Ciências", url: "https://professoraangela.com.br/ciencias/"}
+            ];
+            botoes.forEach(b => {
+                htmlBotoes += `<a href="${b.url}" target="_blank" class="btn-outros">${b.label}</a>`;
+            });
+            bContainer.innerHTML = htmlBotoes;
+        }
+    }
+
     // ================= ADMIN & REGRAS =================
     const SENHA_ADMIN = "Jgg2026@";
     function solicitarSenhaAdmin() {
@@ -634,8 +708,35 @@
     }
 
     async function salvarConfigsFirebase() {
-        try { await db.collection("agendamentos").doc("CONFIG_REGRAS_V2").set(cfgGerais); } 
-        catch(e) { alert("Erro ao salvar regras sistêmicas!"); console.error(e); }
+        try { await db.collection("agendamentos").doc("CONFIG_REGRAS_V2").set(cfgGerais); renderizarInterface(); } 
+        catch(e) { alert("Erro ao salvar configurações sistêmicas!"); console.error(e); }
+    }
+
+    // --- CONFIG INTERFACE (Aba 4) ---
+    function salvarInterfaceGeral() {
+        if(!cfgGerais.interface) cfgGerais.interface = {};
+        cfgGerais.interface.avisoCabecalho = document.getElementById("admin-texto-cabecalho").value.trim();
+        cfgGerais.interface.tituloOutros = document.getElementById("admin-titulo-outros").value.trim();
+        salvarConfigsFirebase(); alert("✅ Textos da interface atualizados!");
+    }
+    
+    function addBotaoOutros() {
+        let label = document.getElementById("admin-btn-label").value.trim();
+        let url = document.getElementById("admin-btn-url").value.trim();
+        if(!label || !url) return alert("Preencha o nome e o link do botão.");
+        if(!cfgGerais.interface) cfgGerais.interface = {};
+        if(!cfgGerais.interface.botoesOutros) cfgGerais.interface.botoesOutros = [];
+        cfgGerais.interface.botoesOutros.push({ id: Date.now().toString(), label: label, url: url });
+        salvarConfigsFirebase(); 
+        document.getElementById("admin-btn-label").value = ""; document.getElementById("admin-btn-url").value = "";
+        preencherFormulariosConfig();
+    }
+    
+    function removerBotaoOutros(id) {
+        if(cfgGerais.interface && cfgGerais.interface.botoesOutros) {
+            cfgGerais.interface.botoesOutros = cfgGerais.interface.botoesOutros.filter(b => b.id !== id);
+            salvarConfigsFirebase(); preencherFormulariosConfig();
+        }
     }
 
     // 1. ANOTAÇÃO FIXA AZUL
@@ -697,11 +798,29 @@
     }
 
     function preencherFormulariosConfig() {
+        // Aba Interface
+        let inf = cfgGerais.interface || {};
+        let taAviso = document.getElementById("admin-texto-cabecalho");
+        if(taAviso) taAviso.value = inf.avisoCabecalho || "⚠️ Atenção: Em agendamentos fora dos horários de suporte do Professor Lian, o professor regente será responsável por retirar a chave, operar os equipamentos e trancar o laboratório.";
+        
+        let iptTit = document.getElementById("admin-titulo-outros");
+        if(iptTit) iptTit.value = inf.tituloOutros || "🔗 Outros Agendamentos:";
+        
+        let htmlBotoes = "";
+        let botoesBase = inf.botoesOutros || [ {id: "b1", label: "💻 Lab 01 Informática", url: "https://www.professoraangela.com.br/agendamento/"}, {id: "b2", label: "🔬 Lab Ciências", url: "https://professoraangela.com.br/ciencias/"} ];
+        botoesBase.forEach(b => {
+            htmlBotoes += `<div class="lista-condensada-item"><span>${b.label} <small style="color:#777;">(${b.url})</small></span><button style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;" onclick="removerBotaoOutros('${b.id}')">Excluir</button></div>`;
+        });
+        let lstBotoes = document.getElementById("lista-botoes-outros");
+        if(lstBotoes) lstBotoes.innerHTML = htmlBotoes || "<span style='font-size:13px; color:#777;'>Nenhum botão cadastrado.</span>";
+
+
+        // Regras
         let htmlFixos = "";
         if(cfgGerais && cfgGerais.textosFixos && Array.isArray(cfgGerais.textosFixos)) {
             cfgGerais.textosFixos.forEach(t => {
                 let dNome = diasSemanaNomes[t.diaSemana];
-                let safeHtml = t.texto.replace(/\n/g, ' '); // Evitar quebra feia na lista
+                let safeHtml = t.texto.replace(/\n/g, ' '); 
                 htmlFixos += `<div class="lista-condensada-item">
                     <span>🟦 <strong>Anotação Fixa</strong> - ${dNome}s - ${safeHtml}</span>
                     <button style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;" onclick="removerAnotacaoFixa('${t.id}')">Excluir</button>
@@ -884,10 +1003,10 @@
             let regrasRec = getRegrasRecorrentesDia(dataR);
             regrasRec.filter(r => r.tipo === "anotacao").forEach(r => { divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${r.cor};">${r.nome}</div>`; });
             
-            // Bloqueios recorrentes: Ocultos no visual se forem só da tarde (Vespertino)
+            // Bloqueios recorrentes: Ocultos no visual se forem só da tarde (Vespertino). Exibe se afetar o MATUTINO.
             regrasRec.filter(r => r.tipo === "bloqueio").forEach(r => {
                 let temMatutino = r.horarios && r.horarios.some(h => !h.includes("Vesp"));
-                if(temMatutino && r.horarios.length >= 5) {
+                if(temMatutino) {
                     divDia.innerHTML += `<div class="reserve-agora" style="color:#d32f2f;">🔴 ${r.nome}</div>`;
                 }
             });
@@ -1084,9 +1203,11 @@
                 cfgGerais.textosFixos = d.textosFixos || [];
                 cfgGerais.alternanciaVesp = d.alternanciaVesp || null;
                 cfgGerais.recorrentes = d.recorrentes || [];
+                if (d.interface) cfgGerais.interface = d.interface;
             } else { 
                 db.collection("agendamentos").doc("CONFIG_REGRAS_V2").set(cfgGerais); 
             }
+            renderizarInterface();
             let elCal = document.getElementById('tela-calendario'); if(elCal && elCal.classList.contains('ativa')) gerarCalendario();
             let elAdm = document.getElementById('tela-admin'); if(elAdm && elAdm.classList.contains('ativa')) preencherFormulariosConfig();
         });

@@ -1281,13 +1281,6 @@
                         });
                     }
 
-                    let altsDia = getProfessorAlternancia(dataR);
-                    if (altsDia.length) {
-                        let nomesAlt = [...new Set(altsDia.map(b => b.nome))].join(', ');
-                        let discAlt = altsDia[0].disciplina;
-                        divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color:${altsDia[0].cor}; color:${altsDia[0].cor};">🔄 Tarde: ${nomesAlt}${discAlt ? `<span class="alt-disc">${discAlt}</span>` : ''}</div>`;
-                    }
-
                     let qtdMatutino = 0; 
                     regrasRec.filter(r => r.tipo === "anotacao").forEach(r => { divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color: ${r.cor || '#ccc'};">${r.nome || ''}</div>`; });
                     

@@ -137,6 +137,12 @@
         .lista-condensada-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 8px 0; font-size: 13px; }
         .lista-condensada-item:last-child { border-bottom: none; }
 
+        /* ===== ADMIN COM MENU LATERAL ===== */
+        .admin-layout { display: flex; gap: 15px; align-items: flex-start; }
+        .admin-layout .admin-tabs { flex-direction: column; width: 210px; flex-shrink: 0; border-bottom: none; border-right: 2px solid #004080; padding-right: 10px; margin-bottom: 0; overflow-x: visible; position: sticky; top: 10px; }
+        .admin-layout .admin-tab-btn { text-align: left; margin: 0 0 5px 0; width: 100%; border-radius: 5px; white-space: normal; }
+        .admin-main { flex: 1; min-width: 0; }
+
         /* ================= RODAPÉ GLOBAL ================= */
         .rodape-global { text-align: center; font-size: 12px; color: #555; padding: 20px 10px; margin-top: auto; border-top: 1px solid #ddd; line-height: 1.5; }
 
@@ -175,6 +181,9 @@
             .td-acoes .btn-editar, .td-acoes .btn-excluir { flex: none; margin: 0; }
             .admin-tabs { gap: 2px; }
             .admin-tab-btn { font-size: 11px; padding: 8px 10px; }
+            .admin-layout { flex-direction: column; }
+            .admin-layout .admin-tabs { flex-direction: row; width: 100%; border-right: none; border-bottom: 2px solid #004080; overflow-x: auto; position: static; padding: 0; margin-bottom: 15px; }
+            .admin-layout .admin-tab-btn { width: auto; margin: 0 5px 0 0; border-radius: 5px 5px 0 0; white-space: nowrap; }
         }
     </style>
 </head>
@@ -334,18 +343,21 @@
         <div style="margin-top: 20px; margin-bottom: 20px;"><button class="btn-voltar-simples" onclick="abrirListaPublica()">⬅️ Voltar para a visualização semanal</button></div>
     </div>
 
-    <!-- TELA 5: ADMIN (ABAS) -->
+    <!-- TELA 5: ADMIN (MENU LATERAL) -->
     <div id="tela-admin" class="tela">
         <button class="btn-voltar" onclick="fecharFormulario()">&lt;&lt; Sair do Painel Admin e Voltar ao Site</button>
         <div style="text-align: center;"><div class="badge-admin-aviso">🔐 MODO ADMINISTRADOR ATIVADO</div></div>
 
-        <!-- ABAS -->
+        <div class="admin-layout">
+        <!-- MENU LATERAL -->
         <div class="admin-tabs">
             <button class="admin-tab-btn active" onclick="switchAdminTab('tab-agendamentos', this)">📋 Agendamentos do Mês</button>
+            <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-alternancia', this)">🔄 Alternância Vespertino</button>
             <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-regras', this)">🔒 Bloqueios e Regras</button>
             <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-aviso', this)">📢 Avisos Pop-up</button>
             <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-interface', this)">🎨 Interface & Links</button>
         </div>
+        <div class="admin-main">
 
         <!-- ABA 1: TABELA DE AGENDAMENTOS NORMAIS -->
         <div id="tab-agendamentos" class="admin-tab-content active">
@@ -367,6 +379,43 @@
             </div>
         </div>
 
+        <!-- NOVA ABA: ALTERNÂNCIA VESPERTINO -->
+        <div id="tab-config-alternancia" class="admin-tab-content">
+            <div class="caixa-branca" style="border-left: 5px solid #8e44ad;">
+                <h3 style="margin-top:0; color:#8e44ad;">🔄 Alternância de Horários (Vespertino)</h3>
+                <p style="font-size:13px; color:#555;">Bloqueia fixamente os horários escolhidos, alternando entre dois nomes. Deixe o "Nome 2" em branco se na outra quinzena o horário deve ficar livre.</p>
+                <input type="hidden" id="alt-id">
+                <div class="form-layout">
+                    <div class="coluna-esq">
+                        <div class="form-group"><label>Dia da semana:</label>
+                            <select id="alt-dia"><option value="1">Segunda</option><option value="2">Terça</option><option value="3">Quarta</option><option value="4" selected>Quinta</option><option value="5">Sexta</option></select>
+                        </div>
+                        <div class="form-group"><label>Data de início (quando começa o Nome 1):</label><input type="date" id="alt-data"></div>
+                        <div class="form-group"><label>Trocar a cada quantos dias:</label><input type="number" id="alt-ciclo" value="15" min="1"></div>
+                        <div class="form-group"><label>Cor no calendário:</label><input type="color" id="alt-cor" value="#8e44ad" style="height:40px; padding:2px;"></div>
+                    </div>
+                    <div class="coluna-dir">
+                        <div class="form-group"><label>Nome 1 (começa na data de início):</label><input type="text" id="alt-nome-a" value="Prof. Lian"></div>
+                        <div class="form-group"><label>Nome 2 (alterna depois):</label><input type="text" id="alt-nome-b" value="Prof. Cláudia"></div>
+                        <label style="font-size:13px; font-weight:bold; color:#555;">Horários da tarde bloqueados:</label>
+                        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:5px; font-size:13px;">
+                            <label><input type="checkbox" name="alt-hr" value="1º Hor. Vesp (13:00 - 13:50)" checked> 1º (13:00)</label>
+                            <label><input type="checkbox" name="alt-hr" value="2º Hor. Vesp (13:50 - 14:40)" checked> 2º (13:50)</label>
+                            <label><input type="checkbox" name="alt-hr" value="3º Hor. Vesp (14:40 - 15:30)" checked> 3º (14:40)</label>
+                            <label><input type="checkbox" name="alt-hr" value="4º Hor. Vesp (15:45 - 16:35)"> 4º (15:45)</label>
+                            <label><input type="checkbox" name="alt-hr" value="5º Hor. Vesp (16:35 - 17:25)"> 5º (16:35)</label>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
+                    <button style="background:transparent; border:none; color:#d32f2f; cursor:pointer; font-weight:bold; text-decoration:underline;" onclick="limparFormAlternancia()">Limpar Campos</button>
+                    <button id="btn-salvar-alt" style="background:#8e44ad; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="salvarAlternancia()">➕ Adicionar Alternância</button>
+                </div>
+            </div>
+            <h2 style="color:#004080; font-size:18px; border-bottom:2px solid #ccc; padding-bottom:5px; margin-top:30px;">📋 Alternâncias Cadastradas</h2>
+            <div id="lista-alternancias" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px;"></div>
+        </div>
+
         <!-- ABA 2: REGRAS FIXAS, BLOQUEIOS E ANOTAÇÕES -->
         <div id="tab-config-regras" class="admin-tab-content">
             
@@ -386,35 +435,6 @@
                         <textarea id="cfg-fixa-texto" rows="2" placeholder="Ex: Prof. Lian&#10;07:00 às 11:25" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; font-family:inherit; resize:vertical;"></textarea>
                     </div>
                     <button style="background:#004080; color:#fff; border:none; padding:9px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="addAnotacaoFixa()">Salvar Anotação</button>
-                </div>
-            </div>
-
-            <div class="caixa-branca" style="border-left: 5px solid #8e44ad; padding: 15px; margin-bottom: 15px;">
-                <h4 style="margin-top:0; margin-bottom: 10px; color:#8e44ad;">🔄 Alternância 15/15 Dias (Vespertino)</h4>
-                <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-start;">
-                    <div style="flex:1; min-width:120px;">
-                        <label style="font-size:12px; font-weight:bold;">Dia da Semana:</label>
-                        <select id="cfg-alt-dia" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
-                            <option value="1">Segunda</option><option value="2">Terça</option><option value="3">Quarta</option><option value="4">Quinta</option><option value="5">Sexta</option>
-                        </select>
-                    </div>
-                    <div style="flex:1; min-width:140px;">
-                        <label style="font-size:12px; font-weight:bold;">Data Início (Lian):</label>
-                        <input type="date" id="cfg-alt-data" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
-                    </div>
-                    <div style="flex:2; min-width:200px;">
-                        <label style="font-size:12px; font-weight:bold; display:block; margin-bottom:5px;">Quais horários da tarde bloquear?</label>
-                        <div style="display:flex; gap:5px; flex-wrap:wrap;">
-                            <label style="font-size:11px;"><input type="checkbox" id="cfg-alt-hr-1" value="1º Hor. Vesp (13:00 - 13:50)"> 1º</label>
-                            <label style="font-size:11px;"><input type="checkbox" id="cfg-alt-hr-2" value="2º Hor. Vesp (13:50 - 14:40)"> 2º</label>
-                            <label style="font-size:11px;"><input type="checkbox" id="cfg-alt-hr-3" value="3º Hor. Vesp (14:40 - 15:30)"> 3º</label>
-                            <label style="font-size:11px;"><input type="checkbox" id="cfg-alt-hr-4" value="4º Hor. Vesp (15:45 - 16:35)"> 4º</label>
-                            <label style="font-size:11px;"><input type="checkbox" id="cfg-alt-hr-5" value="5º Hor. Vesp (16:35 - 17:25)"> 5º</label>
-                        </div>
-                    </div>
-                    <div style="width:100%; text-align:right; margin-top:5px;">
-                        <button style="background:#8e44ad; color:#fff; border:none; padding:8px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="salvarConfigAlternancia()">Salvar Alternância</button>
-                    </div>
                 </div>
             </div>
 
@@ -504,7 +524,7 @@
             <h4 style="margin: 10px 0 5px 0; color:#555;">Anotações Fixas (Azuis no Calendário)</h4>
             <div id="lista-fixos" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px; margin-bottom:15px;"></div>
             
-            <h4 style="margin: 10px 0 5px 0; color:#555;">Bloqueios, Regras Recorrentes e Alternância</h4>
+            <h4 style="margin: 10px 0 5px 0; color:#555;">Bloqueios e Regras Recorrentes</h4>
             <div id="lista-recorrentes" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px; margin-bottom:15px;"></div>
             
             <h4 style="margin: 10px 0 5px 0; color:#555;">Bloqueios de Dias Específicos (Mês Selecionado Acima)</h4>
@@ -574,6 +594,8 @@
                 <div id="lista-botoes-outros" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px;"></div>
             </div>
         </div>
+
+        </div></div> <!-- fecha admin-main e admin-layout -->
     </div>
 </div>
 
@@ -608,7 +630,7 @@
         "1º Hor. Vesp (13:00 - 13:50)", "2º Hor. Vesp (13:50 - 14:40)", "3º Hor. Vesp (14:40 - 15:30)", "4º Hor. Vesp (15:45 - 16:35)", "5º Hor. Vesp (16:35 - 17:25)"
     ];
 
-    let cfgGerais = { textosFixos: [], alternanciaVesp: null, recorrentes: [], interface: {} };
+    let cfgGerais = { textosFixos: [], alternanciaVesp: null, alternancias: [], recorrentes: [], interface: {} };
     let cfgAvisos = { avisos: [] };
 
     // FUNÇÃO QUE PERMITE VOLTAR PELO NAVEGADOR
@@ -630,17 +652,106 @@
         }
     });
 
-    // PROCESSADORES DE REGRAS
+    // ================= ALTERNÂNCIA (CONFIGURÁVEL) =================
+    // Retorna uma lista de bloqueios do dia: [{horario, nome, cor}]
     function getProfessorAlternancia(dataAlvo) {
-        if(!cfgGerais || !cfgGerais.alternanciaVesp || !cfgGerais.alternanciaVesp.dataInicioLian) return null;
-        if(dataAlvo.getDay() !== parseInt(cfgGerais.alternanciaVesp.diaSemana)) return null;
-        let dBase = new Date(cfgGerais.alternanciaVesp.dataInicioLian + "T12:00:00");
-        if(isNaN(dBase.getTime())) return null;
-        let data1 = Date.UTC(dBase.getFullYear(), dBase.getMonth(), dBase.getDate());
-        let data2 = Date.UTC(dataAlvo.getFullYear(), dataAlvo.getMonth(), dataAlvo.getDate());
-        if (data2 < data1) return null;
-        let diffDays = Math.floor((data2 - data1) / (1000 * 60 * 60 * 24));
-        let cycleDay = diffDays % 30; return cycleDay < 15 ? "Prof. Lian" : "Prof. Cláudia";
+        let res = [];
+        (cfgGerais.alternancias || []).forEach(a => {
+            if (!a.dataInicio || dataAlvo.getDay() !== parseInt(a.diaSemana)) return;
+            let dBase = new Date(a.dataInicio + "T12:00:00");
+            if (isNaN(dBase.getTime())) return;
+            let d1 = Date.UTC(dBase.getFullYear(), dBase.getMonth(), dBase.getDate());
+            let d2 = Date.UTC(dataAlvo.getFullYear(), dataAlvo.getMonth(), dataAlvo.getDate());
+            if (d2 < d1) return;
+            let ciclo = parseInt(a.ciclo) || 15;
+            let diff = Math.round((d2 - d1) / 86400000);
+            let nome = (diff % (ciclo * 2)) < ciclo ? a.nomeA : a.nomeB;
+            if (!nome) return; // nome em branco = quinzena livre
+            (a.horarios || []).forEach(h => res.push({ horario: h, nome: nome, cor: a.cor || "#8e44ad" }));
+        });
+        return res;
+    }
+
+    function aplicarAlternanciasForm(dataForm) {
+        document.querySelectorAll('#tela-formulario .horario-item').forEach(i => { i.style.borderColor = ''; i.style.background = ''; });
+        getProfessorAlternancia(dataForm).forEach(b => {
+            let cb = document.querySelector(`#tela-formulario input[value="${b.horario}"]`);
+            if (!cb) return;
+            cb.disabled = true; cb.checked = false;
+            let item = cb.closest('.horario-item');
+            if (item) {
+                item.classList.add('bloqueado', 'bloq-regra');
+                item.setAttribute('data-motivo', ' 🔄 ' + b.nome);
+                item.style.borderColor = b.cor; item.style.background = b.cor + '22';
+            }
+        });
+    }
+
+    function limparFormAlternancia() {
+        document.getElementById('alt-id').value = '';
+        document.getElementById('alt-dia').value = '4';
+        document.getElementById('alt-data').value = '';
+        document.getElementById('alt-ciclo').value = '15';
+        document.getElementById('alt-nome-a').value = 'Prof. Lian';
+        document.getElementById('alt-nome-b').value = 'Prof. Cláudia';
+        document.getElementById('alt-cor').value = '#8e44ad';
+        document.querySelectorAll('input[name="alt-hr"]').forEach((c, i) => c.checked = i < 3);
+        document.getElementById('btn-salvar-alt').innerText = '➕ Adicionar Alternância';
+    }
+
+    function salvarAlternancia() {
+        let idEdit = document.getElementById('alt-id').value;
+        let regra = {
+            id: idEdit || Date.now().toString(),
+            diaSemana: parseInt(document.getElementById('alt-dia').value),
+            dataInicio: document.getElementById('alt-data').value,
+            ciclo: parseInt(document.getElementById('alt-ciclo').value) || 15,
+            nomeA: document.getElementById('alt-nome-a').value.trim(),
+            nomeB: document.getElementById('alt-nome-b').value.trim(),
+            cor: document.getElementById('alt-cor').value,
+            horarios: Array.from(document.querySelectorAll('input[name="alt-hr"]:checked')).map(c => c.value)
+        };
+        if (!regra.dataInicio || !regra.nomeA || regra.horarios.length === 0) return alert("Preencha data de início, Nome 1 e marque ao menos um horário.");
+        if (!cfgGerais.alternancias) cfgGerais.alternancias = [];
+        let idx = cfgGerais.alternancias.findIndex(a => a.id === regra.id);
+        if (idx >= 0) cfgGerais.alternancias[idx] = regra; else cfgGerais.alternancias.push(regra);
+        salvarConfigsFirebase(); renderListaAlternancias(); gerarCalendario(); limparFormAlternancia();
+        alert("✅ Alternância salva!");
+    }
+
+    function editarAlternancia(id) {
+        let a = (cfgGerais.alternancias || []).find(x => x.id === id); if (!a) return;
+        document.getElementById('alt-id').value = a.id;
+        document.getElementById('alt-dia').value = a.diaSemana;
+        document.getElementById('alt-data').value = a.dataInicio;
+        document.getElementById('alt-ciclo').value = a.ciclo || 15;
+        document.getElementById('alt-nome-a').value = a.nomeA || '';
+        document.getElementById('alt-nome-b').value = a.nomeB || '';
+        document.getElementById('alt-cor').value = a.cor || '#8e44ad';
+        document.querySelectorAll('input[name="alt-hr"]').forEach(c => c.checked = (a.horarios || []).includes(c.value));
+        document.getElementById('btn-salvar-alt').innerText = '💾 Atualizar Alternância';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function excluirAlternancia(id) {
+        if (!confirm("Excluir esta alternância?")) return;
+        cfgGerais.alternancias = (cfgGerais.alternancias || []).filter(a => a.id !== id);
+        salvarConfigsFirebase(); renderListaAlternancias(); gerarCalendario();
+    }
+
+    function renderListaAlternancias() {
+        let el = document.getElementById('lista-alternancias'); if (!el) return;
+        let lista = cfgGerais.alternancias || [];
+        if (!lista.length) { el.innerHTML = "<span style='font-size:13px; color:#777;'>Nenhuma alternância cadastrada.</span>"; return; }
+        el.innerHTML = lista.map(a => {
+            let hrs = (a.horarios || []).slice().sort((x, y) => ordemHorarios.indexOf(x) - ordemHorarios.indexOf(y)).map(formatarHorario).join(', ');
+            let ini = (a.dataInicio || '').split('-').reverse().join('/');
+            return `<div class="lista-condensada-item">
+                <span><span style="display:inline-block;width:12px;height:12px;background:${a.cor};border-radius:3px;margin-right:6px;"></span><strong>${diasSemanaNomes[a.diaSemana]}s</strong> | ${hrs} | ${a.nomeA} ⇄ ${a.nomeB || '(livre)'} | a cada ${a.ciclo || 15} dias desde ${ini}</span>
+                <span><button style="color:#004080; background:none; border:none; cursor:pointer; font-weight:bold; margin-right:8px;" onclick="editarAlternancia('${a.id}')">Editar</button>
+                <button style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;" onclick="excluirAlternancia('${a.id}')">Excluir</button></span>
+            </div>`;
+        }).join('');
     }
 
     function getRegrasRecorrentesDia(dataAlvo) {
@@ -770,18 +881,6 @@
         salvarConfigsFirebase(); preencherFormulariosConfig(); gerarCalendario();
     }
 
-    // 2. ALTERNANCIA VESPERTINO
-    function salvarConfigAlternancia() {
-        let diaSemana = parseInt(document.getElementById("cfg-alt-dia").value);
-        let dataInicioLian = document.getElementById("cfg-alt-data").value;
-        let horarios = Array.from(document.querySelectorAll('input[id^="cfg-alt-hr-"]:checked')).map(c => c.value);
-        cfgGerais.alternanciaVesp = { diaSemana, dataInicioLian, horarios };
-        salvarConfigsFirebase(); preencherFormulariosConfig(); alert("✅ Regra de Alternância Salva!");
-    }
-    function removerAlternancia() {
-        cfgGerais.alternanciaVesp = null; salvarConfigsFirebase(); preencherFormulariosConfig(); gerarCalendario();
-    }
-
     // 3. RECORRENTES (PROERD / ANOTAÇÕES)
     function toggleRecFields() {
         let tipo = document.getElementById("cfg-rec-tipo").value;
@@ -849,24 +948,7 @@
         let elFixos = document.getElementById("lista-fixos");
         if(elFixos) elFixos.innerHTML = htmlFixos || "<span style='font-size:13px; color:#777;'>Nenhuma anotação fixa.</span>";
 
-        if(cfgGerais && cfgGerais.alternanciaVesp) {
-            let elAltDia = document.getElementById("cfg-alt-dia"); if(elAltDia) elAltDia.value = cfgGerais.alternanciaVesp.diaSemana || "4";
-            let elAltData = document.getElementById("cfg-alt-data"); if(elAltData) elAltData.value = cfgGerais.alternanciaVesp.dataInicioLian || "";
-            let hrsA = cfgGerais.alternanciaVesp.horarios || [];
-            document.querySelectorAll('input[id^="cfg-alt-hr-"]').forEach(cb => cb.checked = hrsA.includes(cb.value));
-        }
-
         let htmlRec = "";
-        if(cfgGerais && cfgGerais.alternanciaVesp && cfgGerais.alternanciaVesp.dataInicioLian) {
-            let dNome = diasSemanaNomes[cfgGerais.alternanciaVesp.diaSemana];
-            let dtP = cfgGerais.alternanciaVesp.dataInicioLian.split('-');
-            let fDtP = dtP.length === 3 ? `${dtP[2]}/${dtP[1]}/${dtP[0]}` : "";
-            htmlRec += `<div class="lista-condensada-item">
-                    <span>🔄 <strong>Alternância 15/15</strong> - Vespertino - ${dNome}s a partir de ${fDtP}</span>
-                    <button style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;" onclick="removerAlternancia()">Excluir</button>
-                </div>`;
-        }
-        
         if(cfgGerais && cfgGerais.recorrentes && Array.isArray(cfgGerais.recorrentes)) {
             cfgGerais.recorrentes.forEach(r => {
                 let dNomes = (r.dias || []).map(d => diasSemanaNomes[d]).join(', ');
@@ -885,6 +967,7 @@
         if(elRec) elRec.innerHTML = htmlRec || "<span style='font-size:13px; color:#777;'>Nenhuma regra ativa.</span>";
         
         renderListaBloqueiosEspecificos();
+        renderListaAlternancias();
     }
 
     function renderListaBloqueiosEspecificos() {
@@ -1047,11 +1130,11 @@
         }
     }
 
-    // --- BLOQUEIO SIMPLES DIA (Agora na aba de Regras) ---
+    // --- BLOQUEIO SIMPLES DIA (Aba de Regras) ---
     function alternarTodosHorariosAdmin(src) { document.querySelectorAll('input[name="admin-horario"]').forEach(cb => cb.checked = src.checked); }
     function verificarMotivoAdmin() { let el = document.getElementById("admin-motivo-texto"); if(el) el.style.display = document.getElementById("admin-motivo-bloqueio").value === "Outro" ? "block" : "none"; }
     async function salvarBloqueioAdmin() {
-        const dataRaw = document.getElementById("admin-data-bloqueio").value; let motivo = document.getElementById("admin-motivo-bloqueio").value; const resp = document.getElementById("admin-responsavel").value.trim();
+        const dataRaw = document.getElementById("admin-data-bloqueio").value; let motivo = document.getElementById("admin-motivo-bloqueio").value; const resp = "";
         const sel = Array.from(document.querySelectorAll('input[name="admin-horario"]:checked')).map(cb => cb.value);
         if(motivo === "Outro") { motivo = document.getElementById("admin-motivo-texto").value.trim(); if(!motivo) return alert("Digite o motivo."); }
         let h = ["Feriado", "Recesso", "Férias"].includes(motivo) ? [...ordemHorarios] : sel;
@@ -1074,10 +1157,7 @@
         let partes = (ag.data || "").split('/'); 
         if(partes.length === 3) {
             let dForm = new Date(parseInt(partes[2]), parseInt(partes[1]) - 1, parseInt(partes[0]));
-            let profAlt = getProfessorAlternancia(dForm);
-            if(profAlt && cfgGerais && cfgGerais.alternanciaVesp && Array.isArray(cfgGerais.alternanciaVesp.horarios)) {
-                cfgGerais.alternanciaVesp.horarios.forEach(hr => { let cb = document.querySelector(`input[value="${hr}"]`); if(cb){ cb.disabled = true; let item = cb.closest('.horario-item'); if(item) { item.classList.add('bloqueado', 'bloq-regra'); item.setAttribute('data-motivo', ` 🚫 ${profAlt}`); } } });
-            }
+            aplicarAlternanciasForm(dForm);
             let regrasHj = getRegrasRecorrentesDia(dForm);
             regrasHj.filter(r => r.tipo === "bloqueio").forEach(r => {
                 if(r.horarios && Array.isArray(r.horarios)) {
@@ -1161,7 +1241,7 @@
                 divDia.style.borderColor = "#d32f2f"; 
             } else {
                 if (mostrarDetalhes) {
-                    // MODO RAIO-X: APENAS MATUTINO (SEM TEXTO "MATUTINO")
+                    // MODO RAIO-X: APENAS MATUTINO
                     let htmlSlots = `<div style="display:flex; flex-direction:column; gap:1px; margin-top:2px;">`;
                     let slotsM = ["1º Horário (07:00 - 07:50)", "2º Horário (07:50 - 08:40)", "3º Horário (08:40 - 09:30)", "4º Horário (09:45 - 10:35)", "5º Horário (10:35 - 11:25)"];
                     slotsM.forEach((h, i) => { htmlSlots += gerarMiniSlot(h, `${i+1}º`, agDoDia, regrasRec, dataR); });
@@ -1170,13 +1250,18 @@
 
                 } else {
                     // MODO PADRÃO
-                    // Regras Visuais Diretas (Anotação Azul)
                     if(cfgGerais && cfgGerais.textosFixos && Array.isArray(cfgGerais.textosFixos)) {
                         let txts = cfgGerais.textosFixos.filter(t => t.diaSemana === dSem);
                         txts.forEach(t => { 
                             let sHtml = (t.texto || "").replace(/\n/g, '<br>');
                             divDia.innerHTML += `<div class="prof-fixo">${sHtml}</div>`; 
                         });
+                    }
+
+                    let altsDia = getProfessorAlternancia(dataR);
+                    if (altsDia.length) {
+                        let nomesAlt = [...new Set(altsDia.map(b => b.nome))].join(', ');
+                        divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color:${altsDia[0].cor}; color:${altsDia[0].cor};">🔄 Tarde: ${nomesAlt}</div>`;
                     }
 
                     let qtdMatutino = 0; 
@@ -1222,10 +1307,7 @@
 
         let partes = dataStr.split('/'); let d = parseInt(partes[0]), m = parseInt(partes[1]) - 1, a = parseInt(partes[2]); let dataForm = new Date(a, m, d);
         
-        let profAlt = getProfessorAlternancia(dataForm);
-        if(profAlt && cfgGerais && cfgGerais.alternanciaVesp && Array.isArray(cfgGerais.alternanciaVesp.horarios)) {
-            cfgGerais.alternanciaVesp.horarios.forEach(hr => { let cb = document.querySelector(`input[value="${hr}"]`); if(cb){ cb.disabled = true; let item = cb.closest('.horario-item'); if(item){ item.classList.add('bloqueado', 'bloq-regra'); item.setAttribute('data-motivo', ` 🚫 ${profAlt}`); } } });
-        }
+        aplicarAlternanciasForm(dataForm);
         let regrasHj = getRegrasRecorrentesDia(dataForm);
         regrasHj.filter(r => r.tipo === "bloqueio").forEach(r => {
             if(r.horarios && Array.isArray(r.horarios)) {
@@ -1275,7 +1357,8 @@
     function mudarMesTabela(delta) { mesTabelaGlobal += delta; if(mesTabelaGlobal > 11) { mesTabelaGlobal = 0; anoTabelaGlobal++; } if(mesTabelaGlobal < 0) { mesTabelaGlobal = 11; anoTabelaGlobal--; } renderizarTabelasMensais(); }
 
     function gerarHtmlSlot(horarioVal, lblVal, agendamentosDoDia, regrasDoDia, profAltVesp, isVesp, dataDia) {
-        if(isVesp && profAltVesp && cfgGerais && cfgGerais.alternanciaVesp && Array.isArray(cfgGerais.alternanciaVesp.horarios) && cfgGerais.alternanciaVesp.horarios.includes(horarioVal)) return `<div class="slot slot-ocupado" style="background-color: #e8eaf6; color: #004080;"><b>${lblVal}</b>${profAltVesp.split(' ')[1]}</div>`;
+        let altB = (isVesp && Array.isArray(profAltVesp)) ? profAltVesp.find(b => b.horario === horarioVal) : null;
+        if (altB) return `<div class="slot" style="background-color:${altB.cor}22; color:${altB.cor}; border:1px solid ${altB.cor}; font-weight:bold;"><b style="color:${altB.cor};">${lblVal}</b>🔄 ${altB.nome.replace(/^Prof\.\s*/, '')}</div>`;
         let blockRec = regrasDoDia.find(r => r.tipo === "bloqueio" && Array.isArray(r.horarios) && r.horarios.includes(horarioVal));
         if(blockRec) return `<div class="slot slot-proerd" style="background-color:#ffcdd2; color:#d32f2f;"><b>${lblVal}</b>${(blockRec.nome||"").substring(0,6)}</div>`;
         
@@ -1338,7 +1421,6 @@
         atualizarBotoesMesTabela();
 
         let agsMes = todosAgendamentosCache.filter(ag => ag.mesNum === mesTabelaGlobal && ag.anoNum === anoTabelaGlobal);
-        // Tabela Publica: Remove Bloqueios
         let agsMesP = agsMes.filter(ag => { let d = ag.descricaoAula || ""; return !["Feriado", "Recesso", "Férias"].some(m => d.includes(m)) && ag.nomeProfessor !== "🔒 BLOQUEADO" && ag.nomeProfessor !== "📌 ANOTAÇÃO"; });
 
         let hPub = "", hAdm = "";
@@ -1350,7 +1432,6 @@
             });
         }
 
-        // Tabela Admin: Apenas Reservas Reais (Bloqueios ficam na aba de config)
         if (agsMesP.length === 0) hAdm = "<tr><td colspan='5' style='text-align:center;'>Nenhum agendamento de professor neste mês.</td></tr>";
         else {
             agsMesP.forEach(ag => {
@@ -1377,7 +1458,12 @@
             if(doc.exists) { 
                 let d = doc.data();
                 cfgGerais.textosFixos = d.textosFixos || [];
-                cfgGerais.alternanciaVesp = d.alternanciaVesp || null;
+                cfgGerais.alternancias = d.alternancias || [];
+                if (d.alternanciaVesp && d.alternanciaVesp.dataInicioLian && cfgGerais.alternancias.length === 0) {
+                    let o = d.alternanciaVesp; // migra a regra antiga automaticamente
+                    cfgGerais.alternancias = [{ id: 'migrado', diaSemana: o.diaSemana, dataInicio: o.dataInicioLian, ciclo: 15, horarios: o.horarios || [], nomeA: 'Prof. Lian', nomeB: 'Prof. Cláudia', cor: '#8e44ad' }];
+                }
+                cfgGerais.alternanciaVesp = null;
                 cfgGerais.recorrentes = d.recorrentes || [];
                 if (d.interface) cfgGerais.interface = d.interface;
             } else { 
@@ -1392,7 +1478,6 @@
         db.collection("agendamentos").doc("CONFIG_AVISO_GERAL").onSnapshot(doc => {
             if(doc.exists) {
                 let d = doc.data();
-                // Migração de aviso antigo se houver
                 if (d.avisoTexto && (!d.avisos || d.avisos.length === 0)) {
                     cfgAvisos.avisos = [{ id: Date.now().toString(), texto: d.avisoTexto, ativo: d.avisoAtivo, inicio: d.avisoInicio, fim: d.avisoFim }];
                 } else if (d.avisos) {
@@ -1409,7 +1494,7 @@
             if (elAdm && elAdm.classList.contains('ativa')) renderListaAvisos();
         });
         
-        // Listener Agendamentos (Filtra documentos de configuração para não bugar o calendário)
+        // Listener Agendamentos (Filtra documentos de configuração)
         let _limpezaFeita = false;
         db.collection("agendamentos").onSnapshot(s => {
             try {

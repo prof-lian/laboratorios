@@ -60,6 +60,7 @@
         /* ESTILOS DE ANOTAÇÕES VISUAIS */
         .prof-fixo { font-size: 10px; color: #004080; font-weight: bold; margin-top: 2px; text-align: left; line-height: 1.2; }
         .anotacao-visual { background-color: #fafafa; color: #444; border: 1px solid #eee; border-left-width: 4px; padding: 4px; font-size: 10px; font-weight: bold; border-radius: 3px; margin-top: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); text-align: left; }
+        .anotacao-visual .alt-disc { display: block; font-size: 9px; font-weight: normal; opacity: 0.85; margin-top: 1px; }
 
         .container-btn-horarios { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; border-top: 1px dotted #ccc; padding-top: 20px; }
         .btn-ver-horarios { background-color: #004080; color: white; border: none; padding: 15px 25px; font-size: 15px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.2s; width: 100%; max-width: 400px; }
@@ -121,26 +122,30 @@
         .tabela-agendamentos tr:nth-child(even) { background-color: #f9f9f9; }
         .lbl-mobile { display: none; } 
 
-        /* ================= PAINEL ADMIN (ABAS) ================= */
-        .admin-tabs { display: flex; border-bottom: 2px solid #004080; margin-bottom: 20px; overflow-x: auto; }
-        .admin-tab-btn { background: #f0f4f8; color: #004080; border: none; padding: 12px 15px; font-weight: bold; cursor: pointer; border-radius: 5px 5px 0 0; margin-right: 5px; transition: 0.2s; font-size: 13px; white-space: nowrap; }
-        .admin-tab-btn.active { background: #004080; color: white; }
-        .admin-tab-btn:hover:not(.active) { background: #d0dbe6; }
+        /* ================= PAINEL ADMIN ================= */
         .admin-tab-content { display: none; }
-        .admin-tab-content.active { display: block; }
+        .admin-tab-content.active { display: block; animation: fadeAdmin 0.2s ease; }
+        @keyframes fadeAdmin { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
         
         .badge-admin-aviso { background-color: #d32f2f; color: white; padding: 8px 15px; border-radius: 4px; font-size: 14px; font-weight: bold; display: inline-block; margin-bottom: 15px; }
         .btn-excluir, .btn-editar { color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; min-height: 35px; }
         .btn-excluir { background-color: #d32f2f; }
         .btn-editar { background-color: #f0ad4e; color: #fff; margin-right: 5px; margin-bottom: 5px; }
         
-        .lista-condensada-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 8px 0; font-size: 13px; }
+        .lista-condensada-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 8px 0; font-size: 13px; gap: 8px; }
         .lista-condensada-item:last-child { border-bottom: none; }
 
         /* ===== ADMIN COM MENU LATERAL ===== */
-        .admin-layout { display: flex; gap: 15px; align-items: flex-start; }
-        .admin-layout .admin-tabs { flex-direction: column; width: 210px; flex-shrink: 0; border-bottom: none; border-right: 2px solid #004080; padding-right: 10px; margin-bottom: 0; overflow-x: visible; position: sticky; top: 10px; }
-        .admin-layout .admin-tab-btn { text-align: left; margin: 0 0 5px 0; width: 100%; border-radius: 5px; white-space: normal; }
+        .admin-layout { display: flex; gap: 18px; align-items: flex-start; }
+        .admin-sidebar { width: 235px; flex-shrink: 0; background: linear-gradient(180deg, #004080 0%, #002a55 100%); border-radius: 10px; padding: 12px; box-sizing: border-box; position: sticky; top: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.18); }
+        .admin-sidebar-titulo { color: #fff; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; padding: 6px 8px 12px 8px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.25); }
+        .admin-tabs { display: flex; flex-direction: column; gap: 4px; }
+        .admin-tab-btn { display: flex; align-items: center; gap: 8px; background: transparent; color: #dbe7f5; border: none; border-left: 4px solid transparent; padding: 12px 10px; font-weight: bold; cursor: pointer; border-radius: 6px; font-size: 13px; text-align: left; width: 100%; transition: 0.2s; }
+        .admin-tab-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        .admin-tab-btn.active { background: rgba(255,255,255,0.2); color: #fff; border-left-color: #f1c40f; }
+        .admin-sidebar-rodape { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.25); }
+        .btn-sair-admin { width: 100%; background: #d32f2f; color: #fff; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer; transition: 0.2s; }
+        .btn-sair-admin:hover { background: #a82424; }
         .admin-main { flex: 1; min-width: 0; }
 
         /* ================= RODAPÉ GLOBAL ================= */
@@ -179,11 +184,13 @@
             .val-mobile { width: 100%; text-align: left; word-break: break-word; white-space: normal;}
             .td-acoes { flex-direction: row !important; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
             .td-acoes .btn-editar, .td-acoes .btn-excluir { flex: none; margin: 0; }
-            .admin-tabs { gap: 2px; }
-            .admin-tab-btn { font-size: 11px; padding: 8px 10px; }
-            .admin-layout { flex-direction: column; }
-            .admin-layout .admin-tabs { flex-direction: row; width: 100%; border-right: none; border-bottom: 2px solid #004080; overflow-x: auto; position: static; padding: 0; margin-bottom: 15px; }
-            .admin-layout .admin-tab-btn { width: auto; margin: 0 5px 0 0; border-radius: 5px 5px 0 0; white-space: nowrap; }
+            .admin-layout { flex-direction: column; gap: 12px; }
+            .admin-sidebar { width: 100%; position: static; padding: 8px; }
+            .admin-sidebar-titulo { display: none; }
+            .admin-tabs { flex-direction: row; overflow-x: auto; gap: 4px; padding-bottom: 4px; }
+            .admin-tab-btn { width: auto; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; padding: 10px 12px; font-size: 12px; }
+            .admin-tab-btn.active { border-bottom-color: #f1c40f; }
+            .admin-sidebar-rodape { display: none; }
         }
     </style>
 </head>
@@ -345,257 +352,265 @@
 
     <!-- TELA 5: ADMIN (MENU LATERAL) -->
     <div id="tela-admin" class="tela">
-        <button class="btn-voltar" onclick="fecharFormulario()">&lt;&lt; Sair do Painel Admin e Voltar ao Site</button>
         <div style="text-align: center;"><div class="badge-admin-aviso">🔐 MODO ADMINISTRADOR ATIVADO</div></div>
 
         <div class="admin-layout">
-        <!-- MENU LATERAL -->
-        <div class="admin-tabs">
-            <button class="admin-tab-btn active" onclick="switchAdminTab('tab-agendamentos', this)">📋 Agendamentos do Mês</button>
-            <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-alternancia', this)">🔄 Alternância Vespertino</button>
-            <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-regras', this)">🔒 Bloqueios e Regras</button>
-            <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-aviso', this)">📢 Avisos Pop-up</button>
-            <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-interface', this)">🎨 Interface & Links</button>
-        </div>
-        <div class="admin-main">
+            <!-- MENU LATERAL -->
+            <aside class="admin-sidebar">
+                <div class="admin-sidebar-titulo">⚙️ Painel Admin</div>
+                <nav class="admin-tabs">
+                    <button class="admin-tab-btn active" onclick="switchAdminTab('tab-agendamentos', this)">📋 Agendamentos do Mês</button>
+                    <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-alternancia', this)">🔄 Alternância Vespertino</button>
+                    <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-regras', this)">🔒 Bloqueios e Regras</button>
+                    <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-aviso', this)">📢 Avisos Pop-up</button>
+                    <button class="admin-tab-btn" onclick="switchAdminTab('tab-config-interface', this)">🎨 Interface & Links</button>
+                </nav>
+                <div class="admin-sidebar-rodape">
+                    <button class="btn-sair-admin" onclick="fecharFormulario()">⬅️ Sair do Painel</button>
+                </div>
+            </aside>
 
-        <!-- ABA 1: TABELA DE AGENDAMENTOS NORMAIS -->
-        <div id="tab-agendamentos" class="admin-tab-content active">
-            <div class="caixa-branca">
-                <h3 style="margin-top:0; color:#004080; text-align: center;">Gerenciar Agendamentos (Mês Atual)</h3>
-                <p style="font-size: 13px; text-align: center; color: #666; margin-top: -10px;">Apenas reservas de professores são mostradas aqui. Vá em "Bloqueios e Regras" para gerenciar fechamentos e textos azuis.</p>
+            <div class="admin-main">
+
+            <!-- ABA 1: TABELA DE AGENDAMENTOS NORMAIS -->
+            <div id="tab-agendamentos" class="admin-tab-content active">
+                <div class="caixa-branca">
+                    <h3 style="margin-top:0; color:#004080; text-align: center;">Gerenciar Agendamentos (Mês Atual)</h3>
+                    <p style="font-size: 13px; text-align: center; color: #666; margin-top: -10px;">Apenas reservas de professores são mostradas aqui. Vá em "Bloqueios e Regras" para gerenciar fechamentos e textos azuis.</p>
+                    
+                    <div class="nav-mes" style="margin-bottom: 15px; background-color: #f0f4f8;">
+                        <button id="btn-mes-admin-ant" onclick="mudarMesTabela(-1)">&lt; ANT</button>
+                        <h3 id="titulo-tabela-admin" style="color: #004080; font-size: 14px;">MÊS ANO</h3>
+                        <button id="btn-mes-admin-prox" onclick="mudarMesTabela(1)">PRÓX &gt;</button>
+                    </div>
+                    <div class="tabela-wrapper">
+                        <table class="tabela-agendamentos">
+                            <thead style="background-color: #004080; color: white;"><tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th><th>Descrição</th><th style="text-align: center;">Ações</th></tr></thead>
+                            <tbody id="corpo-tabela-admin"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA: ALTERNÂNCIA VESPERTINO -->
+            <div id="tab-config-alternancia" class="admin-tab-content">
+                <div class="caixa-branca" style="border-left: 5px solid #8e44ad;">
+                    <h3 style="margin-top:0; color:#8e44ad;">🔄 Alternância de Horários (Vespertino)</h3>
+                    <p style="font-size:13px; color:#555;">Bloqueia fixamente os horários escolhidos, alternando entre dois nomes (padrão: troca a cada 7 dias). Deixe o "Nome 2" em branco se na outra semana o horário deve ficar livre.</p>
+                    <input type="hidden" id="alt-id">
+                    <div class="form-layout">
+                        <div class="coluna-esq">
+                            <div class="form-group"><label>Dia da semana:</label>
+                                <select id="alt-dia"><option value="1">Segunda</option><option value="2">Terça</option><option value="3">Quarta</option><option value="4" selected>Quinta</option><option value="5">Sexta</option></select>
+                            </div>
+                            <div class="form-group"><label>Data de início (quando começa o Nome 1):</label><input type="date" id="alt-data"></div>
+                            <div class="form-group"><label>Trocar a cada quantos dias:</label><input type="number" id="alt-ciclo" value="7" min="1"></div>
+                            <div class="form-group"><label>Cor no calendário:</label><input type="color" id="alt-cor" value="#8e44ad" style="height:40px; padding:2px;"></div>
+                        </div>
+                        <div class="coluna-dir">
+                            <div class="form-group"><label>Nome 1 (começa na data de início):</label><input type="text" id="alt-nome-a" value="Prof. Lian"></div>
+                            <div class="form-group"><label>Nome 2 (alterna depois):</label><input type="text" id="alt-nome-b" value="Prof. Cláudia"></div>
+                            <div class="form-group"><label>Disciplina (aparece embaixo do nome):</label><input type="text" id="alt-disciplina" value="Informática"></div>
+                            <label style="font-size:13px; font-weight:bold; color:#555;">Horários da tarde bloqueados:</label>
+                            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:5px; font-size:13px;">
+                                <label><input type="checkbox" name="alt-hr" value="1º Hor. Vesp (13:00 - 13:50)" checked> 1º (13:00)</label>
+                                <label><input type="checkbox" name="alt-hr" value="2º Hor. Vesp (13:50 - 14:40)" checked> 2º (13:50)</label>
+                                <label><input type="checkbox" name="alt-hr" value="3º Hor. Vesp (14:40 - 15:30)" checked> 3º (14:40)</label>
+                                <label><input type="checkbox" name="alt-hr" value="4º Hor. Vesp (15:45 - 16:35)"> 4º (15:45)</label>
+                                <label><input type="checkbox" name="alt-hr" value="5º Hor. Vesp (16:35 - 17:25)"> 5º (16:35)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
+                        <button style="background:transparent; border:none; color:#d32f2f; cursor:pointer; font-weight:bold; text-decoration:underline;" onclick="limparFormAlternancia()">Limpar Campos</button>
+                        <button id="btn-salvar-alt" style="background:#8e44ad; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="salvarAlternancia()">➕ Adicionar Alternância</button>
+                    </div>
+                </div>
+                <h2 style="color:#004080; font-size:18px; border-bottom:2px solid #ccc; padding-bottom:5px; margin-top:30px;">📋 Alternâncias Cadastradas</h2>
+                <div id="lista-alternancias" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px;"></div>
+            </div>
+
+            <!-- ABA: REGRAS FIXAS, BLOQUEIOS E ANOTAÇÕES -->
+            <div id="tab-config-regras" class="admin-tab-content">
                 
-                <div class="nav-mes" style="margin-bottom: 15px; background-color: #f0f4f8;">
-                    <button id="btn-mes-admin-ant" onclick="mudarMesTabela(-1)">&lt; ANT</button>
-                    <h3 id="titulo-tabela-admin" style="color: #004080; font-size: 14px;">MÊS ANO</h3>
-                    <button id="btn-mes-admin-prox" onclick="mudarMesTabela(1)">PRÓX &gt;</button>
-                </div>
-                <div class="tabela-wrapper">
-                    <table class="tabela-agendamentos">
-                        <thead style="background-color: #004080; color: white;"><tr><th>Data</th><th>Horários</th><th>Professor / Disciplina</th><th>Descrição</th><th style="text-align: center;">Ações</th></tr></thead>
-                        <tbody id="corpo-tabela-admin"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                <h2 style="color: #004080; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom: 5px;">➕ Criar Novas Regras / Bloqueios</h2>
 
-        <!-- NOVA ABA: ALTERNÂNCIA VESPERTINO -->
-        <div id="tab-config-alternancia" class="admin-tab-content">
-            <div class="caixa-branca" style="border-left: 5px solid #8e44ad;">
-                <h3 style="margin-top:0; color:#8e44ad;">🔄 Alternância de Horários (Vespertino)</h3>
-                <p style="font-size:13px; color:#555;">Bloqueia fixamente os horários escolhidos, alternando entre dois nomes. Deixe o "Nome 2" em branco se na outra quinzena o horário deve ficar livre.</p>
-                <input type="hidden" id="alt-id">
-                <div class="form-layout">
-                    <div class="coluna-esq">
-                        <div class="form-group"><label>Dia da semana:</label>
-                            <select id="alt-dia"><option value="1">Segunda</option><option value="2">Terça</option><option value="3">Quarta</option><option value="4" selected>Quinta</option><option value="5">Sexta</option></select>
-                        </div>
-                        <div class="form-group"><label>Data de início (quando começa o Nome 1):</label><input type="date" id="alt-data"></div>
-                        <div class="form-group"><label>Trocar a cada quantos dias:</label><input type="number" id="alt-ciclo" value="15" min="1"></div>
-                        <div class="form-group"><label>Cor no calendário:</label><input type="color" id="alt-cor" value="#8e44ad" style="height:40px; padding:2px;"></div>
-                    </div>
-                    <div class="coluna-dir">
-                        <div class="form-group"><label>Nome 1 (começa na data de início):</label><input type="text" id="alt-nome-a" value="Prof. Lian"></div>
-                        <div class="form-group"><label>Nome 2 (alterna depois):</label><input type="text" id="alt-nome-b" value="Prof. Cláudia"></div>
-                        <label style="font-size:13px; font-weight:bold; color:#555;">Horários da tarde bloqueados:</label>
-                        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:5px; font-size:13px;">
-                            <label><input type="checkbox" name="alt-hr" value="1º Hor. Vesp (13:00 - 13:50)" checked> 1º (13:00)</label>
-                            <label><input type="checkbox" name="alt-hr" value="2º Hor. Vesp (13:50 - 14:40)" checked> 2º (13:50)</label>
-                            <label><input type="checkbox" name="alt-hr" value="3º Hor. Vesp (14:40 - 15:30)" checked> 3º (14:40)</label>
-                            <label><input type="checkbox" name="alt-hr" value="4º Hor. Vesp (15:45 - 16:35)"> 4º (15:45)</label>
-                            <label><input type="checkbox" name="alt-hr" value="5º Hor. Vesp (16:35 - 17:25)"> 5º (16:35)</label>
-                        </div>
-                    </div>
-                </div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
-                    <button style="background:transparent; border:none; color:#d32f2f; cursor:pointer; font-weight:bold; text-decoration:underline;" onclick="limparFormAlternancia()">Limpar Campos</button>
-                    <button id="btn-salvar-alt" style="background:#8e44ad; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="salvarAlternancia()">➕ Adicionar Alternância</button>
-                </div>
-            </div>
-            <h2 style="color:#004080; font-size:18px; border-bottom:2px solid #ccc; padding-bottom:5px; margin-top:30px;">📋 Alternâncias Cadastradas</h2>
-            <div id="lista-alternancias" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px;"></div>
-        </div>
-
-        <!-- ABA 2: REGRAS FIXAS, BLOQUEIOS E ANOTAÇÕES -->
-        <div id="tab-config-regras" class="admin-tab-content">
-            
-            <h2 style="color: #004080; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom: 5px;">➕ Criar Novas Regras / Bloqueios</h2>
-
-            <div class="caixa-branca" style="border-left: 5px solid #004080; padding: 15px; margin-bottom: 15px;">
-                <h4 style="margin-top:0; margin-bottom: 10px; color:#004080;">👨‍🏫 Anotação Fixa (Azul no Calendário)</h4>
-                <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
-                    <div style="flex:1; min-width:120px;">
-                        <label style="font-size:12px; font-weight:bold;">Dia da Semana:</label>
-                        <select id="cfg-fixa-dia" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
-                            <option value="1">Segunda</option><option value="2">Terça</option><option value="3">Quarta</option><option value="4">Quinta</option><option value="5">Sexta</option>
-                        </select>
-                    </div>
-                    <div style="flex:2; min-width:200px;">
-                        <label style="font-size:12px; font-weight:bold;">Texto Completo a Exibir (Pode usar várias linhas):</label>
-                        <textarea id="cfg-fixa-texto" rows="2" placeholder="Ex: Prof. Lian&#10;07:00 às 11:25" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; font-family:inherit; resize:vertical;"></textarea>
-                    </div>
-                    <button style="background:#004080; color:#fff; border:none; padding:9px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="addAnotacaoFixa()">Salvar Anotação</button>
-                </div>
-            </div>
-
-            <div class="caixa-branca" style="border-left: 5px solid #2ecc71; padding: 15px; margin-bottom: 15px;">
-                <h4 style="margin-top:0; margin-bottom: 10px; color:#2ecc71;">🛑 Bloqueio Recorrente ou 📌 Anotação Visual</h4>
-                <div class="form-layout">
-                    <div class="coluna-esq">
-                        <div class="form-group"><label>Tipo:</label>
-                            <select id="cfg-rec-tipo" onchange="toggleRecFields()">
-                                <option value="bloqueio">🛑 Bloqueio de Horários (Não deixa agendar)</option>
-                                <option value="anotacao">📌 Anotação Visual (Etiqueta no calendário)</option>
+                <div class="caixa-branca" style="border-left: 5px solid #004080; padding: 15px; margin-bottom: 15px;">
+                    <h4 style="margin-top:0; margin-bottom: 10px; color:#004080;">👨‍🏫 Anotação Fixa (Azul no Calendário)</h4>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+                        <div style="flex:1; min-width:120px;">
+                            <label style="font-size:12px; font-weight:bold;">Dia da Semana:</label>
+                            <select id="cfg-fixa-dia" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                                <option value="1">Segunda</option><option value="2">Terça</option><option value="3">Quarta</option><option value="4">Quinta</option><option value="5">Sexta</option>
                             </select>
                         </div>
-                        <div class="form-group"><label>Nome (Ex: PROERD):</label><input type="text" id="cfg-rec-nome"></div>
-                        <div class="form-group"><label>Validade:</label><div style="display:flex; gap:10px;"><input type="date" id="cfg-rec-inicio"><input type="date" id="cfg-rec-fim"></div></div>
-                        <div class="form-group"><label>Dias da Semana:</label>
-                            <div style="display:flex; gap:5px; flex-wrap:wrap; font-size: 12px; background: #f0f4f8; padding:8px; border-radius:4px;">
-                                <label><input type="checkbox" name="cfg-rec-dias" value="1"> Seg</label> <label><input type="checkbox" name="cfg-rec-dias" value="2"> Ter</label>
-                                <label><input type="checkbox" name="cfg-rec-dias" value="3"> Qua</label> <label><input type="checkbox" name="cfg-rec-dias" value="4"> Qui</label> <label><input type="checkbox" name="cfg-rec-dias" value="5"> Sex</label>
-                            </div>
+                        <div style="flex:2; min-width:200px;">
+                            <label style="font-size:12px; font-weight:bold;">Texto Completo a Exibir (Pode usar várias linhas):</label>
+                            <textarea id="cfg-fixa-texto" rows="2" placeholder="Ex: Prof. Lian&#10;07:00 às 11:25" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; font-family:inherit; resize:vertical;"></textarea>
                         </div>
+                        <button style="background:#004080; color:#fff; border:none; padding:9px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="addAnotacaoFixa()">Salvar Anotação</button>
                     </div>
-                    <div class="coluna-dir">
-                        <div id="cfg-rec-box-cor" style="display:none;">
-                            <div class="form-group"><label>Cor Lateral da Anotação:</label>
-                                <select id="cfg-rec-cor"><option value="#f1c40f">Amarelo</option><option value="#3498db">Azul</option><option value="#2ecc71">Verde</option><option value="#e74c3c">Vermelho</option><option value="#9b59b6">Roxo</option></select>
+                </div>
+
+                <div class="caixa-branca" style="border-left: 5px solid #2ecc71; padding: 15px; margin-bottom: 15px;">
+                    <h4 style="margin-top:0; margin-bottom: 10px; color:#2ecc71;">🛑 Bloqueio Recorrente ou 📌 Anotação Visual</h4>
+                    <div class="form-layout">
+                        <div class="coluna-esq">
+                            <div class="form-group"><label>Tipo:</label>
+                                <select id="cfg-rec-tipo" onchange="toggleRecFields()">
+                                    <option value="bloqueio">🛑 Bloqueio de Horários (Não deixa agendar)</option>
+                                    <option value="anotacao">📌 Anotação Visual (Etiqueta no calendário)</option>
+                                </select>
                             </div>
-                        </div>
-                        <div id="cfg-rec-box-hrs">
-                            <label style="font-size: 13px; font-weight: bold; color: #555;">Horários bloqueados:</label>
-                            <div style="display:flex; gap:10px; margin-top:5px;">
-                                <div style="flex:1;">
-                                    <h4 style="margin:0 0 2px 0; font-size:11px;">☀️ Matutino</h4>
-                                    <div class="grid-horarios" style="grid-template-columns: 1fr; gap: 2px;">
-                                        <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="1º Horário (07:00 - 07:50)"> 1º</label>
-                                        <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="2º Horário (07:50 - 08:40)"> 2º</label>
-                                        <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="3º Horário (08:40 - 09:30)"> 3º</label>
-                                        <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="4º Horário (09:45 - 10:35)"> 4º</label>
-                                        <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="5º Horário (10:35 - 11:25)"> 5º</label>
-                                    </div>
-                                </div>
-                                <div style="flex:1;">
-                                    <h4 style="margin:0 0 2px 0; font-size:11px;">🌤️ Vespertino</h4>
-                                    <div class="grid-horarios" style="grid-template-columns: 1fr; gap: 2px;">
-                                        <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="1º Hor. Vesp (13:00 - 13:50)"> 1º</label>
-                                        <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="2º Hor. Vesp (13:50 - 14:40)"> 2º</label>
-                                        <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="3º Hor. Vesp (14:40 - 15:30)"> 3º</label>
-                                        <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="4º Hor. Vesp (15:45 - 16:35)"> 4º</label>
-                                        <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="5º Hor. Vesp (16:35 - 17:25)"> 5º</label>
-                                    </div>
+                            <div class="form-group"><label>Nome (Ex: PROERD):</label><input type="text" id="cfg-rec-nome"></div>
+                            <div class="form-group"><label>Validade:</label><div style="display:flex; gap:10px;"><input type="date" id="cfg-rec-inicio"><input type="date" id="cfg-rec-fim"></div></div>
+                            <div class="form-group"><label>Dias da Semana:</label>
+                                <div style="display:flex; gap:5px; flex-wrap:wrap; font-size: 12px; background: #f0f4f8; padding:8px; border-radius:4px;">
+                                    <label><input type="checkbox" name="cfg-rec-dias" value="1"> Seg</label> <label><input type="checkbox" name="cfg-rec-dias" value="2"> Ter</label>
+                                    <label><input type="checkbox" name="cfg-rec-dias" value="3"> Qua</label> <label><input type="checkbox" name="cfg-rec-dias" value="4"> Qui</label> <label><input type="checkbox" name="cfg-rec-dias" value="5"> Sex</label>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div style="text-align: right; margin-top: 15px;"><button style="background:#2ecc71; color:#fff; border:none; padding:9px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="adicionarRegraRecorrente()">➕ Adicionar Regra</button></div>
-            </div>
-
-            <div class="caixa-branca" style="border-left: 5px solid #e74c3c; padding: 15px; margin-bottom: 30px;">
-                <h4 style="margin-top:0; margin-bottom: 10px; color:#e74c3c;">🔒 Bloquear Dia Único / Feriado / Data Específica</h4>
-                <div class="form-layout">
-                    <div class="coluna-esq">
-                        <div class="form-group"><label>Data:</label><input type="date" id="admin-data-bloqueio"></div>
-                        <div class="form-group"><label>Motivo:</label>
-                            <select id="admin-motivo-bloqueio" onchange="verificarMotivoAdmin()"><option value="Manutenção">Manutenção / Fechado</option><option value="Feriado">Feriado</option><option value="Recesso">Recesso</option><option value="Outro">Outro Motivo</option></select>
-                            <input type="text" id="admin-motivo-texto" placeholder="Digite o motivo..." style="display:none; margin-top:5px;">
+                        <div class="coluna-dir">
+                            <div id="cfg-rec-box-cor" style="display:none;">
+                                <div class="form-group"><label>Cor Lateral da Anotação:</label>
+                                    <select id="cfg-rec-cor"><option value="#f1c40f">Amarelo</option><option value="#3498db">Azul</option><option value="#2ecc71">Verde</option><option value="#e74c3c">Vermelho</option><option value="#9b59b6">Roxo</option></select>
+                                </div>
+                            </div>
+                            <div id="cfg-rec-box-hrs">
+                                <label style="font-size: 13px; font-weight: bold; color: #555;">Horários bloqueados:</label>
+                                <div style="display:flex; gap:10px; margin-top:5px;">
+                                    <div style="flex:1;">
+                                        <h4 style="margin:0 0 2px 0; font-size:11px;">☀️ Matutino</h4>
+                                        <div class="grid-horarios" style="grid-template-columns: 1fr; gap: 2px;">
+                                            <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="1º Horário (07:00 - 07:50)"> 1º</label>
+                                            <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="2º Horário (07:50 - 08:40)"> 2º</label>
+                                            <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="3º Horário (08:40 - 09:30)"> 3º</label>
+                                            <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="4º Horário (09:45 - 10:35)"> 4º</label>
+                                            <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="5º Horário (10:35 - 11:25)"> 5º</label>
+                                        </div>
+                                    </div>
+                                    <div style="flex:1;">
+                                        <h4 style="margin:0 0 2px 0; font-size:11px;">🌤️ Vespertino</h4>
+                                        <div class="grid-horarios" style="grid-template-columns: 1fr; gap: 2px;">
+                                            <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="1º Hor. Vesp (13:00 - 13:50)"> 1º</label>
+                                            <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="2º Hor. Vesp (13:50 - 14:40)"> 2º</label>
+                                            <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="3º Hor. Vesp (14:40 - 15:30)"> 3º</label>
+                                            <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="4º Hor. Vesp (15:45 - 16:35)"> 4º</label>
+                                            <label class="horario-item" style="padding:2px; font-size:11px;"><input type="checkbox" name="cfg-rec-hr" value="5º Hor. Vesp (16:35 - 17:25)"> 5º</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="coluna-dir">
-                        <label style="font-size: 13px; font-weight: bold;">Quais horários bloquear?</label>
-                        <div class="grid-horarios" style="gap: 5px; margin-bottom:10px;">
-                            <label class="horario-item" style="grid-column: span 2; background-color: #f0f4f8; border: 1px dashed #004080;"><input type="checkbox" onchange="alternarTodosHorariosAdmin(this)"><span style="font-weight: bold; color: #004080;">☑️ Marcar Dia Inteiro</span></label>
-                            <label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="1º Horário (07:00 - 07:50)"> 1º Mat</label><label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="1º Hor. Vesp (13:00 - 13:50)"> 1º Vesp</label>
-                            <label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="2º Horário (07:50 - 08:40)"> 2º Mat</label><label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="2º Hor. Vesp (13:50 - 14:40)"> 2º Vesp</label>
-                            <label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="3º Horário (08:40 - 09:30)"> 3º Mat</label><label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="3º Hor. Vesp (14:40 - 15:30)"> 3º Vesp</label>
-                            <label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="4º Horário (09:45 - 10:35)"> 4º Mat</label><label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="4º Hor. Vesp (15:45 - 16:35)"> 4º Vesp</label>
-                            <label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="5º Horário (10:35 - 11:25)"> 5º Mat</label><label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="5º Hor. Vesp (16:35 - 17:25)"> 5º Vesp</label>
+                    <div style="text-align: right; margin-top: 15px;"><button style="background:#2ecc71; color:#fff; border:none; padding:9px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="adicionarRegraRecorrente()">➕ Adicionar Regra</button></div>
+                </div>
+
+                <div class="caixa-branca" style="border-left: 5px solid #e74c3c; padding: 15px; margin-bottom: 30px;">
+                    <h4 style="margin-top:0; margin-bottom: 10px; color:#e74c3c;">🔒 Bloquear Dia Único / Feriado / Data Específica</h4>
+                    <div class="form-layout">
+                        <div class="coluna-esq">
+                            <div class="form-group"><label>Data:</label><input type="date" id="admin-data-bloqueio"></div>
+                            <div class="form-group"><label>Motivo:</label>
+                                <select id="admin-motivo-bloqueio" onchange="verificarMotivoAdmin()"><option value="Manutenção">Manutenção / Fechado</option><option value="Feriado">Feriado</option><option value="Recesso">Recesso</option><option value="Outro">Outro Motivo</option></select>
+                                <input type="text" id="admin-motivo-texto" placeholder="Digite o motivo..." style="display:none; margin-top:5px;">
+                            </div>
+                        </div>
+                        <div class="coluna-dir">
+                            <label style="font-size: 13px; font-weight: bold;">Quais horários bloquear?</label>
+                            <div class="grid-horarios" style="gap: 5px; margin-bottom:10px;">
+                                <label class="horario-item" style="grid-column: span 2; background-color: #f0f4f8; border: 1px dashed #004080;"><input type="checkbox" onchange="alternarTodosHorariosAdmin(this)"><span style="font-weight: bold; color: #004080;">☑️ Marcar Dia Inteiro</span></label>
+                                <label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="1º Horário (07:00 - 07:50)"> 1º Mat</label><label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="1º Hor. Vesp (13:00 - 13:50)"> 1º Vesp</label>
+                                <label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="2º Horário (07:50 - 08:40)"> 2º Mat</label><label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="2º Hor. Vesp (13:50 - 14:40)"> 2º Vesp</label>
+                                <label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="3º Horário (08:40 - 09:30)"> 3º Mat</label><label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="3º Hor. Vesp (14:40 - 15:30)"> 3º Vesp</label>
+                                <label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="4º Horário (09:45 - 10:35)"> 4º Mat</label><label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="4º Hor. Vesp (15:45 - 16:35)"> 4º Vesp</label>
+                                <label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="5º Horário (10:35 - 11:25)"> 5º Mat</label><label class="horario-item" style="padding:4px; font-size:11px;"><input type="checkbox" name="admin-horario" value="5º Hor. Vesp (16:35 - 17:25)"> 5º Vesp</label>
+                            </div>
                         </div>
                     </div>
+                    <div style="text-align: right;"><button style="background:#e74c3c; color:#fff; border:none; padding:9px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="salvarBloqueioAdmin()">🔒 Salvar Bloqueio</button></div>
                 </div>
-                <div style="text-align: right;"><button style="background:#e74c3c; color:#fff; border:none; padding:9px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="salvarBloqueioAdmin()">🔒 Salvar Bloqueio</button></div>
-            </div>
 
-            <!-- ================= ÁREA DE LISTAGEM CONDENSADA ================= -->
-            <h2 style="color: #004080; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-top: 30px;">📋 Lista de Regras Salvas (Para Excluir)</h2>
-            
-            <h4 style="margin: 10px 0 5px 0; color:#555;">Anotações Fixas (Azuis no Calendário)</h4>
-            <div id="lista-fixos" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px; margin-bottom:15px;"></div>
-            
-            <h4 style="margin: 10px 0 5px 0; color:#555;">Bloqueios e Regras Recorrentes</h4>
-            <div id="lista-recorrentes" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px; margin-bottom:15px;"></div>
-            
-            <h4 style="margin: 10px 0 5px 0; color:#555;">Bloqueios de Dias Específicos (Mês Selecionado Acima)</h4>
-            <div id="lista-bloqueios-especificos" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px;"></div>
-
-        </div>
-
-        <!-- ABA 3: POPUP DE AVISOS (MÚLTIPLOS) -->
-        <div id="tab-config-aviso" class="admin-tab-content">
-            <div class="caixa-branca" style="border-left: 5px solid #e67e22;">
-                <h3 style="margin-top:0; color:#e67e22;">📢 Configurar Aviso Pop-up</h3>
-                <p style="font-size:13px; color:#555;">Adicione avisos que pularão na tela dos professores no período configurado.</p>
-                <input type="hidden" id="admin-aviso-id">
+                <!-- ================= ÁREA DE LISTAGEM CONDENSADA ================= -->
+                <h2 style="color: #004080; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-top: 30px;">📋 Lista de Regras Salvas (Para Excluir)</h2>
                 
-                <div class="form-layout">
-                    <div class="coluna-esq">
-                        <div class="form-group"><label>Exibir a partir de:</label><input type="date" id="admin-aviso-inicio"></div>
-                        <div class="form-group"><label>Parar de exibir após:</label><input type="date" id="admin-aviso-fim"></div>
-                    </div>
-                    <div class="coluna-dir">
-                        <div class="form-group"><label>Mensagem do Aviso:</label><textarea id="admin-aviso-texto" rows="4" placeholder="Ex: Informamos que o laboratório estará fechado para dedetização..."></textarea></div>
-                    </div>
-                </div>
-                <label style="font-weight:bold; cursor:pointer; display:flex; align-items:center; gap:10px; margin-top:10px;">
-                    <input type="checkbox" id="admin-aviso-ativo" style="width:20px; height:20px;"> Ativar este aviso
-                </label>
+                <h4 style="margin: 10px 0 5px 0; color:#555;">Anotações Fixas (Azuis no Calendário)</h4>
+                <div id="lista-fixos" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px; margin-bottom:15px;"></div>
                 
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 15px;">
-                    <button style="background:transparent; border:none; color:#d32f2f; cursor:pointer; font-weight:bold; text-decoration:underline;" onclick="limparFormAviso()">Limpar Campos</button>
-                    <button id="btn-salvar-aviso" class="btn-agendar" style="background:#e67e22; padding: 10px 20px; font-size: 14px; width:auto;" onclick="salvarAvisoGlobal()">➕ Adicionar Novo Aviso</button>
+                <h4 style="margin: 10px 0 5px 0; color:#555;">Bloqueios e Regras Recorrentes</h4>
+                <div id="lista-recorrentes" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px; margin-bottom:15px;"></div>
+                
+                <h4 style="margin: 10px 0 5px 0; color:#555;">Bloqueios de Dias Específicos (Mês Selecionado Acima)</h4>
+                <div id="lista-bloqueios-especificos" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px;"></div>
+
+            </div>
+
+            <!-- ABA: POPUP DE AVISOS (MÚLTIPLOS) -->
+            <div id="tab-config-aviso" class="admin-tab-content">
+                <div class="caixa-branca" style="border-left: 5px solid #e67e22;">
+                    <h3 style="margin-top:0; color:#e67e22;">📢 Configurar Aviso Pop-up</h3>
+                    <p style="font-size:13px; color:#555;">Adicione avisos que pularão na tela dos professores no período configurado.</p>
+                    <input type="hidden" id="admin-aviso-id">
+                    
+                    <div class="form-layout">
+                        <div class="coluna-esq">
+                            <div class="form-group"><label>Exibir a partir de:</label><input type="date" id="admin-aviso-inicio"></div>
+                            <div class="form-group"><label>Parar de exibir após:</label><input type="date" id="admin-aviso-fim"></div>
+                        </div>
+                        <div class="coluna-dir">
+                            <div class="form-group"><label>Mensagem do Aviso:</label><textarea id="admin-aviso-texto" rows="4" placeholder="Ex: Informamos que o laboratório estará fechado para dedetização..."></textarea></div>
+                        </div>
+                    </div>
+                    <label style="font-weight:bold; cursor:pointer; display:flex; align-items:center; gap:10px; margin-top:10px;">
+                        <input type="checkbox" id="admin-aviso-ativo" style="width:20px; height:20px;"> Ativar este aviso
+                    </label>
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 15px;">
+                        <button style="background:transparent; border:none; color:#d32f2f; cursor:pointer; font-weight:bold; text-decoration:underline;" onclick="limparFormAviso()">Limpar Campos</button>
+                        <button id="btn-salvar-aviso" class="btn-agendar" style="background:#e67e22; padding: 10px 20px; font-size: 14px; width:auto;" onclick="salvarAvisoGlobal()">➕ Adicionar Novo Aviso</button>
+                    </div>
+                </div>
+
+                <h2 style="color: #004080; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-top: 30px;">📋 Lista de Avisos (Ativos e Inativos)</h2>
+                <div id="lista-avisos-admin" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px; margin-bottom:15px;"></div>
+            </div>
+            
+            <!-- ABA: INTERFACE E LINKS -->
+            <div id="tab-config-interface" class="admin-tab-content">
+                <div class="caixa-branca" style="border-left: 5px solid #3498db; margin-bottom: 20px;">
+                    <h3 style="margin-top:0; color:#3498db;">🎨 Editar Textos da Interface Principal</h3>
+                    <div class="form-group">
+                        <label>Aviso do Cabeçalho (Fundo cinza / borda vermelha):</label>
+                        <textarea id="admin-texto-cabecalho" rows="3" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Aviso de Rodapé (Acima de Outros Agendamentos):</label>
+                        <textarea id="admin-texto-rodape" rows="2" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" placeholder="Deixe em branco para ocultar"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Título da Seção de Outros Agendamentos:</label>
+                        <input type="text" id="admin-titulo-outros" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;">
+                    </div>
+                    <div style="text-align: right; margin-top: 10px;">
+                        <button style="background:#3498db; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="salvarInterfaceGeral()">💾 Salvar Textos Principais</button>
+                    </div>
+                </div>
+
+                <div class="caixa-branca" style="border-left: 5px solid #3498db;">
+                    <h3 style="margin-top:0; color:#3498db;">🔗 Botões "Outros Agendamentos"</h3>
+                    <div class="form-layout" style="align-items: flex-end; background:#f0f4f8; padding:10px; border-radius:5px; margin-bottom:15px;">
+                        <div class="form-group" style="flex:1; margin-bottom:0;"><label style="font-size:11px;">Nome no Botão (Ex: Lab Ciências):</label><input type="text" id="admin-btn-label"></div>
+                        <div class="form-group" style="flex:2; margin-bottom:0;"><label style="font-size:11px;">Link (URL Completa com https://):</label><input type="text" id="admin-btn-url"></div>
+                        <button style="background:#3498db; color:#fff; border:none; padding:10px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="addBotaoOutros()">➕ Adicionar</button>
+                    </div>
+                    <h4 style="margin: 10px 0 5px 0; color:#555;">Botões Cadastrados Atualmente:</h4>
+                    <div id="lista-botoes-outros" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px;"></div>
                 </div>
             </div>
 
-            <h2 style="color: #004080; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-top: 30px;">📋 Lista de Avisos (Ativos e Inativos)</h2>
-            <div id="lista-avisos-admin" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px; margin-bottom:15px;"></div>
-        </div>
-        
-        <!-- ABA 4: INTERFACE E LINKS -->
-        <div id="tab-config-interface" class="admin-tab-content">
-            <div class="caixa-branca" style="border-left: 5px solid #3498db; margin-bottom: 20px;">
-                <h3 style="margin-top:0; color:#3498db;">🎨 Editar Textos da Interface Principal</h3>
-                <div class="form-group">
-                    <label>Aviso do Cabeçalho (Fundo cinza / borda vermelha):</label>
-                    <textarea id="admin-texto-cabecalho" rows="3" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Aviso de Rodapé (Acima de Outros Agendamentos):</label>
-                    <textarea id="admin-texto-rodape" rows="2" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" placeholder="Deixe em branco para ocultar"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Título da Seção de Outros Agendamentos:</label>
-                    <input type="text" id="admin-titulo-outros" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;">
-                </div>
-                <div style="text-align: right; margin-top: 10px;">
-                    <button style="background:#3498db; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="salvarInterfaceGeral()">💾 Salvar Textos Principais</button>
-                </div>
-            </div>
-
-            <div class="caixa-branca" style="border-left: 5px solid #3498db;">
-                <h3 style="margin-top:0; color:#3498db;">🔗 Botões "Outros Agendamentos"</h3>
-                <div class="form-layout" style="align-items: flex-end; background:#f0f4f8; padding:10px; border-radius:5px; margin-bottom:15px;">
-                    <div class="form-group" style="flex:1; margin-bottom:0;"><label style="font-size:11px;">Nome no Botão (Ex: Lab Ciências):</label><input type="text" id="admin-btn-label"></div>
-                    <div class="form-group" style="flex:2; margin-bottom:0;"><label style="font-size:11px;">Link (URL Completa com https://):</label><input type="text" id="admin-btn-url"></div>
-                    <button style="background:#3498db; color:#fff; border:none; padding:10px 15px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="addBotaoOutros()">➕ Adicionar</button>
-                </div>
-                <h4 style="margin: 10px 0 5px 0; color:#555;">Botões Cadastrados Atualmente:</h4>
-                <div id="lista-botoes-outros" style="background:#fff; border:1px solid #ddd; border-radius:5px; padding:10px;"></div>
-            </div>
-        </div>
-
-        </div></div> <!-- fecha admin-main e admin-layout -->
+            </div><!-- fecha admin-main -->
+        </div><!-- fecha admin-layout -->
     </div>
 </div>
 
@@ -624,6 +639,8 @@
     let idAgendamentoEdicao = null; 
     const mesesNomes = ["JANEIRO", "FEVEREIRO", "MARÇO", "ABRIL", "MAIO", "JUNHO", "JULHO", "AGOSTO", "SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO"];
     const diasSemanaNomes = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+    const CICLO_PADRAO = 7;
+    const DISCIPLINA_PADRAO = "Informática";
 
     const ordemHorarios = [
         "1º Horário (07:00 - 07:50)", "2º Horário (07:50 - 08:40)", "3º Horário (08:40 - 09:30)", "4º Horário (09:45 - 10:35)", "5º Horário (10:35 - 11:25)",
@@ -653,7 +670,7 @@
     });
 
     // ================= ALTERNÂNCIA (CONFIGURÁVEL) =================
-    // Retorna uma lista de bloqueios do dia: [{horario, nome, cor}]
+    // Retorna uma lista de bloqueios do dia: [{horario, nome, cor, disciplina}]
     function getProfessorAlternancia(dataAlvo) {
         let res = [];
         (cfgGerais.alternancias || []).forEach(a => {
@@ -663,11 +680,12 @@
             let d1 = Date.UTC(dBase.getFullYear(), dBase.getMonth(), dBase.getDate());
             let d2 = Date.UTC(dataAlvo.getFullYear(), dataAlvo.getMonth(), dataAlvo.getDate());
             if (d2 < d1) return;
-            let ciclo = parseInt(a.ciclo) || 15;
+            let ciclo = parseInt(a.ciclo) || CICLO_PADRAO;
             let diff = Math.round((d2 - d1) / 86400000);
             let nome = (diff % (ciclo * 2)) < ciclo ? a.nomeA : a.nomeB;
-            if (!nome) return; // nome em branco = quinzena livre
-            (a.horarios || []).forEach(h => res.push({ horario: h, nome: nome, cor: a.cor || "#8e44ad" }));
+            if (!nome) return; // nome em branco = semana livre
+            let disc = (a.disciplina === undefined || a.disciplina === null) ? DISCIPLINA_PADRAO : a.disciplina;
+            (a.horarios || []).forEach(h => res.push({ horario: h, nome: nome, cor: a.cor || "#8e44ad", disciplina: disc }));
         });
         return res;
     }
@@ -681,7 +699,7 @@
             let item = cb.closest('.horario-item');
             if (item) {
                 item.classList.add('bloqueado', 'bloq-regra');
-                item.setAttribute('data-motivo', ' 🔄 ' + b.nome);
+                item.setAttribute('data-motivo', ' 🔄 ' + b.nome + (b.disciplina ? ' - ' + b.disciplina : ''));
                 item.style.borderColor = b.cor; item.style.background = b.cor + '22';
             }
         });
@@ -691,9 +709,10 @@
         document.getElementById('alt-id').value = '';
         document.getElementById('alt-dia').value = '4';
         document.getElementById('alt-data').value = '';
-        document.getElementById('alt-ciclo').value = '15';
+        document.getElementById('alt-ciclo').value = String(CICLO_PADRAO);
         document.getElementById('alt-nome-a').value = 'Prof. Lian';
         document.getElementById('alt-nome-b').value = 'Prof. Cláudia';
+        document.getElementById('alt-disciplina').value = DISCIPLINA_PADRAO;
         document.getElementById('alt-cor').value = '#8e44ad';
         document.querySelectorAll('input[name="alt-hr"]').forEach((c, i) => c.checked = i < 3);
         document.getElementById('btn-salvar-alt').innerText = '➕ Adicionar Alternância';
@@ -705,9 +724,10 @@
             id: idEdit || Date.now().toString(),
             diaSemana: parseInt(document.getElementById('alt-dia').value),
             dataInicio: document.getElementById('alt-data').value,
-            ciclo: parseInt(document.getElementById('alt-ciclo').value) || 15,
+            ciclo: parseInt(document.getElementById('alt-ciclo').value) || CICLO_PADRAO,
             nomeA: document.getElementById('alt-nome-a').value.trim(),
             nomeB: document.getElementById('alt-nome-b').value.trim(),
+            disciplina: document.getElementById('alt-disciplina').value.trim(),
             cor: document.getElementById('alt-cor').value,
             horarios: Array.from(document.querySelectorAll('input[name="alt-hr"]:checked')).map(c => c.value)
         };
@@ -724,9 +744,10 @@
         document.getElementById('alt-id').value = a.id;
         document.getElementById('alt-dia').value = a.diaSemana;
         document.getElementById('alt-data').value = a.dataInicio;
-        document.getElementById('alt-ciclo').value = a.ciclo || 15;
+        document.getElementById('alt-ciclo').value = a.ciclo || CICLO_PADRAO;
         document.getElementById('alt-nome-a').value = a.nomeA || '';
         document.getElementById('alt-nome-b').value = a.nomeB || '';
+        document.getElementById('alt-disciplina').value = (a.disciplina === undefined || a.disciplina === null) ? DISCIPLINA_PADRAO : a.disciplina;
         document.getElementById('alt-cor').value = a.cor || '#8e44ad';
         document.querySelectorAll('input[name="alt-hr"]').forEach(c => c.checked = (a.horarios || []).includes(c.value));
         document.getElementById('btn-salvar-alt').innerText = '💾 Atualizar Alternância';
@@ -746,9 +767,10 @@
         el.innerHTML = lista.map(a => {
             let hrs = (a.horarios || []).slice().sort((x, y) => ordemHorarios.indexOf(x) - ordemHorarios.indexOf(y)).map(formatarHorario).join(', ');
             let ini = (a.dataInicio || '').split('-').reverse().join('/');
+            let disc = (a.disciplina === undefined || a.disciplina === null) ? DISCIPLINA_PADRAO : a.disciplina;
             return `<div class="lista-condensada-item">
-                <span><span style="display:inline-block;width:12px;height:12px;background:${a.cor};border-radius:3px;margin-right:6px;"></span><strong>${diasSemanaNomes[a.diaSemana]}s</strong> | ${hrs} | ${a.nomeA} ⇄ ${a.nomeB || '(livre)'} | a cada ${a.ciclo || 15} dias desde ${ini}</span>
-                <span><button style="color:#004080; background:none; border:none; cursor:pointer; font-weight:bold; margin-right:8px;" onclick="editarAlternancia('${a.id}')">Editar</button>
+                <span><span style="display:inline-block;width:12px;height:12px;background:${a.cor};border-radius:3px;margin-right:6px;"></span><strong>${diasSemanaNomes[a.diaSemana]}s</strong> | ${hrs} | ${a.nomeA} ⇄ ${a.nomeB || '(livre)'}${disc ? ' | ' + disc : ''} | a cada ${a.ciclo || CICLO_PADRAO} dias desde ${ini}</span>
+                <span style="white-space:nowrap;"><button style="color:#004080; background:none; border:none; cursor:pointer; font-weight:bold; margin-right:8px;" onclick="editarAlternancia('${a.id}')">Editar</button>
                 <button style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;" onclick="excluirAlternancia('${a.id}')">Excluir</button></span>
             </div>`;
         }).join('');
@@ -831,6 +853,7 @@
         document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.admin-tab-btn').forEach(el => el.classList.remove('active'));
         let target = document.getElementById(tabId); if(target) target.classList.add('active'); if(btn) btn.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     async function salvarConfigsFirebase() {
@@ -838,7 +861,7 @@
         catch(e) { alert("Erro ao salvar configurações sistêmicas!"); console.error(e); }
     }
 
-    // --- CONFIG INTERFACE (Aba 4) ---
+    // --- CONFIG INTERFACE ---
     function salvarInterfaceGeral() {
         if(!cfgGerais.interface) cfgGerais.interface = {};
         cfgGerais.interface.avisoCabecalho = document.getElementById("admin-texto-cabecalho").value.trim();
@@ -1261,7 +1284,8 @@
                     let altsDia = getProfessorAlternancia(dataR);
                     if (altsDia.length) {
                         let nomesAlt = [...new Set(altsDia.map(b => b.nome))].join(', ');
-                        divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color:${altsDia[0].cor}; color:${altsDia[0].cor};">🔄 Tarde: ${nomesAlt}</div>`;
+                        let discAlt = altsDia[0].disciplina;
+                        divDia.innerHTML += `<div class="anotacao-visual" style="border-left-color:${altsDia[0].cor}; color:${altsDia[0].cor};">🔄 Tarde: ${nomesAlt}${discAlt ? `<span class="alt-disc">${discAlt}</span>` : ''}</div>`;
                     }
 
                     let qtdMatutino = 0; 
@@ -1358,7 +1382,7 @@
 
     function gerarHtmlSlot(horarioVal, lblVal, agendamentosDoDia, regrasDoDia, profAltVesp, isVesp, dataDia) {
         let altB = (isVesp && Array.isArray(profAltVesp)) ? profAltVesp.find(b => b.horario === horarioVal) : null;
-        if (altB) return `<div class="slot" style="background-color:${altB.cor}22; color:${altB.cor}; border:1px solid ${altB.cor}; font-weight:bold;"><b style="color:${altB.cor};">${lblVal}</b>🔄 ${altB.nome.replace(/^Prof\.\s*/, '')}</div>`;
+        if (altB) return `<div class="slot" style="background-color:${altB.cor}22; color:${altB.cor}; border:1px solid ${altB.cor}; font-weight:bold;"><b style="color:${altB.cor};">${lblVal}</b>🔄 ${altB.nome.replace(/^Prof\.\s*/, '')}${altB.disciplina ? `<span class="slot-disciplina" style="color:${altB.cor};">${altB.disciplina}</span>` : ''}</div>`;
         let blockRec = regrasDoDia.find(r => r.tipo === "bloqueio" && Array.isArray(r.horarios) && r.horarios.includes(horarioVal));
         if(blockRec) return `<div class="slot slot-proerd" style="background-color:#ffcdd2; color:#d32f2f;"><b>${lblVal}</b>${(blockRec.nome||"").substring(0,6)}</div>`;
         
@@ -1461,7 +1485,7 @@
                 cfgGerais.alternancias = d.alternancias || [];
                 if (d.alternanciaVesp && d.alternanciaVesp.dataInicioLian && cfgGerais.alternancias.length === 0) {
                     let o = d.alternanciaVesp; // migra a regra antiga automaticamente
-                    cfgGerais.alternancias = [{ id: 'migrado', diaSemana: o.diaSemana, dataInicio: o.dataInicioLian, ciclo: 15, horarios: o.horarios || [], nomeA: 'Prof. Lian', nomeB: 'Prof. Cláudia', cor: '#8e44ad' }];
+                    cfgGerais.alternancias = [{ id: 'migrado', diaSemana: o.diaSemana, dataInicio: o.dataInicioLian, ciclo: CICLO_PADRAO, horarios: o.horarios || [], nomeA: 'Prof. Lian', nomeB: 'Prof. Cláudia', disciplina: DISCIPLINA_PADRAO, cor: '#8e44ad' }];
                 }
                 cfgGerais.alternanciaVesp = null;
                 cfgGerais.recorrentes = d.recorrentes || [];

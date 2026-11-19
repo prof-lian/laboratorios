@@ -648,6 +648,7 @@
     ];
 
     let cfgGerais = { textosFixos: [], alternanciaVesp: null, alternancias: [], recorrentes: [], interface: {} };
+    let cfgCarregada = false; // só permite salvar depois de ler as regras do servidor
     let cfgAvisos = { avisos: [] };
 
     // FUNÇÃO QUE PERMITE VOLTAR PELO NAVEGADOR
@@ -857,7 +858,14 @@
     }
 
     async function salvarConfigsFirebase() {
-        try { await db.collection("agendamentos").doc("CONFIG_REGRAS_V2").set(cfgGerais); renderizarInterface(); } 
+        if (!cfgCarregada) { alert("⚠️ As configurações ainda não carregaram do servidor. Recarregue a página e tente de novo."); return; }
+        try {
+            const ref = db.collection("agendamentos").doc("CONFIG_REGRAS_V2");
+            const atual = await ref.get({ source: "server" });
+            if (atual.exists) await db.collection("agendamentos").doc("CONFIG_REGRAS_BACKUP").set({ ...atual.data(), salvoEm: new Date().toISOString() });
+            await ref.set(cfgGerais);
+            renderizarInterface();
+        }
         catch(e) { alert("Erro ao salvar configurações sistêmicas!"); console.error(e); }
     }
 
@@ -1472,6 +1480,7 @@
         
         // Listener Configs/Regras
         db.collection("agendamentos").doc("CONFIG_REGRAS_V2").onSnapshot(doc => {
+            if (doc.metadata.fromCache && !doc.exists) return; // sem resposta do servidor ainda: não fazer nada
             if(doc.exists) { 
                 let d = doc.data();
                 cfgGerais.textosFixos = d.textosFixos || [];
@@ -1483,9 +1492,11 @@
                 cfgGerais.alternanciaVesp = null;
                 cfgGerais.recorrentes = d.recorrentes || [];
                 if (d.interface) cfgGerais.interface = d.interface;
-            } else { 
-                db.collection("agendamentos").doc("CONFIG_REGRAS_V2").set(cfgGerais); 
+                cfgCarregada = true;
+            } else {
+                cfgCarregada = true; // servidor confirmou que não existe: libera salvar pelo admin
             }
+            // (removido) não recria mais o documento vazio automaticamente — isso apagava as regras
             renderizarInterface();
             let elCal = document.getElementById('tela-calendario'); if(elCal && elCal.classList.contains('ativa')) gerarCalendario();
             let elAdm = document.getElementById('tela-admin'); if(elAdm && elAdm.classList.contains('ativa')) preencherFormulariosConfig();
